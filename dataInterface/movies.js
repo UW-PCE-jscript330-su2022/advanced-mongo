@@ -2,7 +2,8 @@ const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
 const uri =
-  "YOUR CONNECTION STRING HERE";
+"mongodb+srv://cahilljm53:Mevin*80@cluster0.qlff5yn.mongodb.net/?retryWrites=true&w=majority"
+
 
 const client = new MongoClient(uri);
 
@@ -86,7 +87,7 @@ module.exports.updateById = async (movieId, newObj) => {
   };
   const filter = { _id: ObjectId(movieId) };
   const result = await movies.updateOne(filter, updateRules);
-
+00110
   if(result.modifiedCount != 1){
     return {error: `Something went wrong. ${result.modifiedCount} movies were updated. Please try again.`}
   };
