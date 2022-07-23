@@ -44,6 +44,8 @@ module.exports.getAllComments = async (movieId)=>{
 module.exports.getById = async (movieId) => {
   const database = client.db(databaseName);
   const movies = database.collection(collName);
+  
+ 
 
   const query = {_id: ObjectId(movieId)};
   let movie = await movies.findOne(query);
@@ -77,6 +79,18 @@ module.exports.getByIdOrTitle = async (identifier) => {
   } else {
     return {error: `No item found with identifier ${identifier}.`}
   }
+}
+
+// FIND A SINGLE COMMENT FOR A MOVIE
+// TODO
+module.exports.getOneComment = async (commentId) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  const query = {_id: ObjectId(commentId)};
+  let comment = await comments.findOne(query);
+
+  return comment;
 }
 
 // CREATE A NEW MOVIE
@@ -136,6 +150,28 @@ module.exports.updateById = async (movieId, newObj) => {
   return updatedMovie;
 }
 
+// UPDATE A COMMENT BY ID
+// TODO
+module.exports.updateCommentById = async (commentId, newObj) => {
+const database = client.db(databaseName);
+const comments = database.collection(commCollName)
+
+const updateRules = {
+  $set: {"text" : newObj.text}
+};
+const filter = {_id: ObjectId(commentId) };
+const result = await comments.updateOne(filter, updateRules);
+
+if(result.modifiedCount != 1){
+  return {error: `Something went wrong. ${result.modifiedCount} comments were updated. Please try again.`}
+};
+
+
+const updatedComment = module.exports.getOneComment(commentId);
+console.log(updatedComment);
+return updatedComment;
+}
+
 // DELETE A MOVIE BY ID
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
 module.exports.deleteById = async (movieId) => {
@@ -154,9 +190,8 @@ module.exports.deleteById = async (movieId) => {
 
 // DELETE A COMMENT BY ID
 module.exports.deleteCommentById = async(commentId) =>{
-  // TODO: Implement
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
+  // const movies = database.collection(collName);
   const comments = database.collection(commCollName)
 
   const deletionRules = {_id:ObjectId(commentId)}
@@ -168,3 +203,4 @@ module.exports.deleteCommentById = async(commentId) =>{
 
   return {message: `Deleted ${result.deletedCount} comment.`};
 }
+
