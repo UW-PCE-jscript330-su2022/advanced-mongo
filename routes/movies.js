@@ -33,12 +33,14 @@ router.get("/:id", async (req, res, next) => {
 
 });
 
-// GET COMMENTS FOR A MOVIE
-// // curl -sS http://localhost:5001/movies/000/comments
-// router.get("/:id/comments", async(req, res) => {
-//   const result = await movieData.getAllComments(req.params.id)
-//   res.status(200).send(result);
-// })
+//GET COMMENTS FOR A MOVIE
+// curl -sS http://localhost:5001/movies/000/comments
+router.get("/:id/comments", async(req, res) => {
+  // const result = await movieData.getAllComments(req.params.id)
+  // res.status(200).send(result);
+  console.log("GET all comments for a movie", (req.params.id))
+  res.status(200).send("ok :)");
+})
 
 
 // CREATE A NEW MOVIE
@@ -56,12 +58,14 @@ router.post("/", async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
-// //CREATE A NEW COMMENT
-// // curl -sS -X POST -H "Content-Type: application/json" -d '{"name":"Cinephile Cyprus", "text":"Wow!"}' http://localhost:5001/movies/000/comments
-// router.post("/:id/comments", async(req, res) => {
-//   const result = await movieData.createComment(req.params.id, req.body)
-//   res.status(200).send(result);
-// })
+//CREATE A NEW COMMENT
+// curl -sS -X POST -H "Content-Type: application/json" -d '{"name":"Cinephile Cyprus", "text":"Wow!"}' http://localhost:5001/movies/000/comments
+router.post("/:id/comments", async(req, res) => {
+  // const result = await movieData.createComment(req.params.id, req.body)
+  // res.status(200).send(result);
+  console.log("Create a new comment for a movie", (req.params.id))
+  res.status(200).send("ok :)");
+})
 
 
 // UPDATE A MOVIE PLOT
@@ -92,13 +96,16 @@ router.delete("/:id", async (req, res, next) => {
   }
 
   res.status(resultStatus).send(result);
+
 });
 
-// // DELETE A MOVIE COMMENT
-// // curl -sS -X DELETE http://localhost:5000/movies/000/comments/000
-// router.delete("/:movieId/comments/:commentId", async(req, res)=>{
-//   const result = await movieData.deleteCommentById(req.params.commentId)
-//   res.status(200).send(result);
-// })
+// DELETE A MOVIE COMMENT
+// curl -sS -X DELETE http://localhost:5001/movies/000/comments/000
+router.delete("/:movieId/comments/:commentId", async(req, res)=>{
+  // const result = await movieData.deleteCommentById(req.params.commentId)
+  // res.status(200).send(result);
+  console.log("Delete a comment for a movie", (req.params.commentId))
+  res.status(200).send("ok :)");
+})
 
 module.exports = router;
