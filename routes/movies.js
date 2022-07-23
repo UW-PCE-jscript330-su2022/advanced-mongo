@@ -78,7 +78,7 @@ router.post("/", async (req, res, next) => {
 
 //CREATE A NEW COMMENT
 // curl -sS -X POST -H "Content-Type: application/json" -d '{"name":"Cinephile Cyprus", "text":"Wow!"}' http://localhost:5001/movies/573a1390f29313caabcd446f/comments
-// created 62dc500c8251c82b1edc1c87
+// created 62dc5a9181fc490e55e22f45
 router.post("/:id/comments", async(req, res) => {
   const result = await movieData.createComment(req.params.id, req.body)
   res.status(200).send(result);
@@ -102,7 +102,8 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // UPDATE A COMMENT TEXT
-// curl -sS -X PUT -H "Content-Type: application/json" -d '{"text":"Fun movie!"}' http://localhost:5001/movies/573a1390f29313caabcd446f/comments/62dc500c8251c82b1edc1c87
+// curl -sS http://localhost:5001/movies/573a1390f29313caabcd446f/comments
+// curl -sS -X PUT -H "Content-Type: application/json" -d '{"text":"Fun movie!"}' http://localhost:5001/movies/573a1390f29313caabcd446f/comments/62dc5a9181fc490e55e22f45
 router.put("/:movieId/comments/:commentId", async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateCommentById(req.params.commentId, req.body)
@@ -147,15 +148,3 @@ router.delete("/:movieId/comments/:commentId", async(req, res)=>{
 })
 
 module.exports = router;
-
-// router.get("/:movieId/comments/:id", async (req, res, next) => {
-//   const result = await movieData.getOneComment(req.params.id)
-//   if(result.error){
-//     resultStatus = 404;
-//   } else {
-//     resultStatus = 200;
-//   }
-
-//   res.status(resultStatus).send(result);
-
-// });
