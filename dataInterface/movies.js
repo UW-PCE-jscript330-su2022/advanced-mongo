@@ -12,6 +12,7 @@ const commCollName = 'comments';
 
 module.exports = {}
 
+// GET ALL MOVIES
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/find/
 module.exports.getAll = async () => {
   const database = client.db(databaseName);
@@ -23,6 +24,7 @@ module.exports.getAll = async () => {
   return movieCursor.toArray();
 }
 
+// GET ALL COMMENTS FOR A MOVIE
 module.exports.getAllComments = async (movieId)=>{
   const database = client.db(databaseName);
   const comments = database.collection(commCollName);

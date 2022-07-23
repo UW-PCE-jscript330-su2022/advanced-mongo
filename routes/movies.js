@@ -16,6 +16,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+
 // GET MOVIES BY TITLE OR ID
 // This route handles either id or title as an identifier.
 // curl -sS http://localhost:5001/movies/573a1390f29313caabcd4135
@@ -33,13 +34,12 @@ router.get("/:id", async (req, res, next) => {
 
 });
 
-//GET COMMENTS FOR A MOVIE
-// curl -sS http://localhost:5001/movies/000/comments
+//GET ALL COMMENTS FOR A MOVIE
+// curl -sS http://localhost:5001/movies/573a1393f29313caabcdbe7c/comments
 router.get("/:id/comments", async(req, res) => {
-  // const result = await movieData.getAllComments(req.params.id)
-  // res.status(200).send(result);
-  console.log("GET all comments for a movie", (req.params.id))
-  res.status(200).send("ok :)");
+  const result = await movieData.getAllComments(req.params.id)
+  res.status(200).send(result);
+  
 })
 
 
