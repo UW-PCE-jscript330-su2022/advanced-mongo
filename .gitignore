@@ -23,3 +23,5 @@ jspm_packages/
 .env
 .env.test
 
+#initial test of code in dev
+testing.json

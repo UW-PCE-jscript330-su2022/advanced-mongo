@@ -38,25 +38,31 @@ module.exports.getAllComments = async (movieId)=>{
   return commentCursor.toArray();
 }
 
+
+// GET MOVIES BY ID
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
 module.exports.getById = async (movieId) => {
   const database = client.db(databaseName);
   const movies = database.collection(collName);
+
   const query = {_id: ObjectId(movieId)};
   let movie = await movies.findOne(query);
 
   return movie;
 }
 
+// GET MOVIES BY TITLE
 module.exports.getByTitle = async (title) => {
   const database = client.db(databaseName);
   const movies = database.collection(collName);
+
   const query = {title: title};
   let movie = await movies.findOne(query);
 
   return movie;
 }
 
+// GET MOVIES BY ID OR TITLE (USES getByTitle AND getByTitle)
 module.exports.getByIdOrTitle = async (identifier) => {
   let movie;
 
@@ -73,6 +79,7 @@ module.exports.getByIdOrTitle = async (identifier) => {
   }
 }
 
+// CREATE A NEW MOVIE
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
 module.exports.create = async (newObj) => {
   const database = client.db(databaseName);
@@ -91,6 +98,7 @@ module.exports.create = async (newObj) => {
   }
 }
 
+// CREATE A NEW COMMENT
 module.exports.createComment = async(movieId, newObj) =>{
   // TODO: Validate that movieId is for an existing movie
   const database = client.db(databaseName);
@@ -107,6 +115,7 @@ module.exports.createComment = async(movieId, newObj) =>{
   }
 }
 
+// UPDATE A MOVIE BY ID
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/change-a-document/
 module.exports.updateById = async (movieId, newObj) => {
   const database = client.db(databaseName);
@@ -127,6 +136,7 @@ module.exports.updateById = async (movieId, newObj) => {
   return updatedMovie;
 }
 
+// DELETE A MOVIE BY ID
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
 module.exports.deleteById = async (movieId) => {
   const database = client.db(databaseName);
@@ -142,7 +152,19 @@ module.exports.deleteById = async (movieId) => {
   return {message: `Deleted ${result.deletedCount} movie.`};
 }
 
-module.exports.deleteCommentById = async(id) =>{
+// DELETE A COMMENT BY ID
+module.exports.deleteCommentById = async(commentId) =>{
   // TODO: Implement
-  return {};
+  const database = client.db(databaseName);
+  const movies = database.collection(collName);
+  const comments = database.collection(commCollName)
+
+  const deletionRules = {_id:ObjectId(commentId)}
+  const result = await comments.deleteOne(deletionRules);
+
+  if(result.deletedCount != 1){
+    return {error: `Something went wrong. ${result.deletedCount} comments were deleted. Please try again.`}
+  };
+
+  return {message: `Deleted ${result.deletedCount} comment.`};
 }

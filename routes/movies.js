@@ -36,6 +36,7 @@ router.get("/:id", async (req, res, next) => {
 
 //GET ALL COMMENTS FOR A MOVIE
 // curl -sS http://localhost:5001/movies/573a1393f29313caabcdbe7c/comments
+// curl -sS http://localhost:5001/movies/573a1390f29313caabcd446f/comments
 router.get("/:id/comments", async(req, res) => {
   const result = await movieData.getAllComments(req.params.id)
   res.status(200).send(result);
@@ -59,12 +60,12 @@ router.post("/", async (req, res, next) => {
 });
 
 //CREATE A NEW COMMENT
-// curl -sS -X POST -H "Content-Type: application/json" -d '{"name":"Cinephile Cyprus", "text":"Wow!"}' http://localhost:5001/movies/000/comments
+// curl -sS -X POST -H "Content-Type: application/json" -d '{"name":"Cinephile Cyprus", "text":"Wow!"}' http://localhost:5001/movies/573a1390f29313caabcd446f/comments
+// created 62db7af353d485ae6d7b8b62
 router.post("/:id/comments", async(req, res) => {
-  // const result = await movieData.createComment(req.params.id, req.body)
-  // res.status(200).send(result);
-  console.log("Create a new comment for a movie", (req.params.id))
-  res.status(200).send("ok :)");
+  const result = await movieData.createComment(req.params.id, req.body)
+  res.status(200).send(result);
+  
 })
 
 
@@ -100,12 +101,11 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 // DELETE A MOVIE COMMENT
-// curl -sS -X DELETE http://localhost:5001/movies/000/comments/000
+// curl -sS -X DELETE http://localhost:5001/movies/573a1390f29313caabcd446f/comments/62db7af353d485ae6d7b8b62
 router.delete("/:movieId/comments/:commentId", async(req, res)=>{
-  // const result = await movieData.deleteCommentById(req.params.commentId)
-  // res.status(200).send(result);
-  console.log("Delete a comment for a movie", (req.params.commentId))
-  res.status(200).send("ok :)");
+  const result = await movieData.deleteCommentById(req.params.commentId)
+  res.status(200).send(result);
+
 })
 
 module.exports = router;
