@@ -37,6 +37,13 @@ router.get("/:id/comments", async(req, res) => {
   res.status(200).send(result);
 })
 
+// curl http://localhost:5001/movies/573a1390f29313caabcd4323/comments/5a9427648b0beebeb69579e7
+router.get("/:movieId/comments/:commentId", async(req, res) => {
+  const result = await movieData.getOneComment(req.params.commentId)
+  res.status(200).send(result);
+  
+})
+
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5001/movies
 // new movie id
 // 62dc823baa418ec4b68290eb
@@ -65,6 +72,21 @@ router.post("/:id/comments", async(req, res) => {
 router.put("/:id", async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateById(req.params.id, req.body)
+
+  if(result.error){
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
+});
+
+//TODO update a comment
+// curl -X PUT -H "Content-Type: application/json" -d '{"text":"Nothing beats Minions!"}' http://localhost:5001/movies/573a1390f29313caabcd446f/comments/5a9427648b0beebeb69579f5
+router.put("/:movieId/comments/:commentId", async (req, res) => {
+  let resultStatus;
+  const result = await movieData.updateComment(req.params.commentId, req.body)
 
   if(result.error){
     resultStatus = 400;

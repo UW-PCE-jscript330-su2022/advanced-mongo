@@ -55,6 +55,17 @@ module.exports.getByTitle = async (title) => {
   return movie;
 }
 
+module.exports.getOneComment = async (commentId) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const query = {_id: ObjectId(commentId)};
+  let comment = await comments.findOne(query);
+
+  return comment;
+}
+
+
+
 module.exports.getByIdOrTitle = async (identifier) => {
   let movie;
 
@@ -125,6 +136,27 @@ module.exports.updateById = async (movieId, newObj) => {
   return updatedMovie;
 }
 
+//update comment
+
+module.exports.updateComment = async (commentId, newObj) => {
+  const database = client.db(databaseName);
+  const comment = database.collection(commCollName);
+
+  // Product team says only these two fields can be updated.
+  const updateRules = {
+    $set: {"text" : newObj.text}
+  };
+  const filter = { _id: ObjectId(commentId) };
+  const result = await comment.updateOne(filter, updateRules);
+
+  if(result.modifiedCount != 1){
+    return {error: `Something went wrong. ${result.modifiedCount} comment was updated. Please try again.`}
+  };
+
+  const updatedComment = module.exports.getOneComment(commentId);
+  return updatedComment;
+}
+
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
 module.exports.deleteById = async (movieId) => {
   const database = client.db(databaseName);
@@ -140,7 +172,16 @@ module.exports.deleteById = async (movieId) => {
   return {message: `Deleted ${result.deletedCount} movie.`};
 }
 
-module.exports.deleteCommentById = async(id) =>{
-  // TODO: Implement
-  return {};
+module.exports.deleteCommentById = async(commentId) =>{
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  const deletionRules = {_id:ObjectId(commentId)}
+  const result = await comments.deleteOne(deletionRules);
+
+  if(result.deletedCount != 1){
+    return {error: `Something went wrong. ${result.deletedCount} comments were deleted. Please try again.`}
+  };
+
+  return {message: `Deleted ${result.deletedCount} comment.`};
 }
