@@ -73,3 +73,63 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 module.exports = router;
+
+// Comments for a Movie
+
+// curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments
+router.get("/:movieId/comments", async (req, res) => {
+  // console.log("GET comments for a movie: ", req.params.movieId);
+  if (req.params.movieId.length != 24) {
+    res.status(404).send("Please check the movie ID number.");
+  } else {
+    const result = await movieData.getAllComments(req.params.movieId);
+    res.status(200).send(result); 
+  }
+});
+
+// curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments/5a9427648b0beebeb69579e7
+router.get("/:movieId/comments/:commentId", async (req, res) => {
+  if (req.params.movieId.length != 24) {
+    res.status(404).send("Please check the movie ID number.");
+  } else if (req.params.commentId.length != 24) {
+    res.status(404).send("Please check the comment ID number.");
+  } else {
+    const result = await movieData.getSingleComment(req.params.movieId, req.params.commentId);
+    res.status(200).send(result);
+  }
+});
+
+// curl -X POST -H "Content-Type: application/json" -d '{"name":"Username", "email":"user@host.com", "text":"Comment Text here" }' http://localhost:5000/movies/573a1390f29313caabcd4323/comments
+router.post("/:movieId/comments", async (req, res) => {
+  // console.log("CREATE comment for a movie: ", req.params.movieId);
+  if (req.params.movieId.length != 24) {
+    res.status(404).send("Please check the movie ID number.");
+  } else {
+    const result = await movieData.createComment(req.params.movieId, req.body);
+    res.status(200).send(result)
+  }
+});
+
+// curl -X PUT -H "Content-Type: application/json" -d '{"text":"This is replacement text"}' http://localhost:5000/movies/573a1391f29313caabcd80db/comments/5a9427648b0beebeb6957b6e
+router.put("/:movieId/comments/:commentId", async (req, res) => {
+  if (req.params.movieId.length != 24) {
+    res.status(404).send("Please check the movie ID number.");
+  } else if (req.params.commentId.length != 24) {
+    res.status(404).send("Please check the comment ID number.");
+  } else {
+    const result = await movieData.updateById(req.params.commentId, req.body);
+    res.status(200).send(`${result} comment(s) updated.`)
+  }  
+});
+
+// curl -X DELETE http://localhost:5000/movies/573a1397f29313caabce75fe/comments/62d741e1022012d6f654f851
+router.delete("/:movieId/comments/:commentId", async (req, res) => {
+  if (req.params.movieId.length != 24) {
+    res.status(404).send("Please check the movie ID number.");
+  } else if (req.params.commentId.length != 24) {
+    res.status(404).send("Please check the comment ID number.");
+  } else {
+    const result = await movieData.deleteCommentById(req.params.commentId);
+    res.status(200).send(`${result} comment(s) deleted.`)
+  }
+});

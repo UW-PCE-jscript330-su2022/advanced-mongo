@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectID } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
 const uri =
@@ -8,6 +8,7 @@ const client = new MongoClient(uri);
 
 const databaseName = 'sample_mflix';
 const collName = 'movies'
+const commCollName = 'comments';
 
 module.exports = {}
 
@@ -108,4 +109,59 @@ module.exports.deleteById = async (movieId) => {
   };
 
   return {message: `Deleted ${result.deletedCount} movie.`};
+}
+
+// Comments for a Movie
+
+module.exports.getAllComments = async (movieId) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  // 'movie_id' is from comments document; it is a field/data type in each item:
+  const query = { movie_id : ObjectId(movieId) };
+  let commentCursor = await comments.find(query);
+  // if(result.acknowledged){
+  //   return commentCursor.toArray();
+  // } else {
+  //   return {error: "Something went wrong. Please try again."}
+  // }
+  return commentCursor.toArray();
+}
+
+module.exports.getSingleComment = async (movieId, commentId) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const query = { movie_id: ObjectId(movieId), _id: ObjectId(commentId) };
+  let commentCursor = await comments.find(query);
+  return commentCursor.toArray();
+}
+
+module.exports.createComment = async (movieId, newObj) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  // Destructure newObj to get the fields inside into goodObj.
+  // As we want movie_id and date to overwrite similar fields in newObj, the destructuring of newObj should occur first.
+  const goodObj = { ...newObj, movie_id: ObjectId(movieId), date: new Date() }
+  const result = await comments.insertOne(goodObj);
+  if(result.acknowledged){
+    return { message: `Item created! ID: ${result.insertedId}` }
+  } else {
+    return {error: "Something went wrong. Please try again."}
+  }
+}
+
+module.exports.updateById = async (commentId, newObj) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const filter = { _id: ObjectId(commentId) };
+  let result = await comments.updateOne( filter, {$set:newObj} );
+  return result.modifiedCount;
+}
+
+module.exports.deleteCommentById = async (commentId) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const query = { _id: ObjectId(commentId) }
+  let result = await comments.deleteOne(query);
+  console.log(result)
+  return result.deletedCount;
 }
