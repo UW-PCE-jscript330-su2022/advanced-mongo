@@ -17,21 +17,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// GET MOVIES BY GENRE
-// curl -sS http://localhost:5001/movies/genres/Short
-router.get("/genres/:genreName", async (req, res, next) => {
-  const result = await movieData.getMoviesByGenre(req.params.genreName);
-
-  if (result) {
-    if (result.length > 0) {
-      res.status(200).send(result);
-    } else {
-      res.status(404).send({error: `No movie found for ${req.params.genreName} genre`});
-    }
-  } else {
-    res.status(500).send({error:"Something went wrong. Please try again."})
-  }
-});
 
 
 
@@ -41,7 +26,11 @@ router.get("/genres/:genreName", async (req, res, next) => {
 
 router.get("/:id/comments", async(req, res) => {
   const result = await movieData.getAllComments(req.params.id)
-  res.status(200).send(result);
+  if (result) {
+    res.status(200).send(result);
+  } else {
+    resultStatus = 404;
+  }
   
 })
 
@@ -99,9 +88,15 @@ router.post("/", async (req, res, next) => {
 // created 62dc5a9181fc490e55e22f45; 62dc741fcd7ef831caf9aa98
 router.post("/:id/comments", async(req, res) => {
   const result = await movieData.createComment(req.params.id, req.body)
-  res.status(200).send(result);
+  if(result){
+    res.status(200).send(result);
+  } else {
+    resultStatus = 400;
+  }
+  
   
 })
+
 
 
 // UPDATE A MOVIE PLOT
@@ -164,5 +159,21 @@ router.delete("/:movieId/comments/:commentId", async(req, res)=>{
   res.status(resultStatus).send(result);
 
 })
+
+// GET MOVIES BY GENRE
+// curl -sS http://localhost:5001/movies/genres/Short
+router.get("/genres/:genreName", async (req, res, next) => {
+  const result = await movieData.getMoviesByGenre(req.params.genreName);
+
+  if (result) {
+    if (result.length > 0) {
+      res.status(200).send(result);
+    } else {
+      res.status(404).send({error: `No movie found for ${req.params.genreName} genre`});
+    }
+  } else {
+    res.status(500).send({error:"Something went wrong. Please try again."})
+  }
+});
 
 module.exports = router;
