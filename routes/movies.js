@@ -78,12 +78,11 @@ module.exports = router;
 
 // curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments
 router.get("/:movieId/comments", async (req, res) => {
-  // console.log("GET comments for a movie: ", req.params.movieId);
   if (req.params.movieId.length != 24) {
     res.status(404).send("Please check the movie ID number.");
   } else {
     const result = await movieData.getAllComments(req.params.movieId);
-    res.status(200).send(result); 
+    res.status(200).send(result);
   }
 });
 
@@ -101,7 +100,6 @@ router.get("/:movieId/comments/:commentId", async (req, res) => {
 
 // curl -X POST -H "Content-Type: application/json" -d '{"name":"Username", "email":"user@host.com", "text":"Comment Text here" }' http://localhost:5000/movies/573a1390f29313caabcd4323/comments
 router.post("/:movieId/comments", async (req, res) => {
-  // console.log("CREATE comment for a movie: ", req.params.movieId);
   if (req.params.movieId.length != 24) {
     res.status(404).send("Please check the movie ID number.");
   } else {
