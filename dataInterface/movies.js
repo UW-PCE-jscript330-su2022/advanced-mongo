@@ -138,6 +138,26 @@ module.exports.updateById = async (movieId, newObj) => {
   return updatedMovie;
 }
 
+module.exports.updateCommentById = async (commentId, newObj) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  // Product team says only these two fields can be updated.
+  const updateRules = {
+    //$set: {"post" : newObj.post, "date": new Date()}
+    $set: {"post" : newObj.post, "date": new Date()}
+  };
+  const filter = { _id: ObjectId(commentId) };
+  const result = await comments.updateOne(filter, updateRules);
+
+  if(result.modifiedCount !== 1){
+    return {error: `Something went wrong. ${result.modifiedCount} comments were updated. Please try again.`}
+  }
+
+  const updatedComment = module.exports.getCommentById(commentId);
+  return updatedComment;
+}
+
 module.exports.deleteCommentById = async (commentId)=>{
   const database = client.db(databaseName)
   const comments = database.collection(commCollName)

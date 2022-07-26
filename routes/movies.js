@@ -90,7 +90,22 @@ router.put("/:id", async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
-// Comment a comments for a movie
+// update a comment
+
+router.put("/:id/comments/:commentId", async (req, res, next) => {
+  let resultStatus;
+  const result = await movieData.updateCommentById(req.params.commentId, req.body)
+
+  if(result.error){
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
+});
+
+// delete a comment for a movie
 
 router.delete("/:movieId/comments/:commentId", async(req, res) =>{
   console.log("Delete a comment for a movie: ", req.params.commentId)
