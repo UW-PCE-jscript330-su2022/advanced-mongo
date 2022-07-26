@@ -53,8 +53,6 @@ module.exports.getById = async (movieId) => {
   const query = { _id: ObjectId(movieId) };
   let movie = await movies.findOne(query);
 
-  console.log('movie = ', movie);
-
   return movie
     ? movie
     : {
@@ -66,7 +64,7 @@ module.exports.getById = async (movieId) => {
 module.exports.getCommentById = async (movieId, commentId) => {
   const database = client.db(databaseName);
   const comments = database.collection(collections.comments);
-  if ((await module.exports.getById(movieId)).status === 200) {
+  if (!(await module.exports.getById(movieId).error)) {
     const query = { _id: ObjectId(commentId) };
     const result = await comments.findOne(query);
 
@@ -161,7 +159,7 @@ module.exports.createComment = async (movieId, newCommentObj) => {
     });
 
     return result.acknowledged
-      ? `New comment created for movie id ${movieId}`
+      ? module.exports.getCommentById(movieId, result.insertedId.toString())
       : {
           error: `There was an error submitting comment data. Please try again later.`,
         };
@@ -204,20 +202,24 @@ module.exports.updateById = async (movieId, newObj) => {
 
 module.exports.updateCommentById = async (movieId, commentId, commentText) => {
   const database = client.db(databaseName);
-  const comments = database.collection(collections.comments);
+  if (!(await module.exports.getById(movieId)).error) {
+    const comments = database.collection(collections.comments);
 
-  let result = await comments.updateOne(
-    { _id: ObjectId(commentId) },
-    { $set: { text: commentText } }
-  );
+    let result = await comments.updateOne(
+      { _id: ObjectId(commentId) },
+      { $set: { text: commentText } }
+    );
 
-  return result.acknowledged
-    ? {
-        message: `Comment updated sucessfully.`,
-      }
-    : {
-        error: `Something went wrong. Comment with id of commentId could not be updated. Please try again.`,
-      };
+    return result.acknowledged
+      ? module.exports.getCommentById(movieId, commentId)
+      : {
+          error: `There was an error updating comment data. Please try again later.`,
+        };
+  } else {
+    return {
+      error: `There was an error retrieving movie data. Please try again later.`,
+    };
+  }
 };
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/

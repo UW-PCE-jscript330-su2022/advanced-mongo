@@ -136,8 +136,6 @@ router.put('/:id', async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateById(req.params.id, req.body);
 
-  console.log('result = ', result);
-
   if (result === null) {
     resultStatus = 500;
   } else if (result.error) {
@@ -152,15 +150,22 @@ router.put('/:id', async (req, res, next) => {
 // Route to update (PUT) a single movie comment based on provided movie id
 // curl -X PUT -H "Content-Type: application/json" -d '{"text": "This is an updated comment string"}' http://localhost:5000/movies/573a1390f29313caabcd4323/comments/62db05b2aa368c8697f4ca86
 router.put('/:movieId/comments/:commentId', async (req, res, next) => {
+  let resultStatus;
   const result = await movieData.updateCommentById(
     req.params.movieId,
     req.params.commentId,
     req.body
   );
 
-  !result.error
-    ? res.status(200).send(result.message)
-    : res.status(400).send(result.error);
+  if (result === null) {
+    resultStatus = 500;
+  } else if (result.error) {
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
 });
 
 // Route to remove (DELETE) a single movie

@@ -137,17 +137,28 @@ describe('/movies routes', () => {
   });
 
   describe('POST /:id/comments', () => {
-    it('should return message confirming new movie created on success', async () => {
-      movieData.createComment.mockResolvedValue(
-        'New comment successfully created.'
-      );
+    it('should return the new comment and a 200 response on success', async () => {
+      movieData.createComment.mockResolvedValue({
+        _id: '123',
+        name: 'Max Power',
+        email: 'max@power.co',
+        text: 'Test',
+        movie_id: '456',
+        date: '2022-07-26T19:28:56.981Z',
+      });
       const res = await request(server).post('/movies/123/comments');
       expect(res.statusCode).toEqual(200);
       expect(res.body).toBeDefined;
+      expect(res.body._id).toBeDefined;
+      expect(res.body.name).toBeDefined;
+      expect(res.body.email).toBeDefined;
+      expect(res.body.text).toBeDefined;
+      expect(res.body.movie_id).toBeDefined;
+      expect(res.body.date).toBeDefined;
       expect(res.body.error).not.toBeDefined;
     });
 
-    it('should return an error message if movie not found', async () => {
+    it('should return an error message and 400 response if movie not found', async () => {
       movieData.createComment.mockResolvedValue({
         error: `There was an error submitting comment data. Please try again later.`,
       });
@@ -156,7 +167,7 @@ describe('/movies routes', () => {
       expect(res.body.error).toBeDefined;
     });
 
-    it('should return an error message if server returns null', async () => {
+    it('should return an error message and 500 response if server returns null', async () => {
       movieData.createComment.mockResolvedValue(null);
       const res = await request(server).post('/movies/123/comments');
       expect(res.statusCode).toEqual(500);
@@ -165,7 +176,7 @@ describe('/movies routes', () => {
   });
 
   describe('PUT /:id', () => {
-    it('should return the updated movie on success', async () => {
+    it('should return the updated movie and 200 response on success', async () => {
       movieData.updateById.mockResolvedValue({
         _id: '890',
         title: 'Updated movie title',
@@ -175,13 +186,43 @@ describe('/movies routes', () => {
       expect(res.body.error).not.toBeDefined;
     });
 
-    it('should return an error message if movie fails to be updated', async () => {
+    it('should return an error message and 400 response if movie fails to be updated', async () => {
       movieData.updateById.mockResolvedValue({
         error: `We've encountered an error. Please try again later.`,
       });
       const res = await request(server).put('/movies/890');
       expect(res.status).toEqual(400);
       expect(res.error).toBeDefined;
+    });
+  });
+
+  describe('PUT /:movieId/comments/:commentId', () => {
+    it('should return the updated comment and 200 response on success', async () => {
+      movieData.updateCommentById.mockResolvedValue({
+        _id: '890',
+        name: 'Max Power',
+        email: 'max@power.co',
+        text: 'Updated comment text',
+      });
+      const res = await request(server).put('/movies/123/comments/456');
+      expect(res.status).toEqual(200);
+      expect(res.body).toBeDefined;
+      expect(res.body.error).not.toBeDefined;
+    });
+
+    it('should return an error message and 400 response if comment fails to be updated', async () => {
+      movieData.updateCommentById.mockResolvedValue({
+        error: `We've encountered an error. Please try again later.`,
+      });
+      const res = await request(server).put('/movies/123/comments/456');
+      expect(res.status).toEqual(400);
+      expect(res.error).toBeDefined;
+    });
+
+    it('should return a 500 response if server returns null', async () => {
+      movieData.updateCommentById.mockResolvedValue(null);
+      const res = await request(server).put('/movies/123/comments/456');
+      expect(res.status).toEqual(500);
     });
   });
 
