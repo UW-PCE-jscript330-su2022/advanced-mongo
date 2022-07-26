@@ -22,12 +22,16 @@ module.exports.getAllMovies = async () => {
   const movies = database.collection(collections.movies);
 
   const query = {};
-  let movieCursor = await movies.find(query).limit(10).sort({ runtime: -1 });
+  let movieCursor = await movies
+    .find(query)
+    .projection({ genre: 1 })
+    .limit(10)
+    .sort({ runtime: -1 });
 
   return movieCursor
     ? movieCursor.toArray()
     : {
-        error: `We've encountered an error. Please try again later.`,
+        error: `There was an error retrieving movie data. Please try again later.`,
       };
 };
 
@@ -52,7 +56,7 @@ module.exports.getMovieById = async (movieId) => {
   return movie
     ? movie
     : {
-        error: `We've encountered an error. Please try again later.`,
+        error: `There was an error retrieving movie data. Please try again later.`,
       };
 };
 
@@ -76,6 +80,22 @@ module.exports.getCommentById = async (movieId, commentId) => {
       error: `There was an error retrieving movie data. Please try again later.`,
     };
   }
+};
+
+// retrieve movies that match a given genre
+module.exports.getMoviesByGenre = async (genreName) => {
+  const database = client.db(databaseName);
+  const movies = database.collection(collections.movies);
+  let movieCursor = await movies
+    .find({ genres: genreName })
+    .limit(10)
+    .project({ title: 1, genres: 1 });
+
+  return movieCursor.toArray()
+    ? movieCursor.toArray()
+    : {
+        error: `There was an error retrieving movie data. Please try again later.`,
+      };
 };
 
 // retrieve all comments for a single movie

@@ -39,6 +39,23 @@ router.get('/comments', async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
+// Route to retrieve (GET) all comments for all movies
+// curl http://localhost:5000/movies/comments
+router.get('/genres/:genreName', async (req, res, next) => {
+  let resultStatus;
+  const result = await movieData.getMoviesByGenre(req.params.genreName);
+
+  if (result === null) {
+    resultStatus = 500;
+  } else if (result.length === 0) {
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
+});
+
 // Route to retrieve (GET) a single movie
 // curl http://localhost:5000/movies/573a13f6f29313caabde538a/
 router.get('/:id', async (req, res, next) => {
@@ -174,6 +191,7 @@ router.delete('/:movieId', async (req, res, next) => {
 });
 
 // Route to remove (DELETE) a single comment
+// curl -X DELETE http://localhost:5000/movies/573a13b1f29313caabd376cf/comments/5a9427658b0beebeb69711a3
 router.delete('/:movieId/comments/:commentId', async (req, res) => {
   const result = await movieData.deleteCommentById(
     req.params.movieId,
