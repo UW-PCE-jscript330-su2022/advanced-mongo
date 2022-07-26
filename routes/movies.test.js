@@ -132,5 +132,59 @@ describe("/movies routes", () => {
     });
   });
 
+  describe("POST /:id/comments", () =>{
+    it("should return the new movie on success", async () => {
+
+      movieData.createComment.mockResolvedValue({
+        "newObjectId": "62df93c1f497479798d1af37",
+        "message": "Comment created! ID: 62df93c1f497479798d1af37"
+      })
+      const res = await request(server).post("/movies/573a1397f29313caabce8896/comments")
+      expect(res.statusCode).toEqual(200);
+
+    });
+
+    it("should return an error message if a comment fails to be created", async () => {
+      movieData.createComment.mockResolvedValue({error: "Something went wrong. Please try again."})
+      const res = await request(server).post("/movies/573a1397f29313caabce8896/comments")
+      expect(res.body.error).toBeDefined()
+
+    });
+
+  });
+
+  describe("DELETE /:id/comments/:commentId", () =>{
+    it("should return a message on success", async () => {
+      movieData.deleteCommentById.mockResolvedValue({message: `Deleted 1 comment.`})
+      const res = await request(server).delete("/movies/573a1397f29313caabce8896/comments/000")
+      expect(res.statusCode).toEqual(200);
+      // check status code 200
+    });
+    it("should return an error message if comments fails to be deleted", async () => {
+      movieData.deleteCommentById.mockResolvedValue({error: `Something went wrong. 0 comments were deleted. Please try again.`})
+      const res = await request(server).delete("/movies/573a1397f29313caabce8896/comments/000")
+      expect(res.statusCode).toEqual(400);
+    });
+  });
+
+  describe("PUT /:id/comments/:commentId", () =>{
+    it("should return the updated comment on success", async () => {
+      movieData.updateCommentById.mockResolvedValue({
+        "_id": "62df8cfe33d248a8ed01b9dc",
+        "post": "Trip to the Moon Forever Sucks extra extra extra Comment",
+        "movie_id": "573a1397f29313caabce8896",
+        "date": "2022-07-26T05:22:23.673Z"
+      })
+      const res = await request(server).put("/movies/62df8cfe33d248a8ed01b9dc/comments/000")
+      expect(res.statusCode).toEqual(200);
+      // check status code 200
+    });
+    it("should return an error if movie fails to be updated", async () => {
+      movieData.updateCommentById.mockResolvedValue({
+        error: `Something went wrong. 0 comments were updated. Please try again.`})
+      const res = await request(server).put("/movies/62df8cfe33d248a8ed01b9dc/comments/000")
+      expect(res.statusCode).toEqual(400);
+    });
+  });
 
 });

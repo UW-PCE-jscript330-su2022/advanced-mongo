@@ -132,7 +132,15 @@ router.delete("/:movieId/comments/:commentId", async(req, res) =>{
   console.log("Delete a comment for a movie: ", req.params.commentId)
   const result = await movieData.deleteCommentById(req.params.commentId)
 
-  res.status(200).send(result)
+  if(result.error){
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
+
+
 })
 
 // curl -X DELETE http://localhost:5000/movies/573a1390f29313caabcd4135
