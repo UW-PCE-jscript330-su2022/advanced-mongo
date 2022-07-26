@@ -100,7 +100,7 @@ router.delete('/:id/comments/:commentId', async (req, res) => {
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
 router.post('/', async (req, res, next) => {
   let statusCode;
-  let results = await movieData.create(req.body);
+  let results = await movieData.createMovie(req.body);
 
   if (results === null) {
     statusCode = 500;
@@ -116,8 +116,18 @@ router.post('/', async (req, res, next) => {
 // Route to insert (POST) a new comment for a specific movie
 // curl -X POST -H "Content-Type: application/json" -d '{"name": "Max Power", "email": "max@power.co", "text": "Love this post! Amazing! Lorem ipsum yabba dabba do."}' http://localhost:5000/movies/573a1390f29313caabcd4323/comments
 router.post('/:id/comments', async (req, res, next) => {
+  let resultStatus;
   let result = await movieData.createComment(req.params.id, req.body);
-  res.status(result.status).send(result.message);
+
+  if (result === null) {
+    resultStatus = 500;
+  } else if (result.error) {
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
 });
 
 // Route to update (PUT) a single movie

@@ -131,7 +131,7 @@ module.exports.getByIdOrTitle = async (identifier) => {
 };
 
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
-module.exports.create = async (newObj) => {
+module.exports.createMovie = async (newObj) => {
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
 
@@ -152,23 +152,24 @@ module.exports.create = async (newObj) => {
 
 module.exports.createComment = async (movieId, newCommentObj) => {
   const database = client.db(databaseName);
-  const comments = database.collection(collections.comments);
+  if (!(await module.exports.getById(movieId)).error) {
+    const comments = database.collection(collections.comments);
+    const result = await comments.insertOne({
+      ...newCommentObj,
+      movie_id: ObjectId(movieId),
+      date: new Date(),
+    });
 
-  const result = await comments.insertOne({
-    ...newCommentObj,
-    movie_id: ObjectId(movieId),
-    date: new Date(),
-  });
-
-  return result.acknowledged
-    ? {
-        message: `New comment (id: ${result.insertedId}) for movie id ${movieId} created.`,
-        status: 200,
-      }
-    : {
-        message: `Something went wrong. Please try again.`,
-        status: 400,
-      };
+    return result.acknowledged
+      ? `New comment created for movie id ${movieId}`
+      : {
+          error: `There was an error submitting comment data. Please try again later.`,
+        };
+  } else {
+    return {
+      error: `There was an error retrieving movie data. Please try again later.`,
+    };
+  }
 };
 
 module.exports.deleteComment = async (id, commentId) => {
