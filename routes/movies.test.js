@@ -10,7 +10,7 @@ describe('/movies routes', () => {
 
   describe('GET /', () => {
     it('should return an array of movies and a 200 response on success', async () => {
-      movieData.getAll.mockResolvedValue([
+      movieData.getAllMovies.mockResolvedValue([
         { _id: 'abc123', title: 'Test movie title' },
       ]);
       const res = await request(server).get('/movies');
@@ -23,7 +23,7 @@ describe('/movies routes', () => {
     });
 
     it('should return a 500 response if server call returns null', async () => {
-      movieData.getAll.mockResolvedValue(null);
+      movieData.getAllMovies.mockResolvedValue(null);
       const res = await request(server).get('/movies');
 
       expect(res.statusCode).toEqual(500);
@@ -71,7 +71,9 @@ describe('/movies routes', () => {
 
   describe('GET /:id', () => {
     it('should return movie object and 200 response on success', async () => {
-      movieData.getById.mockResolvedValue([{ _id: '890', title: 'One Day' }]);
+      movieData.getMovieById.mockResolvedValue([
+        { _id: '890', title: 'One Day' },
+      ]);
       const res = await request(server).get('/movies/890');
 
       expect(res.statusCode).toEqual(200);
@@ -83,7 +85,7 @@ describe('/movies routes', () => {
     });
 
     it('should return an error and 404 response if movie not found', async () => {
-      movieData.getById.mockResolvedValue({
+      movieData.getMovieById.mockResolvedValue({
         error: `We've encountered an error. Please try again later.`,
       });
 
@@ -258,23 +260,27 @@ describe('/movies routes', () => {
 
   describe('DELETE /:id', () => {
     it('should return a message on success', async () => {
-      movieData.deleteById.mockResolvedValue({
-        message: 'Movie successfully deleted.',
-      });
-      const res = await request(server).delete('/movies/890');
+      movieData.deleteById.mockResolvedValue('Movie successfully deleted.');
+      const res = await request(server).delete('/movies/abc123');
       expect(res.status).toEqual(200);
-      expect(res.message).toBeDefined;
+      expect(res.body).toBeDefined;
       expect(res.error).not.toBeDefined;
     });
 
-    it('should return an error message if movie fails to be deleted', async () => {
+    it('should return an error message and 400 response if movie fails to be deleted', async () => {
       movieData.deleteById.mockResolvedValue({
         error: `We've encountered an error. Please try again later.`,
       });
-      const res = await request(server).delete('/movies/890');
+      const res = await request(server).delete('/movies/abc123');
       expect(res.status).toEqual(400);
-      expect(res.message).not.toBeDefined;
+      expect(res.body).toBeDefined;
       expect(res.error).toBeDefined;
+    });
+
+    it('should return a 500 response if server returns null', async () => {
+      movieData.deleteById.mockResolvedValue(null);
+      const res = await request(server).delete('/movies/abc123');
+      expect(res.status).toEqual(500);
     });
   });
 });

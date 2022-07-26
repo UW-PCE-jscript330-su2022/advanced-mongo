@@ -9,7 +9,7 @@ const statusCodes = require('../etc/statusCodes');
 // curl http://localhost:5000/movies
 router.get('/', async (req, res, next) => {
   let resultStatus;
-  let results = await movieData.getAll();
+  let results = await movieData.getAllMovies();
 
   if (results === null) {
     resultStatus = 500;
@@ -43,9 +43,7 @@ router.get('/comments', async (req, res, next) => {
 // curl http://localhost:5000/movies/573a13f6f29313caabde538a/
 router.get('/:id', async (req, res, next) => {
   let resultStatus;
-  const results = await movieData.getById(req.params.id);
-
-  console.log('results =', results);
+  const results = await movieData.getMovieById(req.params.id);
 
   !results.error ? (resultStatus = 200) : (resultStatus = 404);
   res.status(resultStatus).send(results);

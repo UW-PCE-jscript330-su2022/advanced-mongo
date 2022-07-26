@@ -17,7 +17,7 @@ const statusCodes = require('../etc/statusCodes.js');
 module.exports = {};
 
 // GET all movies from movies collection in sample_mflix database
-module.exports.getAll = async () => {
+module.exports.getAllMovies = async () => {
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
 
@@ -47,7 +47,7 @@ module.exports.getAllComments = async () => {
 };
 
 // GET single movie by id from movies collection in sample_mflix database
-module.exports.getById = async (movieId) => {
+module.exports.getMovieById = async (movieId) => {
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
   const query = { _id: ObjectId(movieId) };
@@ -64,7 +64,7 @@ module.exports.getById = async (movieId) => {
 module.exports.getCommentById = async (movieId, commentId) => {
   const database = client.db(databaseName);
   const comments = database.collection(collections.comments);
-  if (!(await module.exports.getById(movieId).error)) {
+  if (!movieExists(movieId).error) {
     const query = { _id: ObjectId(commentId) };
     const result = await comments.findOne(query);
 
@@ -85,11 +85,10 @@ module.exports.getMovieComments = async (movieId) => {
   const database = client.db(databaseName);
   const comments = database.collection(collections.comments);
 
-  if (!(await module.exports.getById(movieId)).error) {
+  if (!movieExists(movieId).error) {
     const query = { movie_id: ObjectId(movieId) };
     const resultCursor = await comments.find(query);
 
-    console.log('cursor:', resultCursor);
     return resultCursor
       ? await resultCursor.toArray()
       : {
@@ -109,23 +108,25 @@ module.exports.getByTitle = async (title) => {
   const query = { title: title };
   let movie = await movies.findOne(query);
 
-  return movie;
+  return movie
+    ? movie
+    : {
+        error: `There was an error retrieving movie data. Please try again later.`,
+      };
 };
 
 module.exports.getByIdOrTitle = async (identifier) => {
   let movie;
 
   if (ObjectId.isValid(identifier)) {
-    movie = module.exports.getById(identifier);
+    movie = module.exports.getMovieById(identifier);
   } else {
     movie = module.exports.getByTitle(identifier);
   }
 
-  if (movie) {
-    return movie;
-  } else {
-    return { error: `No item found with identifier ${identifier}.` };
-  }
+  return movie
+    ? movie
+    : { error: `No item found with identifier ${identifier}.` };
 };
 
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
@@ -140,17 +141,13 @@ module.exports.createMovie = async (newObj) => {
   const result = await movies.insertOne(newObj);
 
   return result.acknowledged
-    ? // ? {
-      //     newObjectId: result.insertedId,
-      //     message: `Item created! ID: ${result.insertedId}`,
-      //   }
-      await module.exports.getById(result.insertedId)
+    ? await module.exports.getMovieById(result.insertedId)
     : { error: 'Something went wrong. Please try again.' };
 };
 
 module.exports.createComment = async (movieId, newCommentObj) => {
   const database = client.db(databaseName);
-  if (!(await module.exports.getById(movieId)).error) {
+  if (!movieExists(movieId).error) {
     const comments = database.collection(collections.comments);
     const result = await comments.insertOne({
       ...newCommentObj,
@@ -172,7 +169,7 @@ module.exports.createComment = async (movieId, newCommentObj) => {
 
 module.exports.deleteComment = async (id, commentId) => {
   //check to see if movie is in database
-  // getById(id)
+  // getMovieById(id)
   //   ?
   //   : res.status(404).
   // //if movie in database, delete comment
@@ -196,13 +193,13 @@ module.exports.updateById = async (movieId, newObj) => {
     };
   }
 
-  const updatedMovie = module.exports.getById(movieId);
+  const updatedMovie = module.exports.getMovieById(movieId);
   return updatedMovie;
 };
 
 module.exports.updateCommentById = async (movieId, commentId, commentText) => {
   const database = client.db(databaseName);
-  if (!(await module.exports.getById(movieId)).error) {
+  if (!movieExists(movieId).error) {
     const comments = database.collection(collections.comments);
 
     let result = await comments.updateOne(
@@ -232,9 +229,13 @@ module.exports.deleteById = async (movieId) => {
 
   if (result.deletedCount != 1) {
     return {
-      error: `Something went wrong. ${result.deletedCount} movies were deleted. Please try again.`,
+      error: `Something went wrong. Please try again.`,
     };
   }
 
-  return { message: `Deleted ${result.deletedCount} movie.` };
+  return `Movie with id of ${movieId} successfully deleted.`;
+};
+
+let movieExists = async (movieId) => {
+  return await module.exports.getMovieById(movieId).error;
 };
