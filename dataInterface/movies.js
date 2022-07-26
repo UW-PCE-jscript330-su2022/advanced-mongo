@@ -25,7 +25,7 @@ module.exports.getAll = async () => {
   let movieCursor = await movies
     .find(query)
     .limit(10)
-    .project({ num_mflix_comments: 1 })
+    //    .project({ num_mflix_comments: 1 })
     .sort({ runtime: -1 });
 
   return !!movieCursor
