@@ -28,6 +28,29 @@ module.exports.getAllComments = async (movieId)=>{
   return commentCursor.toArray()
 }
 
+module.exports.getCommentById = async (commentId) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const query = {_id: ObjectId(commentId)};
+  let comment = await comments.findOne(query);
+
+  return comment;
+}
+
+module.exports.getAComment = async (identifier) => {
+  let comment;
+
+  if(ObjectId.isValid(identifier)){
+    comment = module.exports.getCommentById(identifier);
+  }
+
+  if(comment){
+    return comment;
+  } else {
+    return {error: `No comment found with identifier ${identifier}.`}
+  }
+}
+
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
 module.exports.getById = async (movieId) => {
   const database = client.db(databaseName);

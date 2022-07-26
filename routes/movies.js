@@ -20,6 +20,26 @@ router.get("/", async (req, res, next) => {
 // curl http://localhost:5000/movies/Jurassic%20Park
 router.get("/:id", async (req, res, next) => {
   const result = await movieData.getByIdOrTitle(req.params.id)
+  if(result.error){
+    resultStatus = 404;
+  } else {
+    resultStatus = 200;
+  }
+  res.status(resultStatus).send(result);
+});
+
+// Get all comments for a movie
+
+router.get("/:id/comments", async(req, res) =>{
+  console.log("GET comments for a movie: ", req.params.id)
+  const result = await movieData.getAllComments(req.params.id)
+  res.status(200).send(result)
+})
+
+// Get a single comment
+
+router.get("/:id/comments/:commentId", async (req, res, next) => {
+  const result = await movieData.getAComment(req.params.commentId)
 
   if(result.error){
     resultStatus = 404;
@@ -30,14 +50,6 @@ router.get("/:id", async (req, res, next) => {
   res.status(resultStatus).send(result);
 
 });
-
-// Get all comments for a movie
-
-router.get("/:id/comments", async(req, res) =>{
-  console.log("GET comments for a movie: ", req.params.id)
-  const result = await movieData.getAllComments(req.params.id)
-  res.status(200).send(result)
-})
 
 
 // Create a comments for a movie
