@@ -22,13 +22,9 @@ module.exports.getAllMovies = async () => {
   const movies = database.collection(collections.movies);
 
   const query = {};
-  let movieCursor = await movies
-    .find(query)
-    .limit(10)
-    //    .project({ num_mflix_comments: 1 })
-    .sort({ runtime: -1 });
+  let movieCursor = await movies.find(query).limit(10).sort({ runtime: -1 });
 
-  return !!movieCursor
+  return movieCursor
     ? movieCursor.toArray()
     : {
         error: `We've encountered an error. Please try again later.`,
@@ -62,11 +58,13 @@ module.exports.getMovieById = async (movieId) => {
 
 // retrieve one comment with unique comment id value
 module.exports.getCommentById = async (movieId, commentId) => {
-  const database = client.db(databaseName);
-  const comments = database.collection(collections.comments);
   if (!movieExists(movieId).error) {
+    const database = client.db(databaseName);
+    const comments = database.collection(collections.comments);
     const query = { _id: ObjectId(commentId) };
     const result = await comments.findOne(query);
+
+    console.log('result = ', result);
 
     return result
       ? result
@@ -82,10 +80,10 @@ module.exports.getCommentById = async (movieId, commentId) => {
 
 // retrieve all comments for a single movie
 module.exports.getMovieComments = async (movieId) => {
-  const database = client.db(databaseName);
-  const comments = database.collection(collections.comments);
-
   if (!movieExists(movieId).error) {
+    const database = client.db(databaseName);
+    const comments = database.collection(collections.comments);
+
     const query = { movie_id: ObjectId(movieId) };
     const resultCursor = await comments.find(query);
 
@@ -148,8 +146,8 @@ module.exports.createMovie = async (newObj) => {
 
 // add new comment to database
 module.exports.createComment = async (movieId, newCommentObj) => {
-  const database = client.db(databaseName);
   if (!movieExists(movieId).error) {
+    const database = client.db(databaseName);
     const comments = database.collection(collections.comments);
     const result = await comments.insertOne({
       ...newCommentObj,
@@ -192,8 +190,8 @@ module.exports.updateById = async (movieId, newObj) => {
 
 // update a comment by comment id value
 module.exports.updateCommentById = async (movieId, commentId, commentText) => {
-  const database = client.db(databaseName);
   if (!movieExists(movieId).error) {
+    const database = client.db(databaseName);
     const comments = database.collection(collections.comments);
 
     let result = await comments.updateOne(

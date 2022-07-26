@@ -9,17 +9,17 @@ const statusCodes = require('../etc/statusCodes');
 // curl http://localhost:5000/movies
 router.get('/', async (req, res, next) => {
   let resultStatus;
-  let results = await movieData.getAllMovies();
+  let result = await movieData.getAllMovies();
 
-  if (results === null) {
+  if (result === null) {
     resultStatus = 500;
-  } else if (results.error) {
+  } else if (result.error) {
     resultStatus = 400;
   } else {
     resultStatus = 200;
   }
 
-  res.status(resultStatus).send(results);
+  res.status(resultStatus).send(result);
 });
 
 // Route to retrieve (GET) all comments for all movies
@@ -43,18 +43,18 @@ router.get('/comments', async (req, res, next) => {
 // curl http://localhost:5000/movies/573a13f6f29313caabde538a/
 router.get('/:id', async (req, res, next) => {
   let resultStatus;
-  const results = await movieData.getMovieById(req.params.id);
+  const result = await movieData.getMovieById(req.params.id);
 
-  !results.error ? (resultStatus = 200) : (resultStatus = 404);
-  res.status(resultStatus).send(results);
+  !result.error ? (resultStatus = 200) : (resultStatus = 404);
+  res.status(resultStatus).send(result);
 });
 
 // Route to retrieve (GET) a single comment for a specified movie
 // curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments/5a9427648b0beebeb69579e7/
-router.get('/:id/comments/:commentId', async (req, res, next) => {
+router.get('/:movieId/comments/:commentId', async (req, res, next) => {
   let resultStatus;
   const result = await movieData.getCommentById(
-    req.params.id,
+    req.params.movieId,
     req.params.commentId
   );
 
@@ -66,7 +66,7 @@ router.get('/:id/comments/:commentId', async (req, res, next) => {
     resultStatus = 200;
   }
 
-  res.status(result.status).send(result.results);
+  res.status(resultStatus).send(result);
 });
 
 // Route to retrieve (GET) all comments for a single movie
@@ -89,17 +89,17 @@ router.get('/:id/comments', async (req, res, next) => {
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
 router.post('/', async (req, res, next) => {
   let statusCode;
-  let results = await movieData.createMovie(req.body);
+  let result = await movieData.createMovie(req.body);
 
-  if (results === null) {
+  if (result === null) {
     statusCode = 500;
-  } else if (results.error) {
+  } else if (result.error) {
     statusCode = 400;
   } else {
     statusCode = 200;
   }
 
-  res.status(statusCode).send(results);
+  res.status(statusCode).send(result);
 });
 
 // Route to insert (POST) a new comment for a specific movie
