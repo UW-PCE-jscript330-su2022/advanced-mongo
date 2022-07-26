@@ -66,7 +66,6 @@ router.get("/:id/comments/:commentId", async (req, res, next) => {
 
 });
 
-
 // Create a comments for a movie
 
 router.post("/:id/comments", async(req, res) =>{
@@ -74,8 +73,6 @@ router.post("/:id/comments", async(req, res) =>{
   const result = await movieData.createComment(req.params.id, req.body)
   res.status(200).send(result)
 })
-
-
 
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
 router.post("/", async (req, res, next) => {
