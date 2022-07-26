@@ -53,32 +53,53 @@ describe("/movies routes", () => {
       expect(res.statusCode).toEqual(200);
       expect(Object.entries(res.body)).toBeDefined();
     });
-    it("should return an error message if body is missing title", async () => {
-      //expect 400 status code
-      expect(false).toEqual(true);
-    });
-    // Since we're testing the router, we should write tests that don't depend on/reference mongodb.
-    it("should return an error message if movie fails to be created", async () => {
-      //expect 400 status code
-      expect(false).toEqual(true);
+    it("should return an error code on error", async () => {
+      movieData.createComment.mockResolvedValue(null);
+      const res = await request(server).get('/movies/573a1390f29313caabcd432/comments');
+      expect(res.statusCode).toEqual(404);
+      expect(Object.entries(res.body)).toBeDefined();
     });
   });
 
   describe("PUT /:id", () =>{
-    it("should return the updated movie on success", async () => {
-      expect(false).toEqual(true);
+    it("should return a message on success", async () => {
+      movieData.updateById.mockResolvedValue("Placeholder text");
+      const res = await request(server).get('/movies/573a1391f29313caabcd80db/comments/5a9427648b0beebeb6957b6e');
+      expect(res.statusCode).toEqual(200);
+      expect(Object.entries(res.body)).toBeDefined();
     });
-    it("should return an error message if movie failes to be updated", async () => {
-      expect(false).toEqual(true);
+    it("should return an error code on movieId error", async () => {
+      movieData.updateById.mockResolvedValue("Placeholder text");
+      const res = await request(server).get('/movies/573a1391f29313caabcd80d/comments/5a9427648b0beebeb6957b6e');
+      expect(res.statusCode).toEqual(404);
+      expect(Object.entries(res.body)).toBeDefined();
+    });
+    it("should return an error code on commentId error", async () => {
+      movieData.updateById.mockResolvedValue("Placeholder text");
+      const res = await request(server).get('/movies/573a1391f29313caabcd80db/comments/5a9427648b0beebeb6957b6');
+      expect(res.statusCode).toEqual(404);
+      expect(Object.entries(res.body)).toBeDefined();
     });
   });
 
   describe("DELETE /:id", () =>{
     it("should return a message on success", async () => {
-      expect(false).toEqual(true);
+      movieData.deleteCommentById.mockResolvedValue("Placeholder text");
+      const res = await request(server).get('/movies/573a1391f29313caabcd80db/comments/5a9427648b0beebeb6957b6e');
+      expect(res.statusCode).toEqual(200);
+      expect(Object.entries(res.body)).toBeDefined();
     });
-    it("should return an error message if movie failes to be deleted", async () => {
-      expect(false).toEqual(true);
+    it("should return an error code on movieId error", async () => {
+      movieData.deleteCommentById.mockResolvedValue("Placeholder text");
+      const res = await request(server).get('/movies/573a1391f29313caabcd80d/comments/5a9427648b0beebeb6957b6e');
+      expect(res.statusCode).toEqual(404);
+      expect(Object.entries(res.body)).toBeDefined();
+    });
+    it("should return an error code on commentId error", async () => {
+      movieData.deleteCommentById.mockResolvedValue("Placeholder text");
+      const res = await request(server).get('/movies/573a1391f29313caabcd80db/comments/5a9427648b0beebeb6957b6');
+      expect(res.statusCode).toEqual(404);
+      expect(Object.entries(res.body)).toBeDefined();
     });
   });
 });
