@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
 
 //GET ALL COMMENTS FOR A MOVIE
 // curl -sS http://localhost:5001/movies/573a1393f29313caabcdbe7c/comments
-// curl -sS http://localhost:5001/movies/573a1390f29313caabcd446f/comments
+// curl -sS http://localhost:5001/movies/573a1391f29313caabcd9688/comments
 
 router.get("/:id/comments", async(req, res) => {
   const result = await movieData.getAllComments(req.params.id)
@@ -53,12 +53,12 @@ console.log(result);
 
 
 // FIND A SINGLE COMMENT FOR A MOVIE
-// curl -sS http://localhost:5001/movies/573a1390f29313caabcd4323/comments/5a9427648b0beebeb69579e7
+// curl -sS http://localhost:5001/movies/573a1391f29313caabcd9688/comments/62e06c3541ffffda9a4b4ea6
 
 router.get("/:movieId/comments/:commentId", async (req, res, next) => {
   const result = await movieData.getOneComment(req.params.commentId)
   if(result.error){
-    resultStatus = 404;
+    resultStatus = 500;
   } else {
     resultStatus = 200;
   }
@@ -84,15 +84,16 @@ router.post("/", async (req, res, next) => {
 });
 
 //CREATE A NEW COMMENT
-// curl -sS -X POST -H "Content-Type: application/json" -d '{"name":"Cinephile Cyprus", "text":"Wow!"}' http://localhost:5001/movies/573a1390f29313caabcd446f/comments
+// curl -sS -X POST -H "Content-Type: application/json" -d '{"name":"Cinephile Cyprus", "text":"Wow!"}' http://localhost:5001/movies/573a1391f29313caabcd9688/comments
 // created 62dc5a9181fc490e55e22f45; 62dc741fcd7ef831caf9aa98
 router.post("/:id/comments", async(req, res) => {
   const result = await movieData.createComment(req.params.id, req.body)
   if(result){
     res.status(200).send(result);
-  } else {
-    resultStatus = 400;
-  }
+  } 
+  // else {
+  //   resultStatus = 400;
+  // }
   
   
 })
@@ -116,15 +117,15 @@ router.put("/:id", async (req, res, next) => {
 
 // UPDATE A COMMENT TEXT
 // curl -sS http://localhost:5001/movies/573a1390f29313caabcd446f/comments
-// curl -sS -X PUT -H "Content-Type: application/json" -d '{"text":"My favorite movie!"}' http://localhost:5001/movies/573a1390f29313caabcd446f/comments/62dc5a9181fc490e55e22f45
+// curl -sS -X PUT -H "Content-Type: application/json" -d '{"text":"Not favorite movie!"}' http://localhost:5001/movies/573a1391f29313caabcd9688/comments/5a9427648b0beebeb6957d04
 router.put("/:movieId/comments/:commentId", async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateCommentById(req.params.commentId, req.body)
 
-  if(result.error){
-    resultStatus = 400;
-  } else {
+  if(result){
     resultStatus = 200;
+  } else {
+    resultStatus = 400;
   }
 
   res.status(resultStatus).send(result);
@@ -147,7 +148,7 @@ router.delete("/:id", async (req, res, next) => {
 
 // DELETE A MOVIE COMMENT
 // curl -sS http://localhost:5001/movies/573a1390f29313caabcd446f/comments
-// curl -sS -X DELETE http://localhost:5001/movies/573a1390f29313caabcd446f/comments/62dc5a9181fc490e55e22f45
+// curl -sS -X DELETE http://localhost:5001/movies/573a1391f29313caabcd9688/comments/62e06c3541ffffda9a4b4ea6
 router.delete("/:movieId/comments/:commentId", async(req, res)=>{
   const result = await movieData.deleteCommentById(req.params.commentId)
   if(result.error){
@@ -155,7 +156,7 @@ router.delete("/:movieId/comments/:commentId", async(req, res)=>{
   } else {
     resultStatus = 200;
   }
-
+  console.log(resultStatus);
   res.status(resultStatus).send(result);
 
 })
