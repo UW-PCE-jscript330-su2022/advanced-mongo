@@ -132,7 +132,7 @@ module.exports.updateById = async (movieId, newObj) => {
 
   if(result.modifiedCount != 1){
     return {error: `Something went wrong. ${result.modifiedCount} movies were updated. Please try again.`}
-  };
+  }
 
   const updatedMovie = module.exports.getById(movieId);
   return updatedMovie;

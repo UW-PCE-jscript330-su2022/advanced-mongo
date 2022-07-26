@@ -95,6 +95,12 @@ router.put("/:id", async (req, res, next) => {
     resultStatus = 200;
   }
 
+  // if(result){
+  //   resultStatus = 200;
+  // } else {
+  //   resultStatus = 404;
+  // }
+
   res.status(resultStatus).send(result);
 });
 

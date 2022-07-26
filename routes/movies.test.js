@@ -77,12 +77,15 @@ describe("/movies routes", () => {
 
   describe("PUT /:id", () =>{
     it("should return the updated movie on success", async () => {
-      expect(false).toEqual(true);
+      movieData.updateById.mockResolvedValue({"_id": "62df8cfe33d248a8ed01b9dc", "title": "Trip to the Moon IVi", "plot": null})
+      const res = await request(server).put("/movies/62df8cfe33d248a8ed01b9dc")
+      expect(res.statusCode).toEqual(200);
       // check status code 200
     });
     it("should return an error if movie fails to be updated", async () => {
-      expect(false).toEqual(true);
-      // check status code 400
+      movieData.updateById.mockResolvedValue({error: `Something went wrong. 0 movies were updated. Please try again.`})
+      const res = await request(server).put("/movies/62df8cfe33d248a8ed01b9dc")
+      expect(res.statusCode).toEqual(400);
     });
 
   });
