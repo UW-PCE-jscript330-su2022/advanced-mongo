@@ -15,10 +15,8 @@ module.exports = {}
 module.exports.getAll = async () => {
   const database = client.db(databaseName);
   const movies = database.collection(collName);
-
   const query = {};
   let movieCursor = await movies.find(query).limit(10).project({title: 1}).sort({runtime: -1});
-
   return movieCursor.toArray();
 }
 
@@ -118,7 +116,15 @@ module.exports.updateById = async (movieId, newObj) => {
 }
 
 module.exports.deleteCommentById = async (commentId)=>{
-  return {}
+  const database = client.db(databaseName)
+  const comments = database.collection(commCollName)
+  const deletionRules = {_id:ObjectId(commentId)}
+  const result = await comments.deleteOne(deletionRules)
+  if(result.deletedCount !==1){
+    return {error: `Something went wrong. ${result.deletedCount} comments were deleted. Please try again`}
+  }
+
+  return {message: `Deleted ${result.deletedCount} comment.`}
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
