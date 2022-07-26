@@ -89,7 +89,7 @@ router.put("/:movieId/comments/:commentId", async (req, res) => {
   const result = await movieData.updateComment(req.params.commentId, req.body)
 
   if(result.error){
-    resultStatus = 400;
+    resultStatus = 404;
   } else {
     resultStatus = 200;
   }
