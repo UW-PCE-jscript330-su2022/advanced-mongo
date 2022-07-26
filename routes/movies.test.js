@@ -37,37 +37,41 @@ describe("/movies routes", () => {
 
   describe("GET /:id", () =>{
     it("should return a single movie on success", async () => {
-      expect(false).toEqual(true);
-      // check status code === 200
-
+      movieData.getByIdOrTitle.mockResolvedValue([{_id:"573a1397f29313caabce8896", title: "One Day"}])
+      const res = await request(server).get("/movies/573a1397f29313caabce8896")
+      expect(res.statusCode).toEqual(200)
     });
 
     it("should return a 404 if an error is found", async () => {
-      expect(false).toEqual(true);
-      // check status code === 200
+      movieData.getByIdOrTitle.mockResolvedValue(null)
+      const res = await request(server).get("/movies/573a1397f29313caabce69db")
+      expect(res.statusCode).toEqual(404)
 
     });
-
-    // check status code === 404
-    //
   });
 
   describe("POST /", () =>{
     it("should return the new movie on success", async () => {
-      expect(false).toEqual(true);
-      // check status code 200
+
+      movieData.create.mockResolvedValue({"newObjectId": "62df873237daba30cdf2602e", "message": "Item created! ID: 62df873237daba30cdf2602e"})
+      const res = await request(server).post("/movies")
+      expect(res.statusCode).toEqual(200);
+
     });
 
     it("should return an error message if body is missing title", async () => {
-      expect(false).toEqual(true);
+      movieData.create.mockResolvedValue({error: "Movies must have a title."})
+      const res = await request(server).post("/movies")
+      expect(res.statusCode).toEqual(400);
       // check status code 400
     });
 
     it("should return an error message if movie fails to be created", async () => {
-      expect(false).toEqual(true);
-      // check status code 400
-    });
+      movieData.create.mockResolvedValue({error: "Something went wrong. Please try again."})
+      const res = await request(server).post("/movies")
+      expect(res.body.error).toBeDefined()
 
+    });
 
   });
 
@@ -85,14 +89,16 @@ describe("/movies routes", () => {
 
   describe("DELETE /:id", () =>{
     it("should return a message on success", async () => {
-      expect(false).toEqual(true);
+      movieData.deleteById.mockResolvedValue({message: `Deleted 1 movie.`})
+      const res = await request(server).delete("/movies/573a1397f29313caabce8896")
+      expect(res.statusCode).toEqual(200);
       // check status code 200
     });
     it("should return an error message if movie fails to be deleted", async () => {
-      expect(false).toEqual(true);
-      // check status code 400
+      movieData.deleteById.mockResolvedValue({error: `Something went wrong. 0 movies were deleted. Please try again.`})
+      const res = await request(server).delete("/movies/573a1397f29313caabce8896")
+      expect(res.statusCode).toEqual(400);
     });
-
 
   });
 });

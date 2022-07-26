@@ -20,12 +20,20 @@ router.get("/", async (req, res, next) => {
 // curl http://localhost:5000/movies/Jurassic%20Park
 router.get("/:id", async (req, res, next) => {
   const result = await movieData.getByIdOrTitle(req.params.id)
-  if(result.error){
-    resultStatus = 404;
-  } else {
+  // if(result.error){
+  //   resultStatus = 404;
+  // } else {
+  //   resultStatus = 200;
+  // }
+  // res.status(resultStatus).send(result);
+  if(result){
     resultStatus = 200;
+  } else {
+    resultStatus = 404;
   }
   res.status(resultStatus).send(result);
+
+
 });
 
 // Get all comments for a movie

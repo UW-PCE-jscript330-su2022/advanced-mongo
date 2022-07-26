@@ -87,7 +87,7 @@ module.exports.getByIdOrTitle = async (identifier) => {
 }
 
 module.exports.createComment = async (movieId, newObj) =>{
-  // TODO:
+
   const database = client.db(databaseName);
   const comments = database.collection(commCollName);
   const goodObj = {...newObj, movie_id: ObjectId(movieId), date: new Date() }
