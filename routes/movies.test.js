@@ -95,6 +95,38 @@ describe('/movies routes', () => {
     });
   });
 
+  describe('/genres/:genreName', () => {
+    it('should return an array of movies and 200 response on success', async () => {
+      movieData.getMoviesByGenre.mockResolvedValue([
+        {
+          _id: 'abc123',
+          genres: ['Short', 'Drama', 'Fantasy'],
+          title: 'Test movie',
+        },
+      ]);
+      const res = await request(server).get('/movies/genres/Short');
+      expect(res.statusCode).toEqual(200);
+      expect(Array.isArray(res.body)).toEqual(true);
+      expect(res.body[0]._id).toBeDefined;
+      expect(res.body[0].genres).toBeDefined;
+      expect(res.body[0].title).toBeDefined;
+    });
+
+    it('should return an error and a 400 response if no movies match genre', async () => {
+      movieData.getMoviesByGenre.mockResolvedValue([]);
+      const res = await request(server).get('/movies/genres/Short');
+      expect(res.statusCode).toEqual(400);
+      expect(res.body).toBeDefined;
+    });
+
+    it('should return a 500 response if server returns null', async () => {
+      movieData.getMoviesByGenre.mockResolvedValue(null);
+      const res = await request(server).get('/movies/genres/Short');
+      expect(res.statusCode).toEqual(500);
+      expect(res.body).not.toBeDefined;
+    });
+  });
+
   describe('GET /:id/comments', () => {
     it('should return array of movie comments and 200 response on success (possibly empty)', async () => {
       movieData.getMovieComments.mockResolvedValue([

@@ -91,8 +91,10 @@ module.exports.getMoviesByGenre = async (genreName) => {
     .limit(10)
     .project({ title: 1, genres: 1 });
 
-  return movieCursor.toArray()
-    ? movieCursor.toArray()
+  const result = await movieCursor.toArray();
+
+  return result.length > 0
+    ? result
     : {
         error: `There was an error retrieving movie data. Please try again later.`,
       };
