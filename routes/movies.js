@@ -1,42 +1,107 @@
-const { Router } = require("express");
+const { Router } = require('express');
 const router = Router();
 
 const movieData = require('../dataInterface/movies');
 
+const statusCodes = require('../etc/statusCodes');
+
+// Route to retrieve (GET) all movies from database
 // curl http://localhost:5000/movies
-router.get("/", async (req, res, next) => {
-  let movieList = await movieData.getAll()
+router.get('/', async (req, res, next) => {
+  let resultStatus;
+  let results = await movieData.getAll();
 
-  if(movieList){
-    res.status(200).send(movieList)
-  } else {
-    // If movieList is empty/null, something serious is wrong with the MongoDB connection.
-    res.status(500).send({error: "Something went wrong. Please try again."})
-  }
-});
-
-// This route handles either id or title as an identifier.
-// curl http://localhost:5000/movies/573a1390f29313caabcd4135
-// curl http://localhost:5000/movies/Jurassic%20Park
-router.get("/:id", async (req, res, next) => {
-  const result = await movieData.getByIdOrTitle(req.params.id)
-
-  if(result.error){
-    resultStatus = 404;
+  if (results === null) {
+    resultStatus = 500;
+  } else if (results.error) {
+    resultStatus = 400;
   } else {
     resultStatus = 200;
   }
 
-  res.status(resultStatus).send(result);
-
+  res.status(resultStatus).send(results);
 });
 
+// Route to retrieve (GET) all comments for all movies
+// curl http://localhost:5000/movies/comments
+router.get('/comments', async (req, res, next) => {
+  const results = await movieData.getAllComments();
+
+  res.status(200).send(results);
+});
+
+// Route to retrieve (GET) a single movie
+// curl http://localhost:5000/movies/573a13f6f29313caabde538a/
+router.get('/:id', async (req, res, next) => {
+  let resultStatus;
+  const results = await movieData.getById(req.params.id);
+
+  console.log('results =', results);
+
+  !results.error ? (resultStatus = 200) : (resultStatus = 404);
+  res.status(resultStatus).send(results);
+});
+
+// Route to retrieve (GET) a single comment for a specified movie
+// curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments/5a9427648b0beebeb69579e7/
+router.get('/:id/comments/:commentId', async (req, res, next) => {
+  const results = await movieData.getCommentById(
+    req.params.id,
+    req.params.commentId
+  );
+
+  console.log('results =', results);
+
+  res.status(results.status).send(results.results);
+});
+
+// Route to retrieve (GET) all comments for a single movie
+// curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments
+router.get('/:id/comments', async (req, res, next) => {
+  const results = await movieData.getMovieComments(req.params.id);
+  res.status(results.status).send(results.results);
+});
+
+// Route to remove (DELETE) a single comment
+router.delete('/:id/comments/:commentId', async (req, res) => {
+  const result = await movieData.deleteComment(
+    req.params.id,
+    req.params.commentId
+  );
+  res.status(200).send(result);
+});
+
+// Route to create (POST) a single movie
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
-router.post("/", async (req, res, next) => {
-  let resultStatus;
-  let result = await movieData.create(req.body);
+router.post('/', async (req, res, next) => {
+  let statusCode;
+  let results = await movieData.create(req.body);
 
-  if(result.error){
+  if (results === null) {
+    statusCode = 500;
+  } else if (results.error) {
+    statusCode = 400;
+  } else {
+    statusCode = 200;
+  }
+
+  res.status(statusCode).send(results);
+});
+
+// Route to insert (POST) a new comment for a specific movie
+// curl -X POST -H "Content-Type: application/json" -d '{"name": "Max Power", "email": "max@power.co", "text": "Love this post! Amazing! Lorem ipsum yabba dabba do."}' http://localhost:5000/movies/573a1390f29313caabcd4323/comments
+router.post('/:id/comments', async (req, res, next) => {
+  let result = await movieData.createComment(req.params.id, req.body);
+  res.status(result.status).send(result.message);
+});
+
+// Route to update (PUT) a single movie
+// curl -X PUT -H "Content-Type: application/json" -d '{"plot": "Sharks..."}' http://localhost:5000/movies/573a13a3f29313caabd0e77b
+router.put('/:id', async (req, res, next) => {
+  let resultStatus;
+  const result = await movieData.updateById(req.params.id, req.body);
+
+  if (result.error) {
     resultStatus = 400;
   } else {
     resultStatus = 200;
@@ -45,25 +110,26 @@ router.post("/", async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
-// curl -X PUT -H "Content-Type: application/json" -d '{"plot":"Sharks..."}' http://localhost:5000/movies/573a13a3f29313caabd0e77b
-router.put("/:id", async (req, res, next) => {
-  let resultStatus;
-  const result = await movieData.updateById(req.params.id, req.body)
+// Route to update (PUT) a single movie comment based on provided movie id
+// curl -X PUT -H "Content-Type: application/json" -d '{"text": "This is an updated comment string"}' http://localhost:5000/movies/573a1390f29313caabcd4323/comments/62db05b2aa368c8697f4ca86
+router.put('/:movieId/comments/:commentId', async (req, res, next) => {
+  const result = await movieData.updateCommentById(
+    req.params.movieId,
+    req.params.commentId,
+    req.body
+  );
 
-  if(result.error){
-    resultStatus = 400;
-  } else {
-    resultStatus = 200;
-  }
-
-  res.status(resultStatus).send(result);
+  !result.error
+    ? res.status(200).send(result.message)
+    : res.status(400).send(result.error);
 });
 
+// Route to remove (DELETE) a single movie
 // curl -X DELETE http://localhost:5000/movies/573a1390f29313caabcd4135
-router.delete("/:id", async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   const result = await movieData.deleteById(req.params.id);
 
-  if(result.error){
+  if (result.error) {
     resultStatus = 400;
   } else {
     resultStatus = 200;
