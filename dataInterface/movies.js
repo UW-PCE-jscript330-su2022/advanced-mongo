@@ -16,7 +16,7 @@ const statusCodes = require('../etc/statusCodes.js');
 
 module.exports = {};
 
-// GET all movies from movies collection in sample_mflix database
+// retrieve all movies from database
 module.exports.getAllMovies = async () => {
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
@@ -35,7 +35,7 @@ module.exports.getAllMovies = async () => {
       };
 };
 
-// GET all movie comments from comments collection in sample_mflix database
+// retrieve all movie comments from database
 module.exports.getAllComments = async () => {
   const database = client.db(databaseName);
   const comments = database.collection(collections.comments); // notice connecting to comments collection
@@ -46,7 +46,7 @@ module.exports.getAllComments = async () => {
   return movieCursor.toArray();
 };
 
-// GET single movie by id from movies collection in sample_mflix database
+// retrieve single movie by id from database
 module.exports.getMovieById = async (movieId) => {
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
@@ -60,7 +60,7 @@ module.exports.getMovieById = async (movieId) => {
       };
 };
 
-// GET one comment with comment id
+// retrieve one comment with unique comment id value
 module.exports.getCommentById = async (movieId, commentId) => {
   const database = client.db(databaseName);
   const comments = database.collection(collections.comments);
@@ -80,7 +80,7 @@ module.exports.getCommentById = async (movieId, commentId) => {
   }
 };
 
-// GET all comments for a single movie comments collection in sample_mflix database
+// retrieve all comments for a single movie
 module.exports.getMovieComments = async (movieId) => {
   const database = client.db(databaseName);
   const comments = database.collection(collections.comments);
@@ -101,7 +101,7 @@ module.exports.getMovieComments = async (movieId) => {
   }
 };
 
-// GET single movie by title string from movies collection in sample_mflix database
+// retrieve single movie by title
 module.exports.getByTitle = async (title) => {
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
@@ -115,6 +115,7 @@ module.exports.getByTitle = async (title) => {
       };
 };
 
+// retrieve movies by id or title
 module.exports.getByIdOrTitle = async (identifier) => {
   let movie;
 
@@ -129,7 +130,7 @@ module.exports.getByIdOrTitle = async (identifier) => {
     : { error: `No item found with identifier ${identifier}.` };
 };
 
-// https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
+// add new movie to database
 module.exports.createMovie = async (newObj) => {
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
@@ -145,6 +146,7 @@ module.exports.createMovie = async (newObj) => {
     : { error: 'Something went wrong. Please try again.' };
 };
 
+// add new comment to database
 module.exports.createComment = async (movieId, newCommentObj) => {
   const database = client.db(databaseName);
   if (!movieExists(movieId).error) {
@@ -167,7 +169,7 @@ module.exports.createComment = async (movieId, newCommentObj) => {
   }
 };
 
-// https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/change-a-document/
+// update a movie by movie id value
 module.exports.updateById = async (movieId, newObj) => {
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
@@ -188,6 +190,7 @@ module.exports.updateById = async (movieId, newObj) => {
   return updatedMovie;
 };
 
+// update a comment by comment id value
 module.exports.updateCommentById = async (movieId, commentId, commentText) => {
   const database = client.db(databaseName);
   if (!movieExists(movieId).error) {
@@ -210,7 +213,7 @@ module.exports.updateCommentById = async (movieId, commentId, commentText) => {
   }
 };
 
-// https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
+// delete a movie by movie id value
 module.exports.deleteMovieById = async (movieId) => {
   if (!movieExists(movieId).error) {
     const database = client.db(databaseName);
@@ -233,6 +236,7 @@ module.exports.deleteMovieById = async (movieId) => {
   }
 };
 
+// delete a comment by comment id value
 module.exports.deleteCommentById = async (movieId, commentId) => {
   if (!movieExists(movieId).error) {
     const database = client.db(databaseName);
