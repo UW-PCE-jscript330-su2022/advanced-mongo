@@ -5,9 +5,9 @@ const uri =
   "mongodb+srv://candy-dev:nIcjQAp7LPdpzDhm@cluster0.xaqhzyx.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri);
-
 const databaseName = 'sample_mflix';
 const collName = 'movies'
+const commCollName = 'comments'
 
 module.exports = {}
 
@@ -20,6 +20,14 @@ module.exports.getAll = async () => {
   let movieCursor = await movies.find(query).limit(10).project({title: 1}).sort({runtime: -1});
 
   return movieCursor.toArray();
+}
+
+module.exports.getAllComments = async (movieId)=>{
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const query = { movie_id: ObjectId(movieId)}
+  let commentCursor = await  comments.find(query)
+  return commentCursor.toArray()
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
@@ -55,6 +63,20 @@ module.exports.getByIdOrTitle = async (identifier) => {
   } else {
     return {error: `No item found with identifier ${identifier}.`}
   }
+}
+
+module.exports.createComment = async (movieId, newObj) =>{
+  // TODO:
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const goodObj = {...newObj, movie_id: ObjectId(movieId), date: new Date() }
+  const result = await comments.insertOne(goodObj)
+  if(result.acknowledged){
+    return { newObjectId: result.insertedId, message: `Comment created! ID: ${result.insertedId}` }
+  } else {
+    return {error: "Something went wrong. Please try again."}
+  }
+
 }
 
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
@@ -93,6 +115,10 @@ module.exports.updateById = async (movieId, newObj) => {
 
   const updatedMovie = module.exports.getById(movieId);
   return updatedMovie;
+}
+
+module.exports.deleteCommentById = async (commentId)=>{
+  return {}
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/

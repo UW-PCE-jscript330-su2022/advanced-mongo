@@ -31,6 +31,25 @@ router.get("/:id", async (req, res, next) => {
 
 });
 
+// Get all comments for a movie
+
+router.get("/:id/comments", async(req, res) =>{
+  console.log("GET comments for a movie: ", req.params.id)
+  const result = await movieData.getAllComments(req.params.id)
+  res.status(200).send(result)
+})
+
+
+// Create a comments for a movie
+
+router.post("/:id/comments", async(req, res) =>{
+  console.log("CREATE a comment for a movie: ", req.params.id)
+  const result = await movieData.createComment(req.params.id, req.body)
+  res.status(200).send(result)
+})
+
+
+
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
 router.post("/", async (req, res, next) => {
   let resultStatus;
@@ -58,6 +77,15 @@ router.put("/:id", async (req, res, next) => {
 
   res.status(resultStatus).send(result);
 });
+
+// Comment a comments for a movie
+
+router.delete("/:movieId/comments/:commentId", async(req, res) =>{
+  console.log("Delete a comment for a movie: ", req.params.commentId)
+  const result = await movieData.deleteCommentById(req.params.commentId)
+
+  res.status(200).send(result)
+})
 
 // curl -X DELETE http://localhost:5000/movies/573a1390f29313caabcd4135
 router.delete("/:id", async (req, res, next) => {
