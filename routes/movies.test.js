@@ -132,8 +132,28 @@ describe("/movies routes", () => {
     });
   });
 
+  describe("GET /:id/comments/:commentId", () =>{
+    it("should return a single comment on success", async () => {
+      movieData.getAComment.mockResolvedValue([{
+        "_id": "62df745922ea6d641e865785",
+        "post": "Trip to the Moon Forever Sucks third Comment",
+        "movie_id": "573a1397f29313caabce8896",
+        "date": "2022-07-26T04:58:01.072Z"
+      }])
+      const res = await request(server).get("/movies/573a1397f29313caabce8896/comments/000")
+      expect(res.statusCode).toEqual(200)
+    });
+
+    it("should return a 404 if an error is found", async () => {
+      movieData.getAComment.mockResolvedValue({error: `No comment found with identifier 0.`})
+      const res = await request(server).get("/movies/573a1397f29313caabce69db/comments/000")
+      expect(res.statusCode).toEqual(404)
+
+    });
+  });
+
   describe("POST /:id/comments", () =>{
-    it("should return the new movie on success", async () => {
+    it("should return the new comment on success", async () => {
 
       movieData.createComment.mockResolvedValue({
         "newObjectId": "62df93c1f497479798d1af37",
