@@ -85,15 +85,6 @@ router.get('/:id/comments', async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
-// Route to remove (DELETE) a single comment
-router.delete('/:id/comments/:commentId', async (req, res) => {
-  const result = await movieData.deleteComment(
-    req.params.id,
-    req.params.commentId
-  );
-  res.status(200).send(result);
-});
-
 // Route to create (POST) a single movie
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
 router.post('/', async (req, res, next) => {
@@ -167,9 +158,27 @@ router.put('/:movieId/comments/:commentId', async (req, res, next) => {
 });
 
 // Route to remove (DELETE) a single movie
-// curl -X DELETE http://localhost:5000/movies/573a1390f29313caabcd4135
-router.delete('/:id', async (req, res, next) => {
-  const result = await movieData.deleteById(req.params.id);
+// curl -X DELETE http://localhost:5000/movies/comments/62e04078667032e87b3e5834
+router.delete('/:movieId', async (req, res, next) => {
+  const result = await movieData.deleteMovieById(req.params.movieId);
+
+  if (result === null) {
+    resultStatus = 500;
+  } else if (result.error) {
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
+});
+
+// Route to remove (DELETE) a single comment
+router.delete('/:movieId/comments/:commentId', async (req, res) => {
+  const result = await movieData.deleteCommentById(
+    req.params.movieId,
+    req.params.commentId
+  );
 
   if (result === null) {
     resultStatus = 500;

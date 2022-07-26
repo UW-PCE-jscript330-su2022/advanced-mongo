@@ -167,15 +167,6 @@ module.exports.createComment = async (movieId, newCommentObj) => {
   }
 };
 
-module.exports.deleteComment = async (id, commentId) => {
-  //check to see if movie is in database
-  // getMovieById(id)
-  //   ?
-  //   : res.status(404).
-  // //if movie in database, delete comment
-  return {};
-};
-
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/change-a-document/
 module.exports.updateById = async (movieId, newObj) => {
   const database = client.db(databaseName);
@@ -220,22 +211,49 @@ module.exports.updateCommentById = async (movieId, commentId, commentText) => {
 };
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
-module.exports.deleteById = async (movieId) => {
-  const database = client.db(databaseName);
-  const movies = database.collection(collections.movies);
+module.exports.deleteMovieById = async (movieId) => {
+  if (!movieExists(movieId).error) {
+    const database = client.db(databaseName);
+    const movies = database.collection(collections.movies);
 
-  const deletionRules = { _id: ObjectId(movieId) };
-  const result = await movies.deleteOne(deletionRules);
+    const deletionRules = { _id: ObjectId(movieId) };
+    const result = await movies.deleteOne(deletionRules);
 
-  if (result.deletedCount != 1) {
+    if (result.deletedCount != 1) {
+      return {
+        error: `Something went wrong. Please try again.`,
+      };
+    }
+
+    return `Movie with id of ${movieId} successfully deleted.`;
+  } else {
     return {
-      error: `Something went wrong. Please try again.`,
+      error: `There was an error retrieving movie data. Please try again later.`,
     };
   }
-
-  return `Movie with id of ${movieId} successfully deleted.`;
 };
 
+module.exports.deleteCommentById = async (movieId, commentId) => {
+  if (!movieExists(movieId).error) {
+    const database = client.db(databaseName);
+    const comments = database.collection(collections.comments);
+
+    const deletionRules = { _id: ObjectId(commentId) };
+    const result = await comments.deleteOne(deletionRules);
+
+    return result.deletedCount === 1
+      ? `Comment with id of ${commentId} successfully deleted.`
+      : {
+          error: `There was an error deleting this comment. Please try again later.`,
+        };
+  } else {
+    return {
+      error: `There was an error retrieving movie data. Please try again later.`,
+    };
+  }
+};
+
+// helper function to check for existence of movie in database
 let movieExists = async (movieId) => {
   return await module.exports.getMovieById(movieId).error;
 };

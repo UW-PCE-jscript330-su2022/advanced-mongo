@@ -258,9 +258,11 @@ describe('/movies routes', () => {
     });
   });
 
-  describe('DELETE /:id', () => {
+  describe('DELETE /:movieId', () => {
     it('should return a message on success', async () => {
-      movieData.deleteById.mockResolvedValue('Movie successfully deleted.');
+      movieData.deleteMovieById.mockResolvedValue(
+        'Movie successfully deleted.'
+      );
       const res = await request(server).delete('/movies/abc123');
       expect(res.status).toEqual(200);
       expect(res.body).toBeDefined;
@@ -268,7 +270,7 @@ describe('/movies routes', () => {
     });
 
     it('should return an error message and 400 response if movie fails to be deleted', async () => {
-      movieData.deleteById.mockResolvedValue({
+      movieData.deleteMovieById.mockResolvedValue({
         error: `We've encountered an error. Please try again later.`,
       });
       const res = await request(server).delete('/movies/abc123');
@@ -278,8 +280,42 @@ describe('/movies routes', () => {
     });
 
     it('should return a 500 response if server returns null', async () => {
-      movieData.deleteById.mockResolvedValue(null);
+      movieData.deleteMovieById.mockResolvedValue(null);
       const res = await request(server).delete('/movies/abc123');
+      expect(res.status).toEqual(500);
+    });
+  });
+
+  describe('DELETE /:movieId/comments/:commentId', () => {
+    it('should return a message on success', async () => {
+      movieData.deleteCommentById.mockResolvedValue(
+        `Comment with id of abc123 successfully deleted.`
+      );
+      const res = await request(server).delete(
+        '/movies/abc123/comments/abc123'
+      );
+      expect(res.status).toEqual(200);
+      expect(res.body).toBeDefined;
+      expect(res.error).not.toBeDefined;
+    });
+
+    it('should return an error message and 400 response if movie fails to be deleted', async () => {
+      movieData.deleteCommentById.mockResolvedValue({
+        error: `There was an error deleting this comment. Please try again later.`,
+      });
+      const res = await request(server).delete(
+        '/movies/abc123/comments/abc123'
+      );
+      expect(res.status).toEqual(400);
+      expect(res.body).toBeDefined;
+      expect(res.error).toBeDefined;
+    });
+
+    it('should return a 500 response if server returns null', async () => {
+      movieData.deleteCommentById.mockResolvedValue(null);
+      const res = await request(server).delete(
+        '/movies/abc123/comments/abc123'
+      );
       expect(res.status).toEqual(500);
     });
   });
