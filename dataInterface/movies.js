@@ -6,7 +6,11 @@ const uri =
 
 const client = new MongoClient(uri);
 const databaseName = 'sample_mflix';
-const collName = 'movies';
+
+const collections = {
+  movies: 'movies',
+  comments: 'comments',
+};
 
 const statusCodes = require('../etc/statusCodes.js');
 
@@ -15,7 +19,7 @@ module.exports = {};
 // GET all movies from movies collection in sample_mflix database
 module.exports.getAll = async () => {
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
+  const movies = database.collection(collections.movies);
 
   const query = {};
   let movieCursor = await movies
@@ -34,7 +38,7 @@ module.exports.getAll = async () => {
 // GET all movie comments from comments collection in sample_mflix database
 module.exports.getAllComments = async () => {
   const database = client.db(databaseName);
-  const comments = database.collection('comments'); // notice connecting to comments collection
+  const comments = database.collection(collections.comments); // notice connecting to comments collection
 
   const query = {};
 
@@ -45,14 +49,14 @@ module.exports.getAllComments = async () => {
 // GET single movie by id from movies collection in sample_mflix database
 module.exports.getById = async (movieId) => {
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
+  const movies = database.collection(collections.movies);
   const query = { _id: ObjectId(movieId) };
   let movie = await movies.findOne(query);
 
+  console.log('movie = ', movie);
+
   return movie
-    ? {
-        data: movie,
-      }
+    ? movie
     : {
         error: `We've encountered an error. Please try again later.`,
       };
@@ -61,24 +65,19 @@ module.exports.getById = async (movieId) => {
 // GET one comment with comment id
 module.exports.getCommentById = async (movieId, commentId) => {
   const database = client.db(databaseName);
-  const comments = database.collection('comments');
+  const comments = database.collection(collections.comments);
   if ((await module.exports.getById(movieId)).status === 200) {
     const query = { _id: ObjectId(commentId) };
     const result = await comments.findOne(query);
 
     return result
-      ? {
-          results: result,
-          status: 200,
-        }
+      ? result
       : {
-          results: `There was an error retrieving comment data. Please try again later.`,
-          status: 400,
+          error: `There was an error retrieving comment data. Please try again later.`,
         };
   } else {
     return {
-      results: `There was an error retrieving movie data. Please try again later.`,
-      status: 400,
+      error: `There was an error retrieving movie data. Please try again later.`,
     };
   }
 };
@@ -86,7 +85,7 @@ module.exports.getCommentById = async (movieId, commentId) => {
 // GET all comments for a single movie comments collection in sample_mflix database
 module.exports.getMovieComments = async (movieId) => {
   const database = client.db(databaseName);
-  const comments = database.collection('comments');
+  const comments = database.collection(collections.comments);
 
   if (!(await module.exports.getById(movieId)).error) {
     const query = { movie_id: ObjectId(movieId) };
@@ -94,18 +93,13 @@ module.exports.getMovieComments = async (movieId) => {
 
     console.log('cursor:', resultCursor);
     return resultCursor
-      ? {
-          results: await resultCursor.toArray(),
-          status: 200,
-        }
+      ? await resultCursor.toArray()
       : {
-          results: `There was an error retrieving comment data. Please try again later.`,
-          status: 400,
+          error: `There was an error retrieving comment data. Please try again later.`,
         };
   } else {
     return {
-      results: `There was an error retrieving movie data. Please try again later.`,
-      status: 400,
+      error: `There was an error retrieving movie data. Please try again later.`,
     };
   }
 };
@@ -113,7 +107,7 @@ module.exports.getMovieComments = async (movieId) => {
 // GET single movie by title string from movies collection in sample_mflix database
 module.exports.getByTitle = async (title) => {
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
+  const movies = database.collection(collections.movies);
   const query = { title: title };
   let movie = await movies.findOne(query);
 
@@ -139,7 +133,7 @@ module.exports.getByIdOrTitle = async (identifier) => {
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
 module.exports.create = async (newObj) => {
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
+  const movies = database.collection(collections.movies);
 
   if (!newObj.title) {
     // Invalid movie object, shouldn't go in database.
@@ -158,7 +152,7 @@ module.exports.create = async (newObj) => {
 
 module.exports.createComment = async (movieId, newCommentObj) => {
   const database = client.db(databaseName);
-  const comments = database.collection('comments');
+  const comments = database.collection(collections.comments);
 
   const result = await comments.insertOne({
     ...newCommentObj,
@@ -189,14 +183,13 @@ module.exports.deleteComment = async (id, commentId) => {
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/change-a-document/
 module.exports.updateById = async (movieId, newObj) => {
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
+  const movies = database.collection(collections.movies);
 
   // Product team says only these two fields can be updated.
-  const updateRules = {
-    $set: { title: newObj.title, plot: newObj.plot },
-  };
-  const filter = { _id: ObjectId(movieId) };
-  const result = await movies.updateOne(filter, updateRules);
+  const result = await movies.updateOne(
+    { _id: ObjectId(movieId) },
+    { $set: { title: newObj.title, plot: newObj.plot } }
+  );
 
   if (result.modifiedCount != 1) {
     return {
@@ -210,7 +203,7 @@ module.exports.updateById = async (movieId, newObj) => {
 
 module.exports.updateCommentById = async (movieId, commentId, commentText) => {
   const database = client.db(databaseName);
-  const comments = database.collection('comments');
+  const comments = database.collection(collections.comments);
 
   let result = await comments.updateOne(
     { _id: ObjectId(commentId) },
@@ -229,7 +222,7 @@ module.exports.updateCommentById = async (movieId, commentId, commentText) => {
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
 module.exports.deleteById = async (movieId) => {
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
+  const movies = database.collection(collections.movies);
 
   const deletionRules = { _id: ObjectId(movieId) };
   const result = await movies.deleteOne(deletionRules);

@@ -25,9 +25,18 @@ router.get('/', async (req, res, next) => {
 // Route to retrieve (GET) all comments for all movies
 // curl http://localhost:5000/movies/comments
 router.get('/comments', async (req, res, next) => {
-  const results = await movieData.getAllComments();
+  let resultStatus;
+  const result = await movieData.getAllComments();
 
-  res.status(200).send(results);
+  if (result === null) {
+    resultStatus = 500;
+  } else if (result.length === 0) {
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
 });
 
 // Route to retrieve (GET) a single movie
@@ -45,21 +54,37 @@ router.get('/:id', async (req, res, next) => {
 // Route to retrieve (GET) a single comment for a specified movie
 // curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments/5a9427648b0beebeb69579e7/
 router.get('/:id/comments/:commentId', async (req, res, next) => {
-  const results = await movieData.getCommentById(
+  let resultStatus;
+  const result = await movieData.getCommentById(
     req.params.id,
     req.params.commentId
   );
 
-  console.log('results =', results);
+  if (result === null) {
+    resultStatus = 500;
+  } else if (result.error) {
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
 
-  res.status(results.status).send(results.results);
+  res.status(result.status).send(result.results);
 });
 
 // Route to retrieve (GET) all comments for a single movie
 // curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments
 router.get('/:id/comments', async (req, res, next) => {
-  const results = await movieData.getMovieComments(req.params.id);
-  res.status(results.status).send(results.results);
+  let resultStatus;
+  const result = await movieData.getMovieComments(req.params.id);
+
+  if (result === null) {
+    resultStatus = 500;
+  } else if (result.error) {
+    resultStatus = 400;
+  } else {
+    resultStatus = 200;
+  }
+  res.status(resultStatus).send(result);
 });
 
 // Route to remove (DELETE) a single comment
@@ -101,7 +126,11 @@ router.put('/:id', async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateById(req.params.id, req.body);
 
-  if (result.error) {
+  console.log('result = ', result);
+
+  if (result === null) {
+    resultStatus = 500;
+  } else if (result.error) {
     resultStatus = 400;
   } else {
     resultStatus = 200;
@@ -129,7 +158,9 @@ router.put('/:movieId/comments/:commentId', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   const result = await movieData.deleteById(req.params.id);
 
-  if (result.error) {
+  if (result === null) {
+    resultStatus = 500;
+  } else if (result.error) {
     resultStatus = 400;
   } else {
     resultStatus = 200;
