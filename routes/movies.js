@@ -91,13 +91,13 @@ router.put("/:id", async (req, res, next) => {
 });
 
 
-// curl -X PUT -H "Content-Type: application/json" -d '{"plot":"Sharks..."}' http://localhost:5000/movies/573a13a3f29313caabd0e77b/comments/5a9427648b0beebeb6957ba5
+//curl -X PUT -H "Content-Type: application/json" -d '{"name":"Migs", "text":"This is my updated Text"}'  http://localhost:5000/movies/573a1392f29313caabcda826/comments/5a9427648b0beebeb6957f4a
 router.put("/:movieId/comments/:commentId", async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateCommentById(req.params.commentId, req.body)
 
   if(result.error){
-    resultStatus = 400;
+    resultStatus = 404;
   } else {
     resultStatus = 201;
   }
