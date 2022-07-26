@@ -41,7 +41,14 @@ router.get("/:id", async (req, res, next) => {
 router.get("/:id/comments", async(req, res) =>{
   console.log("GET comments for a movie: ", req.params.id)
   const result = await movieData.getAllComments(req.params.id)
-  res.status(200).send(result)
+
+  if(result){
+    res.status(200).send(result)
+  } else {
+    // If comments is empty/null, something serious is wrong with the MongoDB connection.
+    res.status(500).send({error: "Something went wrong. Please try again."})
+  }
+
 })
 
 // Get a single comment

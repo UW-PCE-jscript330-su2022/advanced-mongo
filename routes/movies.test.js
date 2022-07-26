@@ -87,7 +87,6 @@ describe("/movies routes", () => {
       const res = await request(server).put("/movies/62df8cfe33d248a8ed01b9dc")
       expect(res.statusCode).toEqual(400);
     });
-
   });
 
   describe("DELETE /:id", () =>{
@@ -102,6 +101,36 @@ describe("/movies routes", () => {
       const res = await request(server).delete("/movies/573a1397f29313caabce8896")
       expect(res.statusCode).toEqual(400);
     });
-
   });
+
+  describe("GET /:id/comments", () =>{
+    it("should return an array on success", async () => {
+      movieData.getAllComments.mockResolvedValue([
+          {"_id": "5a9427648b0beebeb695de8c",
+            "name": "Thomas Green",
+            "email": "thomas_green@fakegmail.com",
+            "movie_id": "573a1398f29313caabcebc0b",
+          }])
+
+      const res = await request(server).get("/movies/573a1398f29313caabcebc0b/comments")
+      expect(res.statusCode).toEqual(200)
+      expect(Array.isArray(res.body)).toEqual(true)
+      expect(res.body).toBeInstanceOf(Array)
+      expect(res.body.error).not.toBeDefined()
+
+    });
+    it("should return an error message on error", async () => {
+      // make a request
+      // parse the response
+      // expectations about the response
+
+      movieData.getAllComments.mockResolvedValue(null)
+      const res = await request(server).get("/movies/573a1398f29313caabcebc0b/comments")
+      expect(res.statusCode).toEqual(500)
+      expect(res.body.error).toBeDefined()
+
+    });
+  });
+
+
 });
