@@ -2,7 +2,7 @@ const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
 const uri =
-  "mongodb+srv://APIsuperuser:9RbwKvA8DpBkJgb9@cluster0.bwarser.mongodb.net/?retryWrites=true&w=majority";
+'mongodb+srv://Hgupta9:kThYyac606OgE3xQ@cluster0.s2g6ids.mongodb.net/?retryWrites=true&w=majority';
 
 const client = new MongoClient(uri);
 
@@ -26,10 +26,6 @@ module.exports.getAll = async () => {
 module.exports.getAllComments = async (movieId)=>{
   const database = client.db(databaseName);
   const comments = database.collection(commCollName);
-
-  // https://www.mongodb.com/docs/manual/reference/operator/query-comparison/
-  // To get only comments made since 1985:
-  // const query = {movie_id: ObjectId(movieId), date: { $gt: new Date("January 1, 1985")}}
   const query = { movie_id: ObjectId(movieId)};
 
   let commentCursor = await comments.find(query);
@@ -123,6 +119,15 @@ module.exports.updateById = async (movieId, newObj) => {
 
   const updatedMovie = module.exports.getById(movieId);
   return updatedMovie;
+}
+
+module.exports.getMoviesByGenre = async (genreName) => {
+  const database = client.db(databaseName);
+  const movies = database.collection(collName);
+  const query = {genres: { $in: [genreName] }};
+  let movieCursor = await movies.find(query).limit(10).project({title: 1, genres: 1}).sort({title: 1});
+
+  return movieCursor.toArray();
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/

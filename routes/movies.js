@@ -42,13 +42,15 @@ router.post("/", async (req, res, next) => {
   let resultStatus;
   let result = await movieData.create(req.body);
 
-  if(result.error){
-    resultStatus = 400;
+  if (!result) {
+    res.status(500).send({error: "Something went wrong. Please try again."});
   } else {
-    resultStatus = 200;
+    if (result.error) {
+      res.status(400).send(result);
+    } else {
+      res.status(200).send(result);
+    }
   }
-
-  res.status(resultStatus).send(result);
 });
 
 // curl -X POST -H "Content-Type: application/json" -d '{"name":"Cinephile Cyprus", "text":"Wow!"}' http://localhost:5000/movies/000/comments
@@ -61,33 +63,48 @@ router.post("/:id/comments", async(req, res) => {
 router.put("/:id", async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateById(req.params.id, req.body)
-
-  if(result.error){
-    resultStatus = 400;
+  if (!result) {
+    res.status(500).send({error: "Something went wrong. Please try again."});
   } else {
-    resultStatus = 200;
+    if(result.error){
+      res.status(400).send(result);
+    } else {
+      res.status(200).send(result);
+    }
   }
-
-  res.status(resultStatus).send(result);
 });
 
 // curl -X DELETE http://localhost:5000/movies/573a1390f29313caabcd4135
 router.delete("/:id", async (req, res, next) => {
   const result = await movieData.deleteById(req.params.id);
-
-  if(result.error){
-    resultStatus = 400;
+  if (!result) {
+    res.status(500).send({error: "Something went wrong. Please try again."});
   } else {
-    resultStatus = 200;
+    if (result.error) {
+      res.status(400).send(result);
+    } else {
+      res.status(200).send(result);
+    }
   }
-
-  res.status(resultStatus).send(result);
 });
 
 // curl -X DELETE http://localhost:5000/movies/000/comments/000
-router.delete("/:movieId/comments/:commentId", async(req, res)=>{
-  const result = await movieData.deleteCommentById(req.params.commentId)
-  res.status(200).send(result);
-})
+// router.delete("/:movieId/comments", async(req, res)=>{
+//   const result = await movieData.deleteCommentById(req.params.commentId)
+//   res.status(200).send(result);
+// })
+
+router.get("/genres/:genreName", async (req, res, next) => {
+  const result = await movieData.getMoviesByGenre(req.params.genreName);
+  if (result) {
+    if (result.length > 0) {
+      res.status(200).send(result);
+    } else {
+      res.status(404).send({error: `No movie found with this genre: ${req.params.genreName}`});
+    }
+  } else {
+    res.status(500).send({error:"Something went wrong. Please try again."})
+  }
+});
 
 module.exports = router;
