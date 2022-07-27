@@ -96,8 +96,8 @@ router.delete("/:id", async (req, res, next) => {
 const commentData = require('../dataInterface/comments');
 
 // curl http://localhost:5001/movies/:id/comments
-// GET ALL COMMENTS FOR A MOVIE
-//e.g. curl http://localhost:5001/movies/573a1397f29313caabce69db/comments
+// 1. GET ALL COMMENTS FOR A MOVIE
+//e.g. curl http://localhost:5001/movies/573a1391f29313caabcd8979/comments
 router.get("/:id/comments", async (req, res, next) => {
   let commentList = await commentData.getAllComments(req.params.id)
 
@@ -109,8 +109,9 @@ router.get("/:id/comments", async (req, res, next) => {
   }
 });
 
+// 2. Get a single comment
 // This route handles comment id as an identifier.
-// e.g. http://localhost:5001/movies/comments/5a9427648b0beebeb6957aa3
+// e.g. curl http://localhost:5001/movies/comments/5a9427648b0beebeb6957bdd
 router.get("/comments/:id", async (req, res, next) => {
   const result = await commentData.getCommentByCommentIdOrMovieId(req.params.id)
 
@@ -123,12 +124,10 @@ router.get("/comments/:id", async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
-
-// curl -X POST -H "Content-Type: application/json" -d "{\"text\":\"MongoDB 2nd Test\", \"movie_id\":\"573a1397f29313caabce69db\"}" http://localhost:5001/movies/comments
-router.post("/comments", async (req, res, next) => {
-  let resultStatus;
-  let result = await commentData.createComment(req.body);
-
+// 3. CREATE A NEW COMMENT FOR A MOVIE with movie_id in url
+//e.g. curl -X POST -H "Content-Type: application/json" -d "{\"text\":\"Test 1\"}" http://localhost:5001/movies/573a1391f29313caabcd8979/comments
+router.post("/:id/comments", async(req, res) => {
+  const result = await commentData.createComment(req.params.id, req.body)
   if(result.error){
     resultStatus = 400;
   } else {
@@ -136,16 +135,10 @@ router.post("/comments", async (req, res, next) => {
   }
 
   res.status(resultStatus).send(result);
-});
-
-// CREATE A NEW COMMENT FOR A MOVIE
-router.post("/:id/comments", async(req, res) => {
-  const result = await commentData.createComment(req.params.id, req.body)
-  res.status(200).send(result);
 })
 
-// curl -X PUT -H "Content-Type: application/json" -d "{\"text\":\"MongoDB 5th Test\"}" http://localhost:5001/movies/comments/62e0b359fed238f12b6a7d1c
-// curl -X PUT -H "Content-Type: application/json" -d "{\"text\":\"MongoDB 7th Test\"}" http://localhost:5001/movies/comments/62e0b359fed238f12b6a7d1c
+//4.Update a given comment
+// e.g. curl -X PUT -H "Content-Type: application/json" -d "{\"text\":\"Test update\"}" http://localhost:5001/movies/comments/62e0c328268da65506f7b181
 router.put("/comments/:id", async (req, res, next) => {
   let resultStatus;
   const result = await commentData.updateCommentById(req.params.id, req.body)
@@ -159,7 +152,8 @@ router.put("/comments/:id", async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
-// curl -X DELETE http://localhost:5001/movies/573a1390f29313caabcd4135
+//5. Delete a given comment
+// e.g. curl -X DELETE http://localhost:5001/movies/comments/62e0c328268da65506f7b181
 // DELETE A COMMENT
 router.delete("/comments/:id", async(req, res)=>{
   const result = await commentData.deleteCommentById(req.params.id)

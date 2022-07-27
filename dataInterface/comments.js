@@ -38,25 +38,22 @@ module.exports.getCommentByCommentIdOrMovieId = async (commentId) => {
 
 
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
-module.exports.createComment = async (newObj) => {
+module.exports.createComment = async (movie_id, newObj) => {
   const database = client.db(databaseName);
   const comments = database.collection(collName);
 
-  if(!newObj.text || !newObj.movie_id){
+  if(!newObj.text || !movie_id){
     // Invalid movie object, shouldn't go in database.
     return {error: "Comments must have a text and a movie id associated with it."};
   }
 
   const movies = database.collection("movies");
-  const query = {_id: ObjectId(newObj.movie_id)};
-  const movieExist = await movies.findOne(query);
-
+  const query = {_id: ObjectId(movie_id)};
+  let movieExist = await movies.findOne(query);
   if (!movieExist) {
     return {error: "Movie must exist for the commented to be inserted for."};
   }
-
-  const result = await comments.insertOne({"_id": newObj.id, "text": newObj.text, "email": newObj.email, "movie_id": ObjectId(newObj.movie_id),"date": newObj.date});
-
+  let result = await comments.insertOne({"_id": newObj.id, "text": newObj.text, "email": newObj.email, "movie_id": ObjectId(movie_id),"date": newObj.date});
   if(result.acknowledged){
     return { newObjectId: result.insertedId, message: `Item created! ID: ${result.insertedId}` }
   } else {
