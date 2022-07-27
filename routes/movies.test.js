@@ -7,64 +7,91 @@ const movieData = require("../dataInterface/movies");
 
 describe("/movies routes", () => {
   beforeEach(() => {
-    describe("GET /", () =>{
-      it("should return an array on success", async () => {
-        movieData.getAll.mockResolvedValue({_id: "890", title: "one"});
-        const res = await request(server).get("/movies");
-        expect(res.statusCode).toEqual(200);
-        //check response body is an array
-        expect(res.body instanceof Array);
-        expect(Array.isArray(res.body));
-        expect(res.body.error).not.toBeDefined();
-      });
-      it("should return an error message on error", async () => {
-        movieData.getAll.mockResolvedValue(null);
-        const res = await request(server).get("/movies");
+    
+  });
+  describe("GET /", () =>{
+    it("should return an array on success", async () => {
+      movieData.getAll.mockResolvedValue({_id: "890", title: "one"});
+      const res = await request(server).get("/movies");
+      expect(res.statusCode).toEqual(200);
+      //check response body is an array
+      expect(res.body instanceof Array);
+      expect(Array.isArray(res.body));
+      expect(res.body.error).not.toBeDefined();
+    });
+    it("should return an error message on error", async () => {
+      movieData.getAll.mockResolvedValue(null);
+      const res = await request(server).get("/movies");
 
-        expect(res.statusCode).toEqual(500);
-        expect(res.body.error).toBeDefined();
-      });
+      expect(res.statusCode).toEqual(500);
+      expect(res.body.error).toBeDefined();
     });
-    describe("GET /:id", () =>{
-      it("should return a single movie on success", async () => {
-        expect(false).toEqual(true);
-        //check status code == 200
-        //check response body is an object
-      });
+  });
+  describe("GET /:id", () =>{
+    it("should return a single movie on success", async () => {
+      //check status code == 200
+      //check response body is an object
+      movieData.getByIdOrTitle.mockResolvedValue({_id: "890", title: "one"});
+      const res = await request(server).get("/movies/890");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body instanceof Object);
     });
-  
-    describe("POST /", () =>{
-      it("should return the new movie on success", async () => {
-        expect(false).toEqual(true);
-        //check status == 200
-        //check response body is an object
-      });
-      it("should return an error message if body is missing title", async () => {
-        expect(false).toEqual(true);
-        //check status == 400
-        //check response body is an object
-      });
-      it("should return an error message if movie failes to be created", async () => {
-        expect(false).toEqual(true);
-        //check status == 400
-        //check response body is an object
-      });
+  });
+
+  describe("POST /", () =>{
+    it("should return the new movie on success", async () => {
+      movieData.create.mockResolvedValue({_id: "890", title: "one"});
+      const res = await request(server).post("/movies");
+
+      //check response body is an object
+      expect(res.statusCode).toEqual(200);
+      expect(res.body instanceof Object);
     });
-  
-    describe("PUT /:id", () =>{
-      it("should return the updated movie on success", async () => {
-        expect(false).toEqual(true);
-        //check status == 200
-        //check response body is an object
-      });
+    it("should return an error message if body is missing title", async () => {
+      //check status == 400
+      //check response body is an object
+      movieData.create.mockResolvedValue({error: "Movies must have a title."});
+      const res = await request(server).post("/movies");
+
+      //check response body is an object
+      expect(res.statusCode).toEqual(400);
+      expect(res.body instanceof Object);
     });
-  
-    describe("DELETE /:id", () =>{
-      it("should return a message on success", async () => {
-        expect(false).toEqual(true);
-        //check status == 200
-        //check response body is an object
-      });
+    it("should return an error message if movie failes to be created", async () => {
+      //check status == 400
+      //check response body is an object
+      movieData.create.mockResolvedValue({error: "Something went wrong. Please try again."});
+      const res = await request(server).post("/movies");
+
+      //check response body is an object
+      expect(res.statusCode).toEqual(400);
+      expect(res.body instanceof Object);
+    });
+  });
+
+  describe("PUT /:id", () =>{
+    it("should return the updated movie on success", async () => {
+      movieData.updateById.mockResolvedValue({_id: "890", title: "one"});
+      const res = await request(server).put("/movies/:id");
+
+      //check status == 200
+      //check response body is an object
+      expect(res.statusCode).toEqual(200);
+      expect(res.body instanceof Object);
+    });
+  });
+
+  describe("DELETE /:id", () =>{
+    it("should return a message on success", async () => {
+      //check response body is an object
+      movieData.deleteById.mockResolvedValue({_id: "890", title: "one"});
+      const res = await request(server).delete("/movies/:id");
+
+      //check status == 200
+      //check response body is an object
+      expect(res.statusCode).toEqual(200);
+      expect(res.body instanceof Object);
     });
   });
 });

@@ -21,11 +21,6 @@ module.exports.getAll = async () => {
   return movieCursor.toArray();
 }
 
-module.exports.getAllComments = async (movieId)=>{
-
-  return [];
-}
-
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
 module.exports.getById = async (movieId) => {
   const database = client.db(databaseName);
@@ -65,7 +60,7 @@ module.exports.getByIdOrTitle = async (identifier) => {
 module.exports.create = async (newObj) => {
   const database = client.db(databaseName);
   const movies = database.collection(collName);
-
+  
   if(!newObj.title){
     // Invalid movie object, shouldn't go in database.
     return {error: "Movies must have a title."}
@@ -77,12 +72,6 @@ module.exports.create = async (newObj) => {
   } else {
     return {error: "Something went wrong. Please try again."}
   }
-}
-
-module.exports.createComment = async(movieId, newObj) =>{
-  // Validate that movieId is for an existing movie
-  return {};
-
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/change-a-document/
