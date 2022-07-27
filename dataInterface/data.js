@@ -1,0 +1,46 @@
+_id:5553a998e4b02cf7151190b8
+st:"x+47600-047900"
+ts:1984-03-05T13:00:00.000+00:00
+position:Object
+    type:"Point"
+coordinates:Array
+    0:-47.9
+    1:47.6
+elevation:9999
+callLetters:"VCSZ"
+qualityControlProcess:"V020"
+dataSource:"4"
+type:"FM-13"
+airTemperature:Object
+    value:-3.1
+    quality:"1"
+dewPoint:Object
+    value:999.9
+    quality:"9"
+pressure:Object
+    value:1015.3
+    quality:"1"
+wind:Object
+    direction:Object
+        type:"9"
+speed:Object
+    rate:999.9
+    quality:"9"
+visibility:Object
+    distance:Object
+        value:999999
+        quality:"9"
+    variability:Object
+        value:"N"
+        quality:"9"
+skyCondition:Object
+    ceilingHeight:Object
+        value:99999
+        quality:"9"
+        determination:"9"
+    cavok:"N"
+sections:Array
+    0:"AG1"
+precipitationEstimatedObservation:Object
+    discrepancy:"2"
+    estimatedWaterDepth:999
