@@ -145,6 +145,7 @@ router.post("/:id/comments", async(req, res) => {
 })
 
 // curl -X PUT -H "Content-Type: application/json" -d "{\"text\":\"MongoDB 5th Test\"}" http://localhost:5001/movies/comments/62e0b359fed238f12b6a7d1c
+// curl -X PUT -H "Content-Type: application/json" -d "{\"text\":\"MongoDB 7th Test\"}" http://localhost:5001/movies/comments/62e0b359fed238f12b6a7d1c
 router.put("/comments/:id", async (req, res, next) => {
   let resultStatus;
   const result = await commentData.updateCommentById(req.params.id, req.body)

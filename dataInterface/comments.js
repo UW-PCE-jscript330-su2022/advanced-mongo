@@ -97,7 +97,7 @@ module.exports.deleteCommentById = async (commentId) => {
     return {error: `Something went wrong. ${result.deletedCount} movies were deleted. Please try again.`}
   };
 
-  return {message: `Deleted ${result.deletedCount} movie.`};
+  return {message: `Deleted ${result.deletedCount} comment ${commentId}.`};
 }
 
 
