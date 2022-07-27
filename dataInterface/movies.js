@@ -21,6 +21,7 @@ module.exports.getAll = async () => {
   return movieCursor.toArray();
 }
 
+module.exports.getAllComments = async (movieId)=>{
 
   return [];
 }
