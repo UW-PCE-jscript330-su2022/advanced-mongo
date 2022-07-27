@@ -1,8 +1,7 @@
 const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
-const uri =
-  "YOUR CONNECTION STRING HERE";
+const uri = "mongodb+srv://jilinda10:liaNg331*)@cluster0.f4ghe7b.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri);
 
@@ -20,6 +19,10 @@ module.exports.getAll = async () => {
   let movieCursor = await movies.find(query).limit(10).project({title: 1}).sort({runtime: -1});
 
   return movieCursor.toArray();
+}
+
+
+  return [];
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
@@ -75,6 +78,12 @@ module.exports.create = async (newObj) => {
   }
 }
 
+module.exports.createComment = async(movieId, newObj) =>{
+  // Validate that movieId is for an existing movie
+  return {};
+
+}
+
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/change-a-document/
 module.exports.updateById = async (movieId, newObj) => {
   const database = client.db(databaseName);
@@ -109,3 +118,18 @@ module.exports.deleteById = async (movieId) => {
 
   return {message: `Deleted ${result.deletedCount} movie.`};
 }
+
+module.exports.deleteCommentById = async(id) =>{
+  return {};
+}
+
+
+
+
+
+
+
+
+
+
+
