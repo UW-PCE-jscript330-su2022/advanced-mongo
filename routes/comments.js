@@ -5,7 +5,7 @@ const commentData = require('../dataInterface/comments');
 
 // curl http://localhost:5000/movies/:id/comments
 // GET ALL COMMENTS FOR A MOVIE
-router.get("/:movie_id/comments", async (req, res, next) => {
+router.get("/comments/movies/:id", async (req, res, next) => {
   let commentList = await commentData.getAllComments(req.params.id)
 
   if(commentList){
@@ -19,7 +19,7 @@ router.get("/:movie_id/comments", async (req, res, next) => {
 // This route handles comment id as an identifier.
 // curl http://localhost:5000/movies/573a1390f29313caabcd4135
 router.get("/comments/:id", async (req, res, next) => {
-  const result = await movieData.getCommentByCommentIdOrMovieId(req.params.id)
+  const result = await commentData.getCommentByCommentIdOrMovieId(req.params.id)
 
   if(result.error){
     resultStatus = 404;
@@ -32,9 +32,9 @@ router.get("/comments/:id", async (req, res, next) => {
 
 
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
-router.post("/", async (req, res, next) => {
+router.post("/comments", async (req, res, next) => {
   let resultStatus;
-  let result = await commentData.create(req.body);
+  let result = await commentData.createComments(req.body);
 
   if(result.error){
     resultStatus = 400;
@@ -46,13 +46,13 @@ router.post("/", async (req, res, next) => {
 });
 
 // CREATE A NEW COMMENT FOR A MOVIE
-router.post("/:id/comments", async(req, res) => {
+router.post("/comments/movies/:id", async(req, res) => {
   const result = await commentData.createComment(req.params.id, req.body)
   res.status(200).send(result);
 })
 
 // curl -X PUT -H "Content-Type: application/json" -d '{"plot":"Sharks..."}' http://localhost:5000/movies/573a13a3f29313caabd0e77b
-router.put("/:id/comments", async (req, res, next) => {
+router.put("/comments/movies/:id", async (req, res, next) => {
   let resultStatus;
   const result = await commentData.updateById(req.params.id, req.body)
 
@@ -67,7 +67,7 @@ router.put("/:id/comments", async (req, res, next) => {
 
 // curl -X DELETE http://localhost:5000/movies/573a1390f29313caabcd4135
 // DELETE A COMMENT
-router.delete("/:movieId/comments/:commentId", async(req, res)=>{
+router.delete("/comments/:commentId", async(req, res)=>{
   const result = await commentData.deleteCommentById(req.params.commentId)
   if(result.error){
     resultStatus = 400;

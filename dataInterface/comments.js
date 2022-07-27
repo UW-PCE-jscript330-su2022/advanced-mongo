@@ -13,11 +13,11 @@ module.exports = {}
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/find/
 module.exports.getAllComments = async (movieId)=>{
 
-    const database = client.db(databaseName);
+  const database = client.db(databaseName);
   const comments = database.collection(collName);
 
-  const query = {movie_id: movieId};
-  let commentCursor = await movies.find(query).limit(10).project({text: 1}).sort({runtime: -1});
+  const query = {movie_id: ObjectId(movieId)};
+  let commentCursor = await comments.find(query).limit(10).project({name: 1, text: 1}).sort({runtime: -1});
 
   return commentCursor.toArray();
 }
