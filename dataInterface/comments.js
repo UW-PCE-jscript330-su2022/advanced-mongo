@@ -48,13 +48,14 @@ module.exports.createComment = async (newObj) => {
   }
 
   const movies = database.collection("movies");
+  const query = {_id: ObjectId(newObj.movie_id)};
   const movieExist = await movies.findOne(query);
 
   if (!movieExist) {
     return {error: "Movie must exist for the commented to be inserted for."};
   }
 
-  const result = await movies.insertOne(newObj);
+  const result = await comments.insertOne({"_id": newObj.id, "text": newObj.text, "email": newObj.email, "movie_id": ObjectId(newObj.movie_id),"date": newObj.date});
 
   if(result.acknowledged){
     return { newObjectId: result.insertedId, message: `Item created! ID: ${result.insertedId}` }
@@ -65,22 +66,22 @@ module.exports.createComment = async (newObj) => {
 
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/change-a-document/
-module.exports.updateById = async (movieId, newObj) => {
+module.exports.updateCommentById = async (commentId, newObj) => {
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
+  const comments = database.collection(collName);
 
   // Product team says only these two fields can be updated.
   const updateRules = {
-    $set: {"name" : newObj.name, "email": newObj.email, "movie_id": newObj.movieId, "text": newObj.text, "date": newObj.date}
+    $set: {"name" : newObj.name, "email": newObj.email, "text": newObj.text, "date": newObj.date}
   };
-  const filter = { movie_id: ObjectId(movieId), _id: ObjectId(newObj._id) };
-  const result = await movies.updateOne(filter, updateRules);
+  const filter = { _id: ObjectId(commentId) };
+  const result = await comments.updateOne(filter, updateRules);
 
   if(result.modifiedCount != 1){
     return {error: `Something went wrong. ${result.modifiedCount} movies were updated. Please try again.`}
   };
 
-  const updatedComment = module.exports.getById(movieId);
+  const updatedComment = module.exports.getCommentByCommentIdOrMovieId(commentId);
   return updatedComment;
 }
 

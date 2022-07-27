@@ -3,7 +3,7 @@ const router = Router();
 
 const movieData = require('../dataInterface/movies');
 
-// curl http://localhost:5000/movies
+// curl http://localhost:5001/movies
 router.get("/", async (req, res, next) => {
   let movieList = await movieData.getAll()
 
@@ -16,8 +16,8 @@ router.get("/", async (req, res, next) => {
 });
 
 // This route handles either id or title as an identifier.
-// curl http://localhost:5000/movies/573a1390f29313caabcd4135
-// curl http://localhost:5000/movies/Jurassic%20Park
+// curl http://localhost:5001/movies/573a1390f29313caabcd4135
+// curl http://localhost:5001/movies/Jurassic%20Park
 router.get("/:id", async (req, res, next) => {
   const result = await movieData.getByIdOrTitle(req.params.id)
 
@@ -37,7 +37,7 @@ router.get("/:id", async (req, res, next) => {
 //   res.status(200).send(result);
 // })
 
-// curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
+// curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5001/movies
 router.post("/", async (req, res, next) => {
   let resultStatus;
   let result = await movieData.create(req.body);
@@ -57,7 +57,7 @@ router.post("/", async (req, res, next) => {
 //   res.status(200).send(result);
 // })
 
-// curl -X PUT -H "Content-Type: application/json" -d '{"plot":"Sharks..."}' http://localhost:5000/movies/573a13a3f29313caabd0e77b
+// curl -X PUT -H "Content-Type: application/json" -d '{"plot":"Sharks..."}' http://localhost:5001/movies/573a13a3f29313caabd0e77b
 router.put("/:id", async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateById(req.params.id, req.body)
@@ -71,7 +71,7 @@ router.put("/:id", async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
-// curl -X DELETE http://localhost:5000/movies/573a1390f29313caabcd4135
+// curl -X DELETE http://localhost:5001/movies/573a1390f29313caabcd4135
 router.delete("/:id", async (req, res, next) => {
   const result = await movieData.deleteById(req.params.id);
 
@@ -95,7 +95,7 @@ router.delete("/:id", async (req, res, next) => {
 
 const commentData = require('../dataInterface/comments');
 
-// curl http://localhost:5000/movies/:id/comments
+// curl http://localhost:5001/movies/:id/comments
 // GET ALL COMMENTS FOR A MOVIE
 //e.g. curl http://localhost:5001/movies/573a1397f29313caabce69db/comments
 router.get("/:id/comments", async (req, res, next) => {
@@ -124,10 +124,10 @@ router.get("/comments/:id", async (req, res, next) => {
 });
 
 
-// curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
+// curl -X POST -H "Content-Type: application/json" -d "{\"text\":\"MongoDB 2nd Test\", \"movie_id\":\"573a1397f29313caabce69db\"}" http://localhost:5001/movies/comments
 router.post("/comments", async (req, res, next) => {
   let resultStatus;
-  let result = await commentData.createComments(req.body);
+  let result = await commentData.createComment(req.body);
 
   if(result.error){
     resultStatus = 400;
@@ -144,10 +144,10 @@ router.post("/:id/comments", async(req, res) => {
   res.status(200).send(result);
 })
 
-// curl -X PUT -H "Content-Type: application/json" -d '{"plot":"Sharks..."}' http://localhost:5000/movies/573a13a3f29313caabd0e77b
-router.put("/:id/comments", async (req, res, next) => {
+// curl -X PUT -H "Content-Type: application/json" -d "{\"text\":\"MongoDB 5th Test\"}" http://localhost:5001/movies/comments/62e0b359fed238f12b6a7d1c
+router.put("/comments/:id", async (req, res, next) => {
   let resultStatus;
-  const result = await commentData.updateById(req.params.id, req.body)
+  const result = await commentData.updateCommentById(req.params.id, req.body)
 
   if(result.error){
     resultStatus = 400;
@@ -158,7 +158,7 @@ router.put("/:id/comments", async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
-// curl -X DELETE http://localhost:5000/movies/573a1390f29313caabcd4135
+// curl -X DELETE http://localhost:5001/movies/573a1390f29313caabcd4135
 // DELETE A COMMENT
 router.delete("/comments/:id", async(req, res)=>{
   const result = await commentData.deleteCommentById(req.params.id)
