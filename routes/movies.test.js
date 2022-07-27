@@ -31,44 +31,196 @@ describe("/movies routes", () => {
     });
   });
 
+  describe("GET /:id/comments", () =>{
+    it("should return an array on success", async () => {
+      movieData.getAllComments.mockResolvedValue([{_id:"123", text: "comment"}]);
+
+      const res = await request(server).get("/movies/:id/comments");
+
+      expect(res.statusCode).toEqual(200);
+      expect(Array.isArray(res.body)).toEqual(true);
+      expect(res.body.error).not.toBeDefined();
+    });
+    it("should return an error message on error", async () => {
+      movieData.getAllComments.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies/:id/comments");
+
+      expect(res.statusCode).toEqual(500);
+      expect(res.body.error).toBeDefined();
+    });
+  });
+
   describe("GET /:id", () =>{
     it("should return a single movie on success", async () => {
-      expect(false).toEqual(true);
+      movieData.getAll.mockResolvedValue([{_id:"890", title:"One Day"}]);
+
+      const res = await request(server).get("/movies/:id");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
     });
     it("should return a status code of 404 if movie not found", async () => {
-      expect(false).toEqual(true);
+      movieData.getAll.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies/:id");
+
+      expect(res.statusCode).toEqual(404);
+      expect(res.body.error).toBeDefined();
+    });
+  });
+
+  describe("GET /:id/comments/:commentId", () =>{
+    it("should return a single comment on success", async () => {
+      movieData.getComment.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
+
+      const res = await request(server).get("/movies/:id/comments/:commentId");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
+    });
+    it("should return a status code of 404 if movie not found", async () => {
+      movieData.getComment.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies/:id/comments/:commentId");
+
+      expect(res.statusCode).toEqual(404);
+      expect(res.body.error).toBeDefined();
     });
   });
 
   describe("POST /", () =>{
     it("should return the new movie on success", async () => {
-      expect(false).toEqual(true);
+      movieData.getComment.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
+
+      const res = await request(server).get("/movies/:id/comments/:commentId");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
     });
     it("should return an error message if body is missing title", async () => {
-      expect(false).toEqual(true);
+      movieData.create.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toBeDefined();
       // expect status code == 400
     });
     it("should return an error message if movie fails to be created", async () => {
-      expect(false).toEqual(true);
+      movieData.create.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toBeDefined();
+    });
+      // expect status code == 400
+  });
+
+  describe("POST /:id/comments", () =>{
+    it("should return the new comment on success", async () => {
+      movieData.getComment.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
+
+      const res = await request(server).get("/movies/:id/comments");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
+    });
+    it("should return an error message if body is missing title", async () => {
+      movieData.createComment.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies/:id/comments");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toBeDefined();
       // expect status code == 400
     });
+    it("should return an error message if movie fails to be created", async () => {
+      movieData.createComment.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies/:id/comments");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toBeDefined();
+    });
+      // expect status code == 400
   });
 
   describe("PUT /:id", () =>{
     it("should return the updated movie on success", async () => {
-      expect(false).toEqual(true);
+      movieData.updateById.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
+
+      const res = await request(server).get("/movies/:id");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
     });
     it("should return an error message if movie fails to be updated", async () => {
-      expect(false).toEqual(true);
+      movieData.updateById.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies/:id");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toBeDefined();
+    });
+  });
+
+  describe("PUT /:id", () =>{
+    it("should return the updated comment on success", async () => {
+      movieData.updateCommentById.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
+
+      const res = await request(server).get("/movies/:id/comments/:commentId");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
+    });
+    it("should return an error message if movie fails to be updated", async () => {
+      movieData.updateCommentById.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies/:id/comments/:commentId");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toBeDefined();
+    });
+  });
+
+
+  describe("DELETE /:id", () =>{
+    it("should return a message on success", async () => {
+      movieData.deleteById.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
+
+      const res = await request(server).get("/movies/:id/comments/:commentId");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
+    });
+    it("should return a error message if movie fails to be deleted", async () => {
+      movieData.deleteById.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies/:id");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toBeDefined();
     });
   });
 
   describe("DELETE /:id", () =>{
     it("should return a message on success", async () => {
-      expect(false).toEqual(true);
+      movieData.deleteCommentById.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
+
+      const res = await request(server).get("/movies/:id/comments/:commentId");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
     });
     it("should return a error message if movie fails to be deleted", async () => {
-      expect(false).toEqual(true);
+      movieData.deleteCommentById.mockResolvedValue(null);
+
+      const res = await request(server).get("/movies/:id/comments/:commentId");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toBeDefined();
     });
   });
 

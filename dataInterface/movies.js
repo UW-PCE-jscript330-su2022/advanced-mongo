@@ -2,7 +2,7 @@ const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
 const uri =
-  "mongodb+srv://APIsuperuser:9RbwKvA8DpBkJgb9@cluster0.bwarser.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://admin:vIefiAyna0YZzvaT@cluster0.6ghpl.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri);
 
@@ -34,6 +34,16 @@ module.exports.getAllComments = async (movieId)=>{
 
   let commentCursor = await comments.find(query);
   return commentCursor.toArray();
+}
+
+module.exports.getComment = async (commentId)=>{
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  const query = { _id: ObjectId(commentId)};
+
+  let comment = await comments.findOne(query);
+  return comment;
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
@@ -94,14 +104,21 @@ module.exports.createComment = async(movieId, newObj) =>{
   const database = client.db(databaseName);
   const comments = database.collection(commCollName);
 
-  const goodObj = {...newObj, movie_id: ObjectId(movieId), date: new Date()}
+  let movie = await module.exports.getById(movieId);
 
-  const result = await comments.insertOne(goodObj);
-
-  if(result.acknowledged){
-    return { newObjectId: result.insertedId, message: `Comment created! ID: ${result.insertedId}` }
-  } else {
-    return {error: "Something went wrong. Please try again."}
+  if (movie) {
+    const goodObj = {...newObj, movie_id: ObjectId(movieId), date: new Date()}
+  
+    const result = await comments.insertOne(goodObj);
+  
+    if(result.acknowledged){
+      return { newObjectId: result.insertedId, message: `Comment created! ID: ${result.insertedId}` }
+    } else {
+      return {error: "Something went wrong. Please try again."}
+    }
+  }
+  else {
+    return {error: `No item found with identifier ${movieId}.`}
   }
 }
 
@@ -125,6 +142,24 @@ module.exports.updateById = async (movieId, newObj) => {
   return updatedMovie;
 }
 
+module.exports.updateCommentById = async (commentId, newObj) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  const updateRules = {
+    $set: {"name" : newObj.name, "text": newObj.text, "date": `Comment updated on ${new Date()}`}
+  };
+  const filter = { _id: ObjectId(commentId) };
+  const result = await comments.updateOne(filter, updateRules);
+
+  if(result.modifiedCount != 1){
+    return {error: `Something went wrong. ${result.modifiedCount} movies were updated. Please try again.`}
+  };
+
+  const updatedComment = module.exports.getComment(commentId);
+  return updatedComment;
+}
+
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
 module.exports.deleteById = async (movieId) => {
   const database = client.db(databaseName);
@@ -140,7 +175,16 @@ module.exports.deleteById = async (movieId) => {
   return {message: `Deleted ${result.deletedCount} movie.`};
 }
 
-module.exports.deleteCommentById = async(id) =>{
-  // TODO: Implement
-  return {};
+module.exports.deleteCommentById = async(commentId) =>{
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  const deletionRules = {_id:ObjectId(commentId)}
+  const result = await comments.deleteOne(deletionRules);
+
+  if(result.deletedCount != 1){
+    return {error: `Something went wrong. ${result.deletedCount} movies were deleted. Please try again.`}
+  };
+
+  return {message: `Deleted ${result.deletedCount} comment.`};
 }
