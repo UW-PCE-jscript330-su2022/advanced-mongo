@@ -48,6 +48,10 @@ module.exports.getAllComments = async () => {
 
 // retrieve single movie by id from database
 module.exports.getMovieById = async (movieId) => {
+  if (!validateId(movieId)) {
+    return { error: `Invalid id value. Please try again` };
+  }
+
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
   const query = { _id: ObjectId(movieId) };
@@ -62,7 +66,14 @@ module.exports.getMovieById = async (movieId) => {
 
 // retrieve one comment with unique comment id value
 module.exports.getCommentById = async (movieId, commentId) => {
+  if (!validateId(movieId) || !validateId(commentId)) {
+    return { error: `Invalid id value. Please try again` };
+  }
+
   if (!movieExists(movieId).error) {
+    if (!validateId(movieId)) {
+      return { error: `Invalid id value. Please try again` };
+    }
     const database = client.db(databaseName);
     const comments = database.collection(collections.comments);
     const query = { _id: ObjectId(commentId) };
@@ -102,6 +113,10 @@ module.exports.getMoviesByGenre = async (genreName) => {
 
 // retrieve all comments for a single movie
 module.exports.getMovieComments = async (movieId) => {
+  if (!validateId(movieId)) {
+    return { error: `Invalid id value. Please try again` };
+  }
+
   if (!movieExists(movieId).error) {
     const database = client.db(databaseName);
     const comments = database.collection(collections.comments);
@@ -139,7 +154,7 @@ module.exports.getByTitle = async (title) => {
 module.exports.getByIdOrTitle = async (identifier) => {
   let movie;
 
-  if (ObjectId.isValid(identifier)) {
+  if (validateId.isValid(identifier)) {
     movie = module.exports.getMovieById(identifier);
   } else {
     movie = module.exports.getByTitle(identifier);
@@ -168,6 +183,10 @@ module.exports.createMovie = async (newObj) => {
 
 // add new comment to database
 module.exports.createComment = async (movieId, newCommentObj) => {
+  if (!validateId(movieId)) {
+    return { error: `Invalid id value. Please try again` };
+  }
+
   if (!movieExists(movieId).error) {
     const database = client.db(databaseName);
     const comments = database.collection(collections.comments);
@@ -191,6 +210,10 @@ module.exports.createComment = async (movieId, newCommentObj) => {
 
 // update a movie by movie id value
 module.exports.updateById = async (movieId, newObj) => {
+  if (!validateId(movieId)) {
+    return { error: `Invalid id value. Please try again` };
+  }
+
   const database = client.db(databaseName);
   const movies = database.collection(collections.movies);
 
@@ -212,6 +235,10 @@ module.exports.updateById = async (movieId, newObj) => {
 
 // update a comment by comment id value
 module.exports.updateCommentById = async (movieId, commentId, commentText) => {
+  if (!validateId(movieId) || !validateId(commentId)) {
+    return { error: `Invalid id value. Please try again` };
+  }
+
   if (!movieExists(movieId).error) {
     const database = client.db(databaseName);
     const comments = database.collection(collections.comments);
@@ -235,6 +262,10 @@ module.exports.updateCommentById = async (movieId, commentId, commentText) => {
 
 // delete a movie by movie id value
 module.exports.deleteMovieById = async (movieId) => {
+  if (!validateId(movieId)) {
+    return { error: `Invalid id value. Please try again` };
+  }
+
   if (!movieExists(movieId).error) {
     const database = client.db(databaseName);
     const movies = database.collection(collections.movies);
@@ -258,6 +289,10 @@ module.exports.deleteMovieById = async (movieId) => {
 
 // delete a comment by comment id value
 module.exports.deleteCommentById = async (movieId, commentId) => {
+  if (!validateId(movieId) || !validateId(commentId)) {
+    return { error: `Invalid id value. Please try again` };
+  }
+
   if (!movieExists(movieId).error) {
     const database = client.db(databaseName);
     const comments = database.collection(collections.comments);
@@ -280,4 +315,8 @@ module.exports.deleteCommentById = async (movieId, commentId) => {
 // helper function to check for existence of movie in database
 let movieExists = async (movieId) => {
   return await module.exports.getMovieById(movieId).error;
+};
+
+let validateId = (id) => {
+  return ObjectId.isValid(id);
 };
