@@ -109,10 +109,15 @@ module.exports.deleteById = async (movieId) => {
   return {message: `Deleted ${result.deletedCount} movie.`};
 }
 
-module.exports.deleteCommentById = async(id) =>{
-  return {};
-}
+module.exports.getMoviesByGenre = async(genreName) => {
+  const database = client.db(databaseName);
+  const movies = database.collection(collName);
 
+  const query = {genres: {$in: [genreName]}}
+  let movieCursor = await movies.find(query).limit(10).project({title: 1, _id: 1, genres: 1}).sort({runtime: -1});
+
+  return movieCursor.toArray();
+}
 
 
 

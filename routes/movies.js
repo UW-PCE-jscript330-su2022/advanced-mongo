@@ -95,7 +95,6 @@ router.delete("/:id", async (req, res, next) => {
 
 const commentData = require('../dataInterface/comments');
 
-// curl http://localhost:5001/movies/:id/comments
 // 1. GET ALL COMMENTS FOR A MOVIE
 //e.g. curl http://localhost:5001/movies/573a1391f29313caabcd8979/comments
 router.get("/:id/comments", async (req, res, next) => {
@@ -138,7 +137,7 @@ router.post("/:id/comments", async(req, res) => {
 })
 
 //4.Update a given comment
-// e.g. curl -X PUT -H "Content-Type: application/json" -d "{\"text\":\"Test update\"}" http://localhost:5001/movies/comments/62e0c328268da65506f7b181
+// e.g. curl -X PUT -H "Content-Type: application/json" -d "{\"text\":\"Test update\"}" http://localhost:5001/movies/comments/62e1e339ef21964849bf92bf
 router.put("/comments/:id", async (req, res, next) => {
   let resultStatus;
   const result = await commentData.updateCommentById(req.params.id, req.body)
@@ -153,7 +152,7 @@ router.put("/comments/:id", async (req, res, next) => {
 });
 
 //5. Delete a given comment
-// e.g. curl -X DELETE http://localhost:5001/movies/comments/62e0c328268da65506f7b181
+// e.g. curl -X DELETE http://localhost:5001/movies/comments/62e1e339ef21964849bf92bf
 // DELETE A COMMENT
 router.delete("/comments/:id", async(req, res)=>{
   const result = await commentData.deleteCommentById(req.params.id)
@@ -168,3 +167,10 @@ router.delete("/comments/:id", async(req, res)=>{
 //comment section ends
 module.exports = router;
 
+//genre section start
+// e.g. curl http://localhost:5001/movies/genres/Comedy
+router.get("/genres/:genreName", async(req, res)=>{
+  const result = await movieData.getMoviesByGenre(req.params.genreName)
+  res.status(200).send(result);
+})
+//genre section end
