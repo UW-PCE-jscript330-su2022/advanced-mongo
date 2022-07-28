@@ -19,7 +19,11 @@ module.exports.getAllComments = async (movieId)=>{
   const query = {movie_id: ObjectId(movieId)};
   let commentCursor = await comments.find(query).limit(10).project({name: 1, text: 1}).sort({runtime: -1});
 
-  return commentCursor.toArray();
+  if (commentCursor) {
+    return commentCursor.toArray();
+  } else {
+    return {error: `No item found with identifier ${commentIdOrMovieId}.`}
+  }
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
