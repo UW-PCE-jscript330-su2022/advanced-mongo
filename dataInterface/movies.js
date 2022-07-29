@@ -2,12 +2,13 @@ const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
 const uri =
-  "YOUR CONNECTION STRING HERE";
+  "mongodb+srv://carlitos:test@cluster0.o87d0no.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri);
 
 const databaseName = 'sample_mflix';
 const collName = 'movies'
+const commCollName = 'comments';
 
 module.exports = {}
 
@@ -21,7 +22,23 @@ module.exports.getAll = async () => {
 
   return movieCursor.toArray();
 }
+module.exports.getAllComments = async (movieId)=>{
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
 
+  // https://www.mongodb.com/docs/manual/reference/operator/query-comparison/
+  // To get only comments made since 1985:
+  // const query = {movie_id: ObjectId(movieId), date: { $gt: new Date("January 1, 1985")}}
+  let movieQuery=module.exports.getByIdOrTitle(movieId)
+  const query = { movie_id: ObjectId(movieQuery.movie_id)};
+
+  let commentCursor = await comments.find(query);
+  if(commentCursor.length >=1){
+    return commentCursor.toArray();
+  }else{
+    return {error: "Comments cannot be found"}
+  }
+}
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
 module.exports.getById = async (movieId) => {
   const database = client.db(databaseName);
@@ -49,8 +66,7 @@ module.exports.getByIdOrTitle = async (identifier) => {
   } else {
     movie = module.exports.getByTitle(identifier);
   }
-
-  if(movie){
+  if(await movie){
     return movie;
   } else {
     return {error: `No item found with identifier ${identifier}.`}
@@ -74,6 +90,21 @@ module.exports.create = async (newObj) => {
     return {error: "Something went wrong. Please try again."}
   }
 }
+module.exports.createComment = async(movieId, newObj) =>{
+  // TODO: Validate that movieId is for an existing movie
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  const goodObj = {...newObj, movie_id: ObjectId(movieId), date: new Date()}
+
+  const result = await comments.insertOne(goodObj);
+
+  if(result.acknowledged){
+    return { newObjectId: result.insertedId, message: `Comment created! ID: ${result.insertedId}` }
+  } else {
+    return {error: "Something went wrong. Please try again."}
+  }
+}
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/change-a-document/
 module.exports.updateById = async (movieId, newObj) => {
@@ -88,11 +119,33 @@ module.exports.updateById = async (movieId, newObj) => {
   const result = await movies.updateOne(filter, updateRules);
 
   if(result.modifiedCount != 1){
-    return {error: `Something went wrong. ${result.modifiedCount} movies were updated. Please try again.`}
+    return {error: `Something went wrong. ${result.modifiedCount} movies were not updated. Please try again.`}
   };
 
   const updatedMovie = module.exports.getById(movieId);
   return updatedMovie;
+}
+
+module.exports.updateCommentById = async (movieID, commentID, text) =>{
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const query = { movie_id: ObjectId(movieID)};
+
+  let commentCursor = await comments.find(query);
+  let commentArray = commentCursor.toArray()
+  if(commentArray.length >=1){
+    for(let i =0 ; i<=commentArray.length; i++){
+      if(i._id === commentID){
+        return i
+      }else{
+        return {error: "comment does not exist"}
+      }
+    }
+    console.log(comment)
+  }else{
+    return {error: "Comments cannot be found"}
+  }
+
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
@@ -108,4 +161,22 @@ module.exports.deleteById = async (movieId) => {
   };
 
   return {message: `Deleted ${result.deletedCount} movie.`};
+}
+// Delete a given comment by its id
+module.exports.deleteCommentById = async (commentId) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  // Check if the comment id is valid or not
+  if (!ObjectId.isValid(commentId)) {
+    return {error: `The given id: ${commentId} is invalid. Please try another one.`}
+  }
+  const deletionRules = {_id:ObjectId(commentId)}
+  const result = await comments.deleteOne(deletionRules);
+
+  if(result.deletedCount != 1){
+    return {error: `Something went wrong. ${result.deletedCount} comments were deleted. Please try again.`}
+  };
+
+  return {message: `Deleted ${result.deletedCount} comment.`};
 }
