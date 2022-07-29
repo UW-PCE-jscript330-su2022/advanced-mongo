@@ -24,17 +24,20 @@ const weatherData = require('../dataInterface/weather');
 //   });
 
 // GET WEATHER BY PARAMETER (minAirTemp, maxAirTemp, sections, callLetters)
-// curl -sS "http://localhost:5001/weather?qualityControlProcess=V020&callLetters=VCSZ&airTemp=-3.1"
+// curl -sS "http://localhost:5001/weather?callLetters=VCSZ&qualityControlProcess=V020&airTemp=-3.1"
+// curl -sS "http://localhost:5001/weather?callLetters=VCSZ"
 
 router.get("/", async (req, res) => {
  
   let airTemp = req.query.airTemp;
   let callLetters = req.query.callLetters;
   let sections = req.query.sections;
-
+  // , sections: sections
   console.log(req.query);
 
-  let weatherList = await weatherData.getAll({callLetters: callLetters, sections: sections, 'airTemperature.value': airTemp});
+  let weatherList = await weatherData.getAll(req.query.callLetters);
+
+  console.log(weatherList)
 
   if(weatherList){
     res.status(200).send(weatherList)
