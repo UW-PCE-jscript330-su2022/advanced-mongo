@@ -36,11 +36,11 @@ module.exports.getAll = async (callLetters) => {
 }
 
 // GET WEATHER BY CALL LETTERS ENPOINT
-module.exports.getByCallLetters = async (callLetters) => {
+module.exports.getByCallLetters = async (callLetters, sections) => {
     const database = client.db(databaseName);
     const weather = database.collection(collName);
   
-    const query = {"callLetters": callLetters};
+    const query = {"callLetters": callLetters,sections: {$in: [sections]}};
     let weatherCursor = await  weather.find(query).limit(10);
     return weatherCursor.toArray();
 }
