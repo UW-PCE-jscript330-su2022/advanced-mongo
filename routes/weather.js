@@ -9,11 +9,11 @@ const weatherData = require('../dataInterface/weather');
 
 // curl http://localhost:5000/weather/VCSZ
 router.get("/:callLetters", async (req, res, next) => {
-  let weatherReports = await weatherData.getWeatherReportsByCallLetters();
-  if (weatherReports){
-    res.status(200).send(weatherReports);
+  let weatherReports = await weatherData.getWeatherReportsByCallLetters(req.params.callLetters);
+  if (!weatherReports){
+    res.status(500).send({error: "Something went wrong. Please try again."});
   } else {
-    res.status(500).send({error: "Something went wrong. Please try again."})
+    res.status(200).send(weatherReports);
   }
 });
 
