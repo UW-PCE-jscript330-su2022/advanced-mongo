@@ -25,7 +25,7 @@ module.exports.getWeatherReportsByCallLetters = async (callLetters) => {
   const query = { callLetters: callLetters };
   let weatherCursor = await weather.find(query).limit(10);
   if (!weatherCursor) {
-    return { error: "Something went wrong. Please try again." };
+    return { status: 500, error: "Something went wrong. Please try again." };
   } else {
     return weatherCursor.toArray();
   }
@@ -33,20 +33,20 @@ module.exports.getWeatherReportsByCallLetters = async (callLetters) => {
 
 // createWeatherReport /////////////////////////////////////////////////////////
 // Given a `newWeatherReport`,
-// Adds `newWeatherReport` to the `weatherDatabase` and returns the `newObjectId`
-// with a success message.
+// Adds `newWeatherReport` to the `weatherDatabase` and returns the
+// `newObjectId` with a success message.
 // Docs: https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
 module.exports.createWeatherReport = async (newWeatherReport) => {
   const database = client.db(databaseName);
   const weather = database.collection(weatherCollName);
   if (!newWeatherReport.callLetters) {
-    return {error: "Weather report must have `callLetters`."}
+    return { error: "Weather report must have `callLetters`." };
   }
   const result = await weather.insertOne(newWeatherReport);
-  if(result.acknowledged) {
-    return { newObjectId: result.insertedId, message: `Item created! ID: ${result.insertedId}` }
+  if (!result.acknowledged) {
+    return { error: "Something went wrong. Please try again." };
   } else {
-    return {error: "Something went wrong. Please try again."}
+    return { newObjectId: result.insertedId, message: `Item created! ID: ${result.insertedId}` };
   }
 }
 

@@ -33,13 +33,16 @@ describe("/weather routes", () => {
 
   describe("POST /weather", () =>{
     it("should return the new weather report on success", async () => {
-      expect(false).toEqual(true);
-    });
-    it("should return an error message if body is missing call letters", async () => {
-      expect(false).toEqual(true);
+      weatherData.createWeatherReport.mockResolvedValue({"newObjectId":"62e461bd6350965037199b6c","message":"Item created! ID: 62e461bd6350965037199b6c"});
+      const res = await request(server).post("/weather");
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
     });
     it("should return an error message on error", async () => {
-      expect(false).toEqual(true);
+      weatherData.createWeatherReport.mockResolvedValue({error: "Something went wrong. Please try again."});
+      const res = await request(server).post("/weather");
+      expect(res.statusCode).toEqual(500);
+      expect(res.body.error).toBeDefined();
     });
   });
 

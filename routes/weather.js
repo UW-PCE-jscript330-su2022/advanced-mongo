@@ -19,14 +19,13 @@ router.get("/:callLetters", async (req, res, next) => {
 
 // curl -X POST -H "Content-Type: application/json" -d '{"callLetters":"VCSZ", "elevation":"9999"}' http://localhost:5000/weather
 router.post("/", async (req, res, next) => {
-  let resultStatus;
-  let result = await weatherData.create(req.body);
-  if(result.error){
-    resultStatus = 400;
+  let result = await weatherData.createWeatherReport(req.body);
+  if (result.error){
+    console.log(result);
+    res.status(500).send(result);
   } else {
-    resultStatus = 200;
+    res.status(200).send(result);
   }
-  res.status(resultStatus).send(result);
 });
 
 // curl http://localhost:5000/weather?callLetters=VCSZ&minAirTemp=35
