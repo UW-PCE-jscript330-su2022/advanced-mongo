@@ -1,0 +1,2833 @@
+[{
+    "_id": "5553a998e4b02cf7151190ba",
+    "st": "x+51900+003600",
+    "ts": "1984-03-05T14:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [3.6, 51.9]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 4.4,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 3.5,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1030.8,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 200,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 1,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.9,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "seaSurfaceTemperature": {
+        "value": 4.5,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 4,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151190c0",
+    "st": "x+59500+001500",
+    "ts": "1984-03-05T15:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [1.5, 59.5]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 6.3,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1026.1,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 280,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 9.3,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 10000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GF1", "MW1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "0",
+            "quality": "1"
+        },
+        "period": {
+            "value": 3,
+            "quality": "1"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "07",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "99",
+            "quality": "9"
+        },
+        "lowCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 1250,
+            "quality": "1"
+        },
+        "midCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        },
+        "highCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "02",
+        "quality": "1"
+    }],
+    "waveMeasurement": {
+        "method": "M",
+        "waves": {
+            "period": 99,
+            "height": 2.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "00",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151190c3",
+    "st": "x+56500+002100",
+    "ts": "1984-03-05T15:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [2.1, 56.5]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 7.1,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1028.2,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 320,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 4.1,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 20000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 22000,
+            "quality": "1",
+            "determination": "C"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GF1", "MD1", "MW1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "0",
+            "quality": "1"
+        },
+        "period": {
+            "value": 3,
+            "quality": "1"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "00",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "00",
+            "quality": "1"
+        },
+        "lowCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 99999,
+            "quality": "9"
+        },
+        "midCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        },
+        "highCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        }
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.4,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "02",
+        "quality": "1"
+    }],
+    "waveMeasurement": {
+        "method": "M",
+        "waves": {
+            "period": 5,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "00",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151190c8",
+    "st": "x+53200+003200",
+    "ts": "1984-03-05T16:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [3.2, 53.2]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 5.4,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1032.9,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 20,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 1.5,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 1.2,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 5,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151190c9",
+    "st": "x+51900+003200",
+    "ts": "1984-03-05T17:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [3.2, 51.9]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 4.8,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 4.6,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1032.6,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 170,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 0.5,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "SA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 1.2,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "seaSurfaceTemperature": {
+        "value": 5.5,
+        "quality": "9"
+    }
+}, {
+    "_id": "5553a998e4b02cf7151193be",
+    "st": "x+51900+003200",
+    "ts": "1984-03-05T19:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [3.2, 51.9]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 4.7,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 4.5,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1033.6,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 999,
+            "quality": "9"
+        },
+        "type": "9",
+        "speed": {
+            "rate": 999.9,
+            "quality": "9"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "SA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 1.3,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "seaSurfaceTemperature": {
+        "value": 5.6,
+        "quality": "9"
+    }
+}, {
+    "_id": "5553a998e4b02cf7151193c0",
+    "st": "x+56400+002000",
+    "ts": "1984-03-05T20:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [2, 56.4]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 9999.9,
+        "quality": "9"
+    },
+    "wind": {
+        "direction": {
+            "angle": 220,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 5.7,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "OA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    }
+}, {
+    "_id": "5553a998e4b02cf715119400",
+    "st": "x+53200+003200",
+    "ts": "1984-03-05T22:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [3.2, 53.2]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 5,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1035.2,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 220,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 1,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.8,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 6,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf715119411",
+    "st": "x+58700+001300",
+    "ts": "1984-03-06T00:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [1.3, 58.7]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 7.9,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1024.8,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 240,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 11.8,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "7",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 1,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 6,
+            "height": 2.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151195d6",
+    "st": "x+56500+003200",
+    "ts": "1984-03-05T15:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [3.2, 56.5]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 6,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 4.6,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1030,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 300,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 7.2,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 10000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 22000,
+            "quality": "1",
+            "determination": "C"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GF1", "MD1", "MW1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "0",
+            "quality": "1"
+        },
+        "period": {
+            "value": 3,
+            "quality": "1"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "01",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "00",
+            "quality": "1"
+        },
+        "lowCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 99999,
+            "quality": "9"
+        },
+        "midCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        },
+        "highCloudGenus": {
+            "value": "09",
+            "quality": "1"
+        }
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 1.1,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "02",
+        "quality": "1"
+    }],
+    "seaSurfaceTemperature": {
+        "value": 5.4,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 5,
+            "height": 1.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151195d8",
+    "st": "x+57900+000100",
+    "ts": "1984-03-05T15:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [0.1, 57.9]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 7.3,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1029.3,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 230,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 6.2,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 20000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 750,
+            "quality": "1",
+            "determination": "C"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GF1", "MD1", "MW1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "0",
+            "quality": "1"
+        },
+        "period": {
+            "value": 3,
+            "quality": "1"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "07",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "05",
+            "quality": "1"
+        },
+        "lowCloudGenus": {
+            "value": "05",
+            "quality": "1"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 800,
+            "quality": "1"
+        },
+        "midCloudGenus": {
+            "value": "07",
+            "quality": "1"
+        },
+        "highCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        }
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.2,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "02",
+        "quality": "1"
+    }],
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 5,
+            "height": 1.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151195dd",
+    "st": "x+51900+003600",
+    "ts": "1984-03-05T16:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [3.6, 51.9]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 4.8,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 4,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1031.6,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 999,
+            "quality": "9"
+        },
+        "type": "9",
+        "speed": {
+            "rate": 999.9,
+            "quality": "9"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 1.4,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "seaSurfaceTemperature": {
+        "value": 4.5,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 4,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151195de",
+    "st": "x+53200+003200",
+    "ts": "1984-03-05T17:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [3.2, 53.2]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 6.1,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1033.1,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 150,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 0.5,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.9,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 4,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151195eb",
+    "st": "x+58700+001300",
+    "ts": "1984-03-05T18:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [1.3, 58.7]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 7.4,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1026.1,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 240,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 8.7,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "7",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.2,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 6,
+            "height": 2.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf715119689",
+    "st": "x+61200+001800",
+    "ts": "1984-03-06T00:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [1.8, 61.2]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 7.6,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 5.8,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1014.4,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 250,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 20,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 4000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GF1", "MD1", "MW1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 2
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "6",
+            "quality": "1"
+        },
+        "period": {
+            "value": 6,
+            "quality": "1"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "08",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "99",
+            "quality": "9"
+        },
+        "lowCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 99999,
+            "quality": "9"
+        },
+        "midCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        },
+        "highCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        }
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "7",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 1.8,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "61",
+        "quality": "1"
+    }],
+    "seaSurfaceTemperature": {
+        "value": 8,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 7,
+            "height": 4,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151197c1",
+    "st": "x+61200+001100",
+    "ts": "1984-03-05T13:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [1.1, 61.2]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 13,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 8.2,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1021.2,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 290,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 8.7,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "4",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "waveMeasurement": {
+        "method": "M",
+        "waves": {
+            "period": 7,
+            "height": 3.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "00",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151197c5",
+    "st": "x+58400+000300",
+    "ts": "1984-03-05T15:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [0.3, 58.4]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 5.5,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1026.7,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 260,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 7.7,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "7",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.2,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151197cf",
+    "st": "x+54700+007100",
+    "ts": "1984-03-05T15:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [7.1, 54.7]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 5,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 3.9,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1029.3,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 320,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 7.7,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 20000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 22000,
+            "quality": "1",
+            "determination": "C"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GA1", "GF1", "MD1", "MW1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "0",
+            "quality": "1"
+        },
+        "period": {
+            "value": 3,
+            "quality": "1"
+        }
+    }],
+    "skyCoverLayer": [{
+        "coverage": {
+            "value": "01",
+            "quality": "1"
+        },
+        "baseHeight": {
+            "value": 6000,
+            "quality": "9"
+        },
+        "cloudType": {
+            "value": "00",
+            "quality": "9"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "01",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "00",
+            "quality": "1"
+        },
+        "lowCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 99999,
+            "quality": "9"
+        },
+        "midCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        },
+        "highCloudGenus": {
+            "value": "01",
+            "quality": "1"
+        }
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 1.2,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "02",
+        "quality": "1"
+    }],
+    "seaSurfaceTemperature": {
+        "value": 2.1,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "M",
+        "waves": {
+            "period": 1,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151197d8",
+    "st": "x+58400+000300",
+    "ts": "1984-03-05T18:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [0.3, 58.4]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 6,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 1.7,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1026.3,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 250,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 8.2,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "7",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.4,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151197eb",
+    "st": "x+60800+001400",
+    "ts": "1984-03-05T18:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [1.4, 60.8]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 6.4,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 4.6,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1021.9,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 220,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 10.3,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 20000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GF1", "MW1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 1
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "6",
+            "quality": "1"
+        },
+        "period": {
+            "value": 6,
+            "quality": "1"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "08",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "08",
+            "quality": "1"
+        },
+        "lowCloudGenus": {
+            "value": "06",
+            "quality": "1"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 99999,
+            "quality": "9"
+        },
+        "midCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        },
+        "highCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "60",
+        "quality": "1"
+    }],
+    "waveMeasurement": {
+        "method": "M",
+        "waves": {
+            "period": 7,
+            "height": 3.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "00",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf715119874",
+    "st": "x+52200+004200",
+    "ts": "1984-03-06T03:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [4.2, 52.2]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 5.5,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 4.6,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 9999.9,
+        "quality": "9"
+    },
+    "wind": {
+        "direction": {
+            "angle": 230,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 0.5,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "OA1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "seaSurfaceTemperature": {
+        "value": 4.3,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 7,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf71511988e",
+    "st": "x+52200+004200",
+    "ts": "1984-03-06T04:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [4.2, 52.2]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 5.5,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 4.6,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 9999.9,
+        "quality": "9"
+    },
+    "wind": {
+        "direction": {
+            "angle": 220,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 3.6,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "OA1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "seaSurfaceTemperature": {
+        "value": 4.3,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 9,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf715119890",
+    "st": "x+51900+003200",
+    "ts": "1984-03-06T05:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [3.2, 51.9]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 5,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 4.5,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1035.2,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 200,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 3.1,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "SA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "7",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.1,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "seaSurfaceTemperature": {
+        "value": 5.5,
+        "quality": "9"
+    }
+}, {
+    "_id": "5553a998e4b02cf715119891",
+    "st": "x+58400+000300",
+    "ts": "1984-03-06T06:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [0.3, 58.4]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 6.3,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 3.9,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1025.3,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 280,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 11.3,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "OA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    }
+}, {
+    "_id": "5553a998e4b02cf715119898",
+    "st": "x+53100+002200",
+    "ts": "1984-03-06T06:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [2.2, 53.1]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 2.8,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 1.4,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1034.4,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 290,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 4.1,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "3",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.4,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151198a2",
+    "st": "x+54700+007100",
+    "ts": "1984-03-05T13:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [7.1, 54.7]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 4.7,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 3.9,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1028.4,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 330,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 7.7,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 20000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 22000,
+            "quality": "1",
+            "determination": "C"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GA1", "GF1", "MD1", "MW1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "0",
+            "quality": "1"
+        },
+        "period": {
+            "value": 99,
+            "quality": "9"
+        }
+    }],
+    "skyCoverLayer": [{
+        "coverage": {
+            "value": "03",
+            "quality": "1"
+        },
+        "baseHeight": {
+            "value": 6000,
+            "quality": "9"
+        },
+        "cloudType": {
+            "value": "00",
+            "quality": "9"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "03",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "00",
+            "quality": "1"
+        },
+        "lowCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 99999,
+            "quality": "9"
+        },
+        "midCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        },
+        "highCloudGenus": {
+            "value": "02",
+            "quality": "1"
+        }
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 1.5,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "02",
+        "quality": "1"
+    }],
+    "seaSurfaceTemperature": {
+        "value": 2.1,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "M",
+        "waves": {
+            "period": 2,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151198a4",
+    "st": "x+52200+004200",
+    "ts": "1984-03-05T14:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [4.2, 52.2]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 5.6,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 4.7,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1030.2,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 260,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 0.5,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "OA1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 999
+    },
+    "seaSurfaceTemperature": {
+        "value": 4.3,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 4,
+            "height": 0.5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151198a7",
+    "st": "x+58700+001300",
+    "ts": "1984-03-06T06:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [1.3, 58.7]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 7.5,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 999.9,
+        "quality": "9"
+    },
+    "pressure": {
+        "value": 1024,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 250,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 11.8,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 999999,
+            "quality": "9"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 99999,
+            "quality": "9",
+            "determination": "9"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "MD1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "4",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 6,
+            "height": 3,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151198b4",
+    "st": "x+61200+001800",
+    "ts": "1984-03-05T15:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [1.8, 61.2]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 7,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 3.4,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1021.9,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 270,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 9.3,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 10000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 22000,
+            "quality": "1",
+            "determination": "C"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GF1", "MD1", "MW1", "SA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "2",
+        "estimatedWaterDepth": 0
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "0",
+            "quality": "1"
+        },
+        "period": {
+            "value": 3,
+            "quality": "1"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "03",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "01",
+            "quality": "1"
+        },
+        "lowCloudGenus": {
+            "value": "02",
+            "quality": "1"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 800,
+            "quality": "1"
+        },
+        "midCloudGenus": {
+            "value": "00",
+            "quality": "1"
+        },
+        "highCloudGenus": {
+            "value": "08",
+            "quality": "1"
+        }
+    },
+    "atmosphericPressureChange": {
+        "tendency": {
+            "code": "2",
+            "quality": "1"
+        },
+        "quantity3Hours": {
+            "value": 0.5,
+            "quality": "1"
+        },
+        "quantity24Hours": {
+            "value": 99.9,
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "02",
+        "quality": "1"
+    }],
+    "seaSurfaceTemperature": {
+        "value": 7.7,
+        "quality": "9"
+    },
+    "waveMeasurement": {
+        "method": "I",
+        "waves": {
+            "period": 8,
+            "height": 4,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "99",
+            "quality": "9"
+        }
+    }
+}, {
+    "_id": "5553a998e4b02cf7151198cb",
+    "st": "x+60800+001400",
+    "ts": "1984-03-06T06:00:00.000Z",
+    "position": {
+        "type": "Point",
+        "coordinates": [1.4, 60.8]
+    },
+    "elevation": 9999,
+    "callLetters": "PLAT",
+    "qualityControlProcess": "V020",
+    "dataSource": "4",
+    "type": "FM-13",
+    "airTemperature": {
+        "value": 7,
+        "quality": "1"
+    },
+    "dewPoint": {
+        "value": 2.1,
+        "quality": "1"
+    },
+    "pressure": {
+        "value": 1019.1,
+        "quality": "1"
+    },
+    "wind": {
+        "direction": {
+            "angle": 280,
+            "quality": "1"
+        },
+        "type": "N",
+        "speed": {
+            "rate": 14.9,
+            "quality": "1"
+        }
+    },
+    "visibility": {
+        "distance": {
+            "value": 20000,
+            "quality": "1"
+        },
+        "variability": {
+            "value": "N",
+            "quality": "9"
+        }
+    },
+    "skyCondition": {
+        "ceilingHeight": {
+            "value": 22000,
+            "quality": "1",
+            "determination": "C"
+        },
+        "cavok": "N"
+    },
+    "sections": ["AG1", "AY1", "GF1", "MW1", "OA1", "UA1"],
+    "precipitationEstimatedObservation": {
+        "discrepancy": "1",
+        "estimatedWaterDepth": 0
+    },
+    "pastWeatherObservationManual": [{
+        "atmosphericCondition": {
+            "value": "0",
+            "quality": "1"
+        },
+        "period": {
+            "value": 6,
+            "quality": "1"
+        }
+    }],
+    "skyConditionObservation": {
+        "totalCoverage": {
+            "value": "03",
+            "opaque": "99",
+            "quality": "1"
+        },
+        "lowestCloudCoverage": {
+            "value": "99",
+            "quality": "9"
+        },
+        "lowCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        },
+        "lowestCloudBaseHeight": {
+            "value": 99999,
+            "quality": "9"
+        },
+        "midCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        },
+        "highCloudGenus": {
+            "value": "99",
+            "quality": "9"
+        }
+    },
+    "presentWeatherObservationManual": [{
+        "condition": "02",
+        "quality": "1"
+    }],
+    "waveMeasurement": {
+        "method": "M",
+        "waves": {
+            "period": 8,
+            "height": 5,
+            "quality": "9"
+        },
+        "seaState": {
+            "code": "00",
+            "quality": "9"
+        }
+    }
+}]

@@ -1,9 +1,10 @@
 const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
+require('dotenv').config()
 
 const uri =
-  "mongodb+srv://cahilljm53:Mevin*80@cluster0.qlff5yn.mongodb.net/?retryWrites=true&w=majority"
+`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qlff5yn.mongodb.net/?retryWrites=true&w=majority`
 
 const client = new MongoClient(uri);
 
@@ -13,27 +14,26 @@ const collName = 'data';
 module.exports = {}
 
 // GET WEATHER ENDPOINT
-module.exports.getAll = async () => {
-    const database = client.db(databaseName);
-    const weather = database.collection(collName);
+// module.exports.getAll = async () => {
+//     const database = client.db(databaseName);
+//     const weather = database.collection(collName);
   
-    const query = {};
-    let weatherCursor = await  weather.find(query).limit(10);
-    return weatherCursor.toArray();
-}
+//     const query = {};
+//     let weatherCursor = await  weather.find(query).limit(10);
+//     return weatherCursor.toArray();
+// }
 
-// GET WEATHER BY ID ENDPOINT
-module.exports.getWeatherById = async (weatherId) => {
+// GET ALL BY PARAM
+// GET WEATHER ENDPOINT
+// maxAirTemp: { $max: "$airTemperature.value" }  minAirTemp: { $min: "$airTemperature.value" }
+module.exports.getAll = async (callLetters, sections, maxAirTemp, minAirTemp) => {
   const database = client.db(databaseName);
   const weather = database.collection(collName);
-
-  const query = { _id: ObjectId(weatherId)};
-  let result = await  weather.find(query);
-    return result;
+  
+  const query = {"callLetters": callLetters, sections: {$in: [sections]}, maxAirTemp:{ $max: $airTemperature.value }, minAirTemp:{ $min: $airTemperature.value }    };
+  let weatherCursor = await weather.find(query).limit(10);
+  return weatherCursor.toArray();
 }
-
-// GET WEATHER BY PARAMETER (minAirTemp, maxAirTemp, section, callLetters)
-
 
 // GET WEATHER BY CALL LETTERS ENPOINT
 module.exports.getByCallLetters = async (callLetters) => {
@@ -50,10 +50,6 @@ module.exports.create = async (newObj) => {
   const database = client.db(databaseName);
   const weather = database.collection(collName);
 
-  // if (!newObj.title) {
-  //   // Invalid weather object, shouldn't go in database.
-  //   return { error: "Movies must have a title." }
-  // }
   const result = await weather.insertOne(newObj);
 
   if (result.acknowledged) {
@@ -62,3 +58,4 @@ module.exports.create = async (newObj) => {
     return { error: "Something went wrong. Please try again." }
   }
 }
+
