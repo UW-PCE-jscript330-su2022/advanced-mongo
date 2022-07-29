@@ -54,6 +54,7 @@ router.post("/:id/comments", async(req, res) => {
   }
 
   res.status(resultStatus).send(result);
+
 })
 
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
@@ -69,6 +70,12 @@ router.post("/", async (req, res, next) => {
 
   res.status(resultStatus).send(result);
 });
+
+// curl -X POST -H "Content-Type: application/json" -d '{"name":"Cinephile Cyprus", "text":"Wow!"}' http://localhost:5000/movies/000/comments
+router.post("/:id/comments", async(req, res) => {
+  const result = await movieData.createComment(req.params.id, req.body)
+  res.status(200).send(result);
+})
 
 // curl -X PUT -H "Content-Type: application/json" -d '{"plot":"Sharks..."}' http://localhost:5000/movies/573a13a3f29313caabd0e77b
 router.put("/:id", async (req, res, next) => {

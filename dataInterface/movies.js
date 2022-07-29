@@ -2,11 +2,14 @@ const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
 const uri =
+
   "mongodb+srv://carlitos:test@cluster0.o87d0no.mongodb.net/?retryWrites=true&w=majority";
+
 
 const client = new MongoClient(uri);
 
 const databaseName = 'sample_mflix';
+
 const collName = 'movies'
 const commCollName = 'comments';
 
@@ -22,6 +25,7 @@ module.exports.getAll = async () => {
 
   return movieCursor.toArray();
 }
+
 module.exports.getAllComments = async (movieId)=>{
   const database = client.db(databaseName);
   const comments = database.collection(commCollName);
@@ -29,6 +33,7 @@ module.exports.getAllComments = async (movieId)=>{
   // https://www.mongodb.com/docs/manual/reference/operator/query-comparison/
   // To get only comments made since 1985:
   // const query = {movie_id: ObjectId(movieId), date: { $gt: new Date("January 1, 1985")}}
+
   let movieQuery=module.exports.getByIdOrTitle(movieId)
   const query = { movie_id: ObjectId(movieQuery.movie_id)};
 
@@ -39,6 +44,7 @@ module.exports.getAllComments = async (movieId)=>{
     return {error: "Comments cannot be found"}
   }
 }
+
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
 module.exports.getById = async (movieId) => {
   const database = client.db(databaseName);
@@ -90,6 +96,22 @@ module.exports.create = async (newObj) => {
     return {error: "Something went wrong. Please try again."}
   }
 }
+module.exports.createComment = async(movieId, newObj) =>{
+  // TODO: Validate that movieId is for an existing movie
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  const goodObj = {...newObj, movie_id: ObjectId(movieId), date: new Date()}
+
+  const result = await comments.insertOne(goodObj);
+
+  if(result.acknowledged){
+    return { newObjectId: result.insertedId, message: `Comment created! ID: ${result.insertedId}` }
+  } else {
+    return {error: "Something went wrong. Please try again."}
+  }
+}
+
 module.exports.createComment = async(movieId, newObj) =>{
   // TODO: Validate that movieId is for an existing movie
   const database = client.db(databaseName);
@@ -162,6 +184,7 @@ module.exports.deleteById = async (movieId) => {
 
   return {message: `Deleted ${result.deletedCount} movie.`};
 }
+
 // Delete a given comment by its id
 module.exports.deleteCommentById = async (commentId) => {
   const database = client.db(databaseName);
@@ -179,4 +202,5 @@ module.exports.deleteCommentById = async (commentId) => {
   };
 
   return {message: `Deleted ${result.deletedCount} comment.`};
+
 }

@@ -3,6 +3,7 @@ const server = require("../server");
 
 // the mock data should be define before the test
 jest.mock("../dataInterface/movies")
+
 const movieData = require("../dataInterface/movies")
 
 describe("/movies routes", () => {
@@ -20,6 +21,7 @@ describe("/movies routes", () => {
       expect(res.statusCode).toEqual(200);
       expect(Array.isArray(res.body)).toEqual(true)
       expect(res.body.error).not.toBeDefined()
+
     });
     it("should return an error message on error", async ()=>{
       movieData.getAll.mockResolvedValue(null)
@@ -48,6 +50,7 @@ describe("/movies routes", () => {
       expect(res.body.error).toBeDefined()
       expect(res.status).toEqual(404)
     })
+
   });
 
   describe("POST /", () =>{
@@ -78,6 +81,7 @@ describe("/movies routes", () => {
       expect(res.body.error).toBeDefined()
       expect(res.status).toEqual(400)
     })
+
   });
 
   describe("DELETE /:id", () =>{
@@ -93,6 +97,9 @@ describe("/movies routes", () => {
       res = await request(server).del("/movies/7")
       expect(res.body.error).toBeDefined()
       expect(res.status).toEqual(400)
+    });
+    it("should return a error message if movie fails to be deleted", async () => {
+      expect(false).toEqual(true);
     });
   });
 
@@ -132,4 +139,5 @@ describe("/movies routes", () => {
   })
 
   
+
 });
