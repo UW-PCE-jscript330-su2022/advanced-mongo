@@ -22,11 +22,8 @@ module.exports = {}
 module.exports.getWeatherReportsByCallLetters = async (callLetters) => {
   const database = client.db(databaseName);
   const weather = database.collection(weatherCollName);
-  // https://www.mongodb.com/docs/manual/reference/operator/query-comparison/
-  // To get only comments made since 1985:
-  // const query = {movie_id: ObjectId(movieId), date: { $gt: new Date("January 1, 1985")}}
   const query = { callLetters: callLetters };
-  let weatherCursor = await weather.find(query);
+  let weatherCursor = await weather.find(query).limit(10);
   if (!weatherCursor) {
     return { error: "Something went wrong. Please try again." };
   } else {
