@@ -26,11 +26,11 @@ module.exports = {}
 // GET ALL BY PARAM
 // GET WEATHER ENDPOINT
 // maxAirTemp: { $max: "$airTemperature.value" }  minAirTemp: { $min: "$airTemperature.value" }
-module.exports.getAll = async (callLetters) => {
+module.exports.getAll = async (callLetters,sections) => {
   const database = client.db(databaseName);
   const weather = database.collection(collName);
-  // , sections: {$in: [sections]}
-  const query = {"callLetters": callLetters } ;
+  // 
+  const query = {"callLetters": callLetters, sections: {$in: [sections]} } ;
   let weatherCursor = await weather.find(query).limit(10);
   return weatherCursor.toArray();
 }
