@@ -11,11 +11,26 @@ const collName = 'data'
 module.exports = {}
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/find/
-module.exports.getAll = async () => {
+// module.exports.getAll = async () => {
+//     const database = client.db(databaseName);
+//     const weather = database.collection(collName);
+//     const query = {};
+//     let weatherCursor = await weather.find(query).limit(10);
+//     return weatherCursor.toArray();
+// }
+
+module.exports.getAll = async (minAirTemp, maxAirTemp, section, callLetters) => {
+    console.log(callLetters)
     const database = client.db(databaseName);
     const weather = database.collection(collName);
-    const query = {};
+    const query = {callLetters: {$eq: callLetters}};
     let weatherCursor = await weather.find(query).limit(10);
+    //await console.log(weatherCursor.toArray())
+    //const query = {callLetters: {$eq: callLetters}};
+
+    // let weatherCursor = await weather.find(
+    //     {callLetters: {$eq: callLetters}}
+    // ).limit(10);
     return weatherCursor.toArray();
 }
 
@@ -33,6 +48,7 @@ module.exports.getByCallLetter = async (identity) => {
     //console.log(identity)
     const database = client.db(databaseName);
     const weather = database.collection(collName);
+    console.log(identity)
     const records = await weather.find({callLetters: {$eq: identity}}).limit(10)
     return records.toArray();
 }
@@ -53,6 +69,36 @@ module.exports.getByIdOrCallLetter = async (identifier) => {
         return {error: `No item found with identifier ${identifier}.`}
     }
 }
+
+// module.exports.getByQueryParameters = async (min, max, section, callLetter) => {
+//     //console.log(identifier)
+//     // console.log(min)
+//     // console.log(max)
+//     // console.log(section)
+//     //console.log(callLetter)
+//     const database = client.db(databaseName);
+//     const weather = database.collection(collName);
+//
+//     let records
+//
+//     records = module.exports.getByCallLetter(callLetter);
+//
+//     //const records = await weather.find({callLetters: {$eq: callLetter}}).limit(10)
+//
+//     //await console.log(records)
+//
+//     // if(ObjectId.isValid(identifier)){
+//     //     records = module.exports.getById(identifier);
+//     // } else {
+//     //     records = module.exports.getByCallLetter(identifier);
+//     // }
+//
+//     if(records){
+//         return records;
+//     } else {
+//         return {error: `No record found.`}
+//     }
+// }
 
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
 module.exports.create = async (newObj) => {

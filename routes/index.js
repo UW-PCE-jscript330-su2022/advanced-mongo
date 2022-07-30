@@ -1,5 +1,9 @@
 const { Router } = require("express");
+const bodyParser = require("body-parser");
 const router = Router();
+// use body-parser middleware
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
 
 router.use("/movies", require("./movies"));
 router.use("/weather", require("./weather"));
