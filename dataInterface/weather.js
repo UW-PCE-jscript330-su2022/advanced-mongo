@@ -27,9 +27,11 @@ module.exports.getMaxTemp =  (max) => {
 }
 
 module.exports.getSection = (section) => {
-    const query = {sections: {
+    const query = {
+        sections: {
             "$in": [section]
-        }}
+        }
+    }
     return query;
 }
 
@@ -52,6 +54,97 @@ module.exports.getCallLettersMinTemp = (callLetters, min) => {
     }
     return query;
 }
+
+module.exports.getMinSection =  (min, section) => {
+    const query = {
+        airTemperature: {$gte: {value: min}},
+        sections: {
+            "$in": [section]
+        }
+    }
+    return query;
+}
+
+module.exports.getMaxSection =  (max, section) => {
+    const query = {
+        airTemperature: {$lte: {value: max}},
+        sections: {
+            "$in": [section]
+        }
+    }
+    return query;
+}
+
+module.exports.getMaxCallLetters =  (max, callLetters) => {
+    const query = {
+        airTemperature: {$lte: {value: max}},
+        callLetters: {$eq: callLetters}
+
+    }
+    return query;
+}
+
+module.exports.getSectionCallLetters =  (section, callLetters) => {
+    const query = {
+        sections: {
+            "$in": [section]
+        },
+        callLetters: {$eq: callLetters}
+    }
+    return query;
+}
+
+module.exports.getTempRangeSection = (min, max, section) => {
+    const query = {
+        $and:[{airTemperature: {$gte:{value:min}}},{airTemperature: {$lte:{value: max}}}],
+        sections: {
+            "$in": [section]
+        }
+    }
+    return query;
+}
+
+module.exports.getTempRangeCallLetters = (min, max, callLetters) => {
+    const query = {
+        $and:[{airTemperature: {$gte:{value:min}}},{airTemperature: {$lte:{value: max}}}],
+        callLetters: {$eq: callLetters}
+    }
+    return query;
+}
+
+module.exports.getMinSectionCallletters =  (min, section, callLetters) => {
+    const query = {
+        airTemperature: {$gte: {value: min}},
+        sections: {
+            "$in": [section]
+        },
+        callLetters: {$eq: callLetters}
+    }
+    return query;
+}
+
+module.exports.getMaxSectionCallletters =  (max, section, callLetters) => {
+    const query = {
+        airTemperature: {$lte: {value: max}},
+        sections: {
+            "$in": [section]
+        },
+        callLetters: {$eq: callLetters}
+    }
+    return query;
+}
+
+module.exports.getTempRangeSectionCallLetters = (min, max, section, callLetters) => {
+    const query = {
+        $and:[{airTemperature: {$gte:{value:min}}},{airTemperature: {$lte:{value: max}}}],
+        sections: {
+            "$in": [section]
+        },
+        callLetters: {$eq: callLetters}
+    }
+    return query;
+}
+
 
 module.exports.getAll = async (minAirTemp, maxAirTemp, section, callLetters) => {
     // if a query parameter is missing, it console logs as 'undefined'
@@ -86,6 +179,42 @@ module.exports.getAll = async (minAirTemp, maxAirTemp, section, callLetters) => 
         return weatherCursor.toArray()
     } else if(minAirTemp===undefined && maxAirTemp===undefined && section===undefined && callLetters!==undefined){
         const myQuery = module.exports.getCallLetters(callLetters)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp!==undefined && maxAirTemp===undefined && section!==undefined && callLetters===undefined){
+        const myQuery = module.exports.getMinSection(min, section)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp===undefined && maxAirTemp!==undefined && section!==undefined && callLetters===undefined){
+        const myQuery = module.exports.getMaxSection(max, section)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp===undefined && maxAirTemp!==undefined && section===undefined && callLetters!==undefined){
+        const myQuery = module.exports.getMaxCallLetters(max, callLetters)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp===undefined && maxAirTemp===undefined && section!==undefined && callLetters!==undefined){
+        const myQuery = module.exports.getSectionCallLetters(section, callLetters)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp!==undefined && maxAirTemp!==undefined && section!==undefined && callLetters===undefined){
+        const myQuery = module.exports.getTempRangeSection(min, max, section)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp!==undefined && maxAirTemp!==undefined && section===undefined && callLetters!==undefined){
+        const myQuery = module.exports.getTempRangeCallLetters(min, max, callLetters)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp!==undefined && maxAirTemp===undefined && section!==undefined && callLetters!==undefined){
+        const myQuery = module.exports.getMinSectionCallletters(min, section, callLetters)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp===undefined && maxAirTemp!==undefined && section!==undefined && callLetters!==undefined){
+        const myQuery = module.exports.getMaxSectionCallletters(max, section, callLetters)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp!==undefined && maxAirTemp!==undefined && section!==undefined && callLetters!==undefined){
+        const myQuery = module.exports.getTempRangeSectionCallLetters(min, max, section, callLetters)
         let weatherCursor = await weather.find(myQuery).limit(10);
         return weatherCursor.toArray()
     } else if(minAirTemp===undefined && maxAirTemp===undefined && section===undefined && callLetters===undefined){
