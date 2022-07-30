@@ -20,10 +20,36 @@ module.exports = {}
 // }
 
 module.exports.getAll = async (minAirTemp, maxAirTemp, section, callLetters) => {
-    console.log(callLetters)
+    //console.log(callLetters)
+    console.log(typeof Number(minAirTemp))
+    console.log(Number(minAirTemp))
+
+    const min = Number(minAirTemp)
+    const max = Number(maxAirTemp)
+
+    // if not present in the query string, its NaN
+
     const database = client.db(databaseName);
     const weather = database.collection(collName);
-    const query = {callLetters: {$eq: callLetters}};
+    const query = {
+        //airTemperature: {value: {$gte: min}}
+        //elevation: {$gte: 1000},
+
+        callLetters: {$eq: callLetters},
+        airTemperature: {$gte: {value: min}},
+        //$and:[{airTemperature: {$gte:{value:min}}},{airTemperature: {$lte:{value: max}}}],
+
+        //airTemperature: {value: {$gte: Number(minAirTemp)}},
+        //$and:[{airTemperature: {value:{$gte: Number(minAirTemp)}}}, {airTemperature: {value: {$lte: Number(maxAirTemp)}}}]
+        //airTemperature: {value: {$gte: 4.4}},
+        //"airTemperature": {"value": {$gte: Number(minAirTemp)}
+        //maxAirTemp: {$lte: maxAirTemp},
+        //sections:{$eq:section}
+        // sections: {
+        //     "$in": [section]
+        // }
+    }
+
     let weatherCursor = await weather.find(query).limit(10);
     //await console.log(weatherCursor.toArray())
     //const query = {callLetters: {$eq: callLetters}};
