@@ -19,45 +19,83 @@ module.exports = {}
 //     return weatherCursor.toArray();
 // }
 
+module.exports.getMinTemp =  (min) => {
+    const query = {
+        airTemperature: {$gte: {value: min}}
+    }
+    return query;
+}
+
+module.exports.getTempRange = (min, max) => {
+    const query = {$and:[{airTemperature: {$gte:{value:min}}},{airTemperature: {$lte:{value: max}}}]}
+    return query;
+}
+
+module.exports.getSection = (section) => {
+    const query = {sections: {
+            "$in": [section]
+        }}
+    return query;
+}
+
+module.exports.getCallLettersMinTemp = (callLetters, min) => {
+    const query = {
+        airTemperature: {$gte: {value: min}},
+        callLetters: {$eq: callLetters}
+    }
+    return query;
+}
+
 module.exports.getAll = async (minAirTemp, maxAirTemp, section, callLetters) => {
-    //console.log(callLetters)
-    console.log(typeof Number(minAirTemp))
-    console.log(Number(minAirTemp))
+    // if a query parameter is missing, it console logs as 'undefined'
 
     const min = Number(minAirTemp)
     const max = Number(maxAirTemp)
 
-    // if not present in the query string, its NaN
+    // if not present in the query string, its NaN after the conversion
 
     const database = client.db(databaseName);
     const weather = database.collection(collName);
-    const query = {
-        //airTemperature: {value: {$gte: min}}
-        //elevation: {$gte: 1000},
 
-        callLetters: {$eq: callLetters},
+    if(minAirTemp!==undefined && maxAirTemp===undefined && section===undefined&&callLetters===undefined){
+        const myQuery = module.exports.getMinTemp(min)
+        console.log(myQuery)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    }else if(minAirTemp!==undefined && maxAirTemp!==undefined && section===undefined && callLetters===undefined){
+        const myQuery = module.exports.getTempRange(min, max)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    }else if(section!==undefined && minAirTemp===undefined && maxAirTemp===undefined && callLetters===undefined){
+        const myQuery = module.exports.getSection(section)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    }else if(callLetters!==undefined && minAirTemp!==undefined && maxAirTemp===undefined && section===undefined){
+        const myQuery = module.exports.getCallLettersMinTemp(callLetters, min)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    }
+
+
+    const query = {
+
         airTemperature: {$gte: {value: min}},
         //$and:[{airTemperature: {$gte:{value:min}}},{airTemperature: {$lte:{value: max}}}],
-
-        //airTemperature: {value: {$gte: Number(minAirTemp)}},
-        //$and:[{airTemperature: {value:{$gte: Number(minAirTemp)}}}, {airTemperature: {value: {$lte: Number(maxAirTemp)}}}]
-        //airTemperature: {value: {$gte: 4.4}},
-        //"airTemperature": {"value": {$gte: Number(minAirTemp)}
-        //maxAirTemp: {$lte: maxAirTemp},
-        //sections:{$eq:section}
         // sections: {
         //     "$in": [section]
         // }
+        //callLetters: {$eq: callLetters},
+
     }
 
-    let weatherCursor = await weather.find(query).limit(10);
+    //let weatherCursor = await weather.find(query).limit(10);
     //await console.log(weatherCursor.toArray())
     //const query = {callLetters: {$eq: callLetters}};
 
     // let weatherCursor = await weather.find(
     //     {callLetters: {$eq: callLetters}}
     // ).limit(10);
-    return weatherCursor.toArray();
+    //return weatherCursor.toArray();
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
