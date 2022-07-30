@@ -35,20 +35,20 @@ describe("/weather routes", () => {
         });
     });
 
-    // describe("GET /:id", () =>{
-    //     it("should return a single weather on success", async () => {
-    //         weatherData.getByIdOrTitle.mockResolvedValue([{_id:"573a1397f29313caabce8896", title: "One Day"}])
-    //         const res = await request(server).get("/weathers/573a1397f29313caabce8896")
-    //         expect(res.statusCode).toEqual(200)
-    //     });
-    //
-    //     it("should return a 404 if an error is found", async () => {
-    //         weatherData.getByIdOrTitle.mockResolvedValue(null)
-    //         const res = await request(server).get("/weathers/573a1397f29313caabce69db")
-    //         expect(res.statusCode).toEqual(404)
-    //
-    //     });
-    // });
+    describe("GET /:id", () =>{
+        it("should return a weather array on success", async () => {
+            weatherData.getByIdOrCallLetter.mockResolvedValue([{_id:"573a1397f29313caabce8896", callLetters: "PLAT"}])
+            const res = await request(server).get("/weather/PLAT")
+            expect(res.statusCode).toEqual(200)
+        });
+
+        it("should return a 404 if an error is found", async () => {
+            weatherData.getByIdOrCallLetter.mockResolvedValue(null)
+            const res = await request(server).get("/weather/PLAT")
+            expect(res.statusCode).toEqual(404)
+
+        });
+    });
     //
     describe("POST /", () =>{
         it("should return a new weather object id on success", async () => {
