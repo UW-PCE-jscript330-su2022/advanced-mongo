@@ -104,16 +104,16 @@ module.exports.createComment = async (movieId, newObj) =>{
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
 module.exports.create = async (newObj) => {
     const database = client.db(databaseName);
-    const movies = database.collection(collName);
+    const weather = database.collection(collName);
 
-    if(!newObj.title){
-        // Invalid movie object, shouldn't go in database.
-        return {error: "Movies must have a title."}
+    if(!newObj.airTemperature.value){
+        // Invalid weather object, shouldn't go in database.
+        return {error: "Weather post must have an air temperature value."}
     }
-    const result = await movies.insertOne(newObj);
+    const result = await weather.insertOne(newObj);
 
     if(result.acknowledged){
-        return { newObjectId: result.insertedId, message: `Item created! ID: ${result.insertedId}` }
+        return { newObjectId: result.insertedId, message: `Weather object created! ID: ${result.insertedId}` }
     } else {
         return {error: "Something went wrong. Please try again."}
     }

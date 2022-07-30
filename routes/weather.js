@@ -77,7 +77,7 @@ router.post("/:id/comments", async(req, res) =>{
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
 router.post("/", async (req, res, next) => {
     let resultStatus;
-    let result = await movieData.create(req.body);
+    let result = await weatherData.create(req.body);
 
     if(result.error){
         resultStatus = 400;
