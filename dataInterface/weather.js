@@ -11,17 +11,17 @@ const collName = 'data'
 module.exports = {}
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/find/
-// module.exports.getAll = async () => {
-//     const database = client.db(databaseName);
-//     const weather = database.collection(collName);
-//     const query = {};
-//     let weatherCursor = await weather.find(query).limit(10);
-//     return weatherCursor.toArray();
-// }
 
 module.exports.getMinTemp =  (min) => {
     const query = {
         airTemperature: {$gte: {value: min}}
+    }
+    return query;
+}
+
+module.exports.getMaxTemp =  (max) => {
+    const query = {
+        airTemperature: {$lte: {value: max}}
     }
     return query;
 }
@@ -59,7 +59,6 @@ module.exports.getAll = async (minAirTemp, maxAirTemp, section, callLetters) => 
 
     if(minAirTemp!==undefined && maxAirTemp===undefined && section===undefined&&callLetters===undefined){
         const myQuery = module.exports.getMinTemp(min)
-        console.log(myQuery)
         let weatherCursor = await weather.find(myQuery).limit(10);
         return weatherCursor.toArray()
     }else if(minAirTemp!==undefined && maxAirTemp!==undefined && section===undefined && callLetters===undefined){
@@ -74,28 +73,16 @@ module.exports.getAll = async (minAirTemp, maxAirTemp, section, callLetters) => 
         const myQuery = module.exports.getCallLettersMinTemp(callLetters, min)
         let weatherCursor = await weather.find(myQuery).limit(10);
         return weatherCursor.toArray()
+    } else if(minAirTemp===undefined && maxAirTemp!==undefined && section===undefined && callLetters===undefined){
+        const myQuery = module.exports.getMaxTemp(max)
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
+    } else if(minAirTemp===undefined && maxAirTemp===undefined && section===undefined && callLetters===undefined){
+        const myQuery={}
+        let weatherCursor = await weather.find(myQuery).limit(10);
+        return weatherCursor.toArray()
     }
 
-
-    const query = {
-
-        airTemperature: {$gte: {value: min}},
-        //$and:[{airTemperature: {$gte:{value:min}}},{airTemperature: {$lte:{value: max}}}],
-        // sections: {
-        //     "$in": [section]
-        // }
-        //callLetters: {$eq: callLetters},
-
-    }
-
-    //let weatherCursor = await weather.find(query).limit(10);
-    //await console.log(weatherCursor.toArray())
-    //const query = {callLetters: {$eq: callLetters}};
-
-    // let weatherCursor = await weather.find(
-    //     {callLetters: {$eq: callLetters}}
-    // ).limit(10);
-    //return weatherCursor.toArray();
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
@@ -133,36 +120,6 @@ module.exports.getByIdOrCallLetter = async (identifier) => {
         return {error: `No item found with identifier ${identifier}.`}
     }
 }
-
-// module.exports.getByQueryParameters = async (min, max, section, callLetter) => {
-//     //console.log(identifier)
-//     // console.log(min)
-//     // console.log(max)
-//     // console.log(section)
-//     //console.log(callLetter)
-//     const database = client.db(databaseName);
-//     const weather = database.collection(collName);
-//
-//     let records
-//
-//     records = module.exports.getByCallLetter(callLetter);
-//
-//     //const records = await weather.find({callLetters: {$eq: callLetter}}).limit(10)
-//
-//     //await console.log(records)
-//
-//     // if(ObjectId.isValid(identifier)){
-//     //     records = module.exports.getById(identifier);
-//     // } else {
-//     //     records = module.exports.getByCallLetter(identifier);
-//     // }
-//
-//     if(records){
-//         return records;
-//     } else {
-//         return {error: `No record found.`}
-//     }
-// }
 
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
 module.exports.create = async (newObj) => {
