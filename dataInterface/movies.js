@@ -9,6 +9,7 @@ const databaseName = 'sample_mflix';
 const collName = 'movies'
 const commCollName = 'comments'
 
+
 module.exports = {}
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/find/
