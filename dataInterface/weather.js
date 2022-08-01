@@ -17,10 +17,13 @@ const uri =
   module.exports.getByCallLetters = async (userCallLetters) => {
     const database = client.db(databaseName);
     const weather = database.collection(collName);
+
+    
   
-    const query = {callLetters: userCallLetters};
+    const query = {callLetters: userCallLetters.toUpperCase()};
   
     let weatherCursor = await weather.find(query);
+    console.log(query);
   
     return weatherCursor.toArray();
   };
@@ -48,11 +51,11 @@ const uri =
     const database = client.db(databaseName);
     const weather = database.collection(collName);
   
-    const query = {userQuery};
-
-    return {}
+    // const query = {userQuery};
+    console.log(userQuery)
+    // console.log(query)
   
-    // let weatherCursor = await weather.find(userQuery);
+    let weatherCursor = await weather.find(userQuery).limit(10);
   
-    // return weatherCursor.toArray();
+    return weatherCursor.toArray();
   };
