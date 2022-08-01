@@ -26,23 +26,31 @@ module.exports = {}
 // GET ALL BY PARAM
 // GET WEATHER ENDPOINT
 // maxAirTemp: { $max: "$airTemperature.value" }  minAirTemp: { $min: "$airTemperature.value" }
-module.exports.getAll = async (callLetters,sections) => {
+module.exports.getAll = async (callLetters,sections,minAirTemp,maxAirTemp) => {
   const database = client.db(databaseName);
   const weather = database.collection(collName);
-  // 
-  const query = {"callLetters": callLetters, sections: {$in: [sections]} } ;
+
+// const maximAirTemp = weather.find(maxAirTemp).sort({"airTemperature.value":-1}).limit(1) // for MAX
+// db.collection.find().sort({age:+1}).limit(1) // for MIN
+// console.log(maximAirTemp);
+// , "airTemperature.value": maximAirTemp
+const query = {"callLetters": callLetters, sections: {$in: [sections]} } ;
   let weatherCursor = await weather.find(query).limit(10);
   return weatherCursor.toArray();
 }
 
 // GET WEATHER BY CALL LETTERS ENPOINT
-module.exports.getByCallLetters = async (callLetters, sections) => {
+module.exports.getByCallLetters = async (callLetters ) => {
     const database = client.db(databaseName);
     const weather = database.collection(collName);
   
-    const query = {"callLetters": callLetters,sections: {$in: [sections]}};
+    const query = {"callLetters": callLetters};
     let weatherCursor = await  weather.find(query).limit(10);
+    if(weatherCursor) {
     return weatherCursor.toArray();
+  } else {
+    return { error: "Something went wrong. Please try again." }
+  }
 }
 
 // POST WEATHER
