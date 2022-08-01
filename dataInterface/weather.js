@@ -4,7 +4,7 @@ const ObjectId = require('mongodb').ObjectId;
 require('dotenv').config()
 
 const uri =
-`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qlff5yn.mongodb.net/?retryWrites=true&w=majority`
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qlff5yn.mongodb.net/?retryWrites=true&w=majority`
 
 const client = new MongoClient(uri);
 
@@ -13,40 +13,37 @@ const collName = 'data';
 
 module.exports = {}
 
-// GET WEATHER ENDPOINT
-// module.exports.getAll = async () => {
-//     const database = client.db(databaseName);
-//     const weather = database.collection(collName);
-  
-//     const query = {};
-//     let weatherCursor = await  weather.find(query).limit(10);
-//     return weatherCursor.toArray();
-// }
+// GET ALLWEATHER BY PARAM
 
-// GET ALL BY PARAM
-// GET WEATHER ENDPOINT
-// maxAirTemp: { $max: "$airTemperature.value" }  minAirTemp: { $min: "$airTemperature.value" }
-module.exports.getAll = async (callLetters,sections,minAirTemp,maxAirTemp) => {
+module.exports.getAll = async (callLetters, sections, minAirTemp, maxAirTemp) => {
   const database = client.db(databaseName);
   const weather = database.collection(collName);
+  console.log(minAirTemp);
+  console.log(maxAirTemp); 
+  console.log(parseFloat(minAirTemp));
+  console.log(parseFloat(maxAirTemp));
 
-// const maximAirTemp = weather.find(maxAirTemp).sort({"airTemperature.value":-1}).limit(1) // for MAX
-// db.collection.find().sort({age:+1}).limit(1) // for MIN
-// console.log(maximAirTemp);
-// , "airTemperature.value": maximAirTemp
-const query = {"callLetters": callLetters, sections: {$in: [sections]} } ;
-  let weatherCursor = await weather.find(query).limit(10);
+
+  const query = {
+    "callLetters": callLetters
+    , sections: { $in: [sections] }
+    , "airTemperature.value": { $gte: (parseFloat(minAirTemp)) }
+    , "airTemperature.value": { $lte: (parseFloat(maxAirTemp)) }
+    // , "airTemperature.value": { $gte: (minAirTemp) }
+    // , "airTemperature.value": { $lte: (maxAirTemp) }
+  };
+  let weatherCursor = await weather.find(query).limit(10).project({callLetters: 1, sections:1, "airTemperature.value":1});
   return weatherCursor.toArray();
 }
 
 // GET WEATHER BY CALL LETTERS ENPOINT
-module.exports.getByCallLetters = async (callLetters ) => {
-    const database = client.db(databaseName);
-    const weather = database.collection(collName);
-  
-    const query = {"callLetters": callLetters};
-    let weatherCursor = await  weather.find(query).limit(10);
-    if(weatherCursor) {
+module.exports.getByCallLetters = async (callLetters) => {
+  const database = client.db(databaseName);
+  const weather = database.collection(collName);
+
+  const query = { "callLetters": callLetters };
+  let weatherCursor = await weather.find(query).limit(10);
+  if (weatherCursor) {
     return weatherCursor.toArray();
   } else {
     return { error: "Something went wrong. Please try again." }
