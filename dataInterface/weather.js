@@ -1,8 +1,10 @@
 const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
+require('dotenv').config();
+
 const uri =
-  "mongodb+srv://Cahillmn:Ballard*85@cluster0.i33cd.mongodb.net/?retryWrites=true&w=majority";
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.i33cd.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri);
 
@@ -11,14 +13,16 @@ const collName = 'data';
 
 module.exports = {}
 
-module.exports.getAll = async () => {
+module.exports.getAll = async (callLetters,sections,minAirTemp,maxAirTemp) => {
     const database = client.db(databaseName);
     const weather = database.collection(collName);
   
-    const query = {};
+    const query = {"callLetters":callLetters, sections: {$in: [sections]}};
     let weatherCursor = await weather.find(query).limit(10);
   
     return weatherCursor.toArray();
+
+    
   }
 
   module.exports.getByCallLetters = async (callLetters) => {

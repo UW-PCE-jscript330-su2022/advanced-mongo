@@ -18,10 +18,15 @@
     "testEnvironment": "node"
   },
   "nodemonConfig": {
-    "ignore": ["**/*test.js", "README.md", "package.json"],
+    "ignore": [
+      "**/*test.js",
+      "README.md",
+      "package.json"
+    ],
     "delay": 2000
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mongodb": "^4.8.0"
   },
