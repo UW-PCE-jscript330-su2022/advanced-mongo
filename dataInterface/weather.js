@@ -10,6 +10,43 @@ const collection = 'data';
 
 module.exports = {};
 
+module.exports.getWeatherByQuery = async (
+  minAirTemp,
+  maxAirTemp,
+  section,
+  callLetters
+) => {
+  const database = client.db(databaseName);
+  const collectionData = database.collection(collection);
+
+  let query = {};
+
+  if (minAirTemp) {
+    query['airTemperature.value'] = { $gte: parseInt(minAirTemp) };
+  }
+
+  if (maxAirTemp) {
+    query['airTemperature.value'] = { $lte: parseInt(maxAirTemp) };
+  }
+
+  if (section) {
+    query.sections = section;
+  }
+
+  if (callLetters) {
+    query.callLetters = callLetters;
+  }
+
+  console.log(query);
+  let cursor = await collectionData.find(query);
+
+  return cursor
+    ? cursor.toArray()
+    : {
+        error: `There was an error retrieving data. Please try again later.`,
+      };
+};
+
 // retrieve weather data for given call letters
 module.exports.getWeatherByCallLetters = async (callLetters) => {
   const database = client.db(databaseName);
@@ -29,7 +66,6 @@ module.exports.createWeatherReport = async (weatherReport) => {
   const database = client.db(databaseName);
   const collectionData = database.collection(collection);
 
-  const query = {};
   const result = await collectionData.insertOne(weatherReport);
 
   return result.acknowledged

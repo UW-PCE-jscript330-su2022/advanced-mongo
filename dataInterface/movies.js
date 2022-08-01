@@ -105,15 +105,15 @@ module.exports.getMovieByTitle = async (title) => {
 };
 
 // add new movie to database
-module.exports.createMovie = async (newObj) => {
+module.exports.createMovie = async (newMovieObj) => {
   const database = client.db(databaseName);
   const movies = database.collection(collection);
 
-  if (!newObj.title) {
+  if (!newMovieObj.title) {
     // Invalid movie object, shouldn't go in database.
     return { error: 'Movies must have a title.' };
   }
-  const result = await collectionData.insertOne(newObj);
+  const result = await collectionData.insertOne(newMovieObj);
 
   return result.acknowledged
     ? await module.exports.getMovieById(result.insertedId)
@@ -148,7 +148,7 @@ module.exports.createComment = async (movieId, newCommentObj) => {
 };
 
 // update a movie by movie id value
-module.exports.updateMovieById = async (movieId, newObj) => {
+module.exports.updateMovieById = async (movieId, newMovieObj) => {
   if (!validateId(movieId)) {
     return { error: `Invalid id value. Please try again` };
   }
@@ -159,7 +159,7 @@ module.exports.updateMovieById = async (movieId, newObj) => {
   // Product team says only these two fields can be updated.
   const result = await collectionData.updateOne(
     { _id: ObjectId(movieId) },
-    { $set: { title: newObj.title, plot: newObj.plot } }
+    { $set: { title: newMovieObj.title, plot: newMovieObj.plot } }
   );
 
   if (result.modifiedCount != 1) {
