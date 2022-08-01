@@ -8,13 +8,13 @@ const client = new MongoClient(uri);
 const databaseName = 'sample_mflix';
 const collection = 'movies';
 
+const database = client.db(databaseName);
+const collectionData = database.collection(collection);
+
 module.exports = {};
 
 // retrieve all movies from database
 module.exports.getAllMovies = async () => {
-  const database = client.db(databaseName);
-  const collectionData = database.collection(collection);
-
   const query = {};
   let cursor = await collectionData
     .find(query)
@@ -35,8 +35,6 @@ module.exports.getMovieById = async (movieId) => {
     return { error: `Invalid id value. Please try again` };
   }
 
-  const database = client.db(databaseName);
-  const movies = database.collection(collection);
   const query = { _id: ObjectId(movieId) };
   let movie = await collectionData.findOne(query);
 
@@ -49,8 +47,6 @@ module.exports.getMovieById = async (movieId) => {
 
 // retrieve movies that match a given genre
 module.exports.getMoviesByGenre = async (genreName) => {
-  const database = client.db(databaseName);
-  const movies = database.collection(collection);
   let cursor = await collectionData
     .find({ genres: genreName })
     .limit(10)
@@ -72,11 +68,8 @@ module.exports.getMovieComments = async (movieId) => {
   }
 
   if (!movieExists(movieId).error) {
-    const database = client.db(databaseName);
-    const comments = database.collection(collections.comments);
-
     const query = { movie_id: ObjectId(movieId) };
-    const resultCursor = await comments.find(query);
+    const resultCursor = await collectionData.find(query);
 
     return resultCursor
       ? await resultCursor.toArray()
@@ -92,8 +85,6 @@ module.exports.getMovieComments = async (movieId) => {
 
 // retrieve single movie by title
 module.exports.getMovieByTitle = async (title) => {
-  const database = client.db(databaseName);
-  const movies = database.collection(collection);
   const query = { title: title };
   let movie = await collectionData.findOne(query);
 
@@ -106,9 +97,6 @@ module.exports.getMovieByTitle = async (title) => {
 
 // add new movie to database
 module.exports.createMovie = async (newMovieObj) => {
-  const database = client.db(databaseName);
-  const movies = database.collection(collection);
-
   if (!newMovieObj.title) {
     // Invalid movie object, shouldn't go in database.
     return { error: 'Movies must have a title.' };
@@ -127,9 +115,7 @@ module.exports.createComment = async (movieId, newCommentObj) => {
   }
 
   if (!movieExists(movieId).error) {
-    const database = client.db(databaseName);
-    const comments = database.collection(collections.comments);
-    const result = await comments.insertOne({
+    const result = await collectionData.insertOne({
       ...newCommentObj,
       movie_id: ObjectId(movieId),
       date: new Date(),
@@ -152,9 +138,6 @@ module.exports.updateMovieById = async (movieId, newMovieObj) => {
   if (!validateId(movieId)) {
     return { error: `Invalid id value. Please try again` };
   }
-
-  const database = client.db(databaseName);
-  const movies = database.collection(collection);
 
   // Product team says only these two fields can be updated.
   const result = await collectionData.updateOne(
@@ -179,9 +162,6 @@ module.exports.deleteMovieById = async (movieId) => {
   }
 
   if (!movieExists(movieId).error) {
-    const database = client.db(databaseName);
-    const movies = database.collection(collection);
-
     const deletionRules = { _id: ObjectId(movieId) };
     const result = await collectionData.deleteOne(deletionRules);
 

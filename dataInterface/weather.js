@@ -5,8 +5,12 @@ const uri =
   'mongodb+srv://Ryan:7Kvszal8Uz7Oqzok@cluster0.couuu.mongodb.net/?retryWrites=true&w=majority';
 
 const client = new MongoClient(uri);
+
 const databaseName = 'sample_weatherdata';
 const collection = 'data';
+
+const database = client.db(databaseName);
+const collectionData = database.collection(collection);
 
 module.exports = {};
 
@@ -16,9 +20,6 @@ module.exports.getWeatherByQuery = async (
   section,
   callLetters
 ) => {
-  const database = client.db(databaseName);
-  const collectionData = database.collection(collection);
-
   let query = {};
 
   if (minAirTemp) {
@@ -37,7 +38,6 @@ module.exports.getWeatherByQuery = async (
     query.callLetters = callLetters;
   }
 
-  console.log(query);
   let cursor = await collectionData.find(query);
 
   return cursor
@@ -49,9 +49,6 @@ module.exports.getWeatherByQuery = async (
 
 // retrieve weather data for given call letters
 module.exports.getWeatherByCallLetters = async (callLetters) => {
-  const database = client.db(databaseName);
-  const collectionData = database.collection(collection);
-
   const query = { callLetters: callLetters.toUpperCase() };
   let cursor = await collectionData.find(query).limit(10);
 
@@ -63,9 +60,6 @@ module.exports.getWeatherByCallLetters = async (callLetters) => {
 };
 
 module.exports.createWeatherReport = async (weatherReport) => {
-  const database = client.db(databaseName);
-  const collectionData = database.collection(collection);
-
   const result = await collectionData.insertOne(weatherReport);
 
   return result.acknowledged

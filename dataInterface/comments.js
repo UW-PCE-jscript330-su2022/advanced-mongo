@@ -8,13 +8,13 @@ const client = new MongoClient(uri);
 const databaseName = 'sample_mflix';
 const collection = 'comments';
 
+const database = client.db(databaseName);
+const collectionData = database.collection(collection);
+
 module.exports = {};
 
 // retrieve all movie comments from database
 module.exports.getAllComments = async () => {
-  const database = client.db(databaseName);
-  const collectionData = database.collection(collection);
-
   const query = {};
 
   let cursor = await collectionData
@@ -32,8 +32,6 @@ module.exports.getCommentById = async (commentId) => {
   }
 
   if (!movieExists(movieId).error) {
-    const database = client.db(databaseName);
-    const comments = database.collection(collection);
     const query = { _id: ObjectId(commentId) };
     const result = await collectionData.findOne(query);
 
@@ -53,9 +51,6 @@ module.exports.updateCommentById = async (commentId, commentText) => {
     return { error: `Invalid id value. Please try again` };
   }
 
-  const database = client.db(databaseName);
-  const comments = database.collection(collection);
-
   let result = await collectionData.updateOne(
     { _id: ObjectId(commentId) },
     { $set: { text: commentText } }
@@ -73,9 +68,6 @@ module.exports.deleteCommentById = async (commentId) => {
   if (!validateId(commentId)) {
     return { error: `Invalid id value. Please try again` };
   }
-
-  const database = client.db(databaseName);
-  const comments = database.collection(collection);
 
   const deletionRules = { _id: ObjectId(commentId) };
   const result = await collectionData.deleteOne(deletionRules);
