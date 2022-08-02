@@ -17,7 +17,10 @@ module.exports.getAll = async (callLetters,sections,minAirTemp,maxAirTemp) => {
     const database = client.db(databaseName);
     const weather = database.collection(collName);
   
-    const query = {"callLetters":callLetters, sections: {$in: [sections]}};
+    const query = {"callLetters":callLetters, sections: {$in: [sections]},"airTemperature.value": { $gte: (parseFloat(minAirTemp)), $lte: (parseFloat(maxAirTemp)) }};
+
+    console.log(minAirTemp);
+    console.log(maxAirTemp);
     let weatherCursor = await weather.find(query).limit(10);
   
     return weatherCursor.toArray();

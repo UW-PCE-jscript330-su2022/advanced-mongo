@@ -3,16 +3,16 @@ const router = Router();
 
 const weatherData = require('../dataInterface/weather');
 
-// curl http://localhost:5001/weather?callLetters=VC81&sections=AG1&minAirTemp=-4.7&maxAirTemp=-4.7
+// curl http://localhost:5001/weather?callLetters=VC81&sections=AG1&minAirTemp=-20&maxAirTemp=50
 router.get("/", async (req, res, next) => {
 
   let callLetters = req.query.callLetters;
   let sections = req.query.sections;
+  let minAirTemp = req.query.minAirTemp;
   let maxAirTemp = req.query.maxAirTemp;
-  let minAirTemp = req.query.maxAirTemp;
 
   console.log(req.query);
-    let weatherList = await weatherData.getAll(callLetters,sections,maxAirTemp,minAirTemp);
+    let weatherList = await weatherData.getAll(callLetters,sections,minAirTemp,maxAirTemp);
   
     if(weatherList){
       res.status(200).send(weatherList)
