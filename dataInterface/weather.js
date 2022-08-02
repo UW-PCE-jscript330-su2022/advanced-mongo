@@ -22,11 +22,11 @@ module.exports.getAllByCallLetter = async (callLetter) => {
 }
 
 module.exports.getByParameter = async (queryObj) => {
+  console.log(queryObj);
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
-  // const query = {  };
-  let movie = await movies.find(queryObj).limit(10);
-  return movie;
+  const weatherData = database.collection(collName);
+  let result = await weatherData.find(queryObj).limit(10);
+  return result.toArray();
 }
 
 module.exports.createWeatherDocument = async (itemsToInsert) => {
