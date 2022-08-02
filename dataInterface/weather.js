@@ -19,15 +19,23 @@ module.exports.getAll = async (callLetters, sections, minAirTemp, maxAirTemp) =>
   const database = client.db(databaseName);
   const weather = database.collection(collName);
 
-  const query = {
-    "callLetters": callLetters
-    , "sections": { $in: [sections] }
-    , "airTemperature.value": { $gte: (parseFloat(minAirTemp)),$lte: (parseFloat(maxAirTemp)) }
+  let query = {};
 
-  };
+  if (sections) {
+    query.sections = sections;
+  }
+
+  if (callLetters) {
+    query.callLetters = callLetters;
+  }
+
+  if (minAirTemp, maxAirTemp) {
+    query['airTemperature.value'] = { $lte: parseInt(maxAirTemp) },{ $gte: parseInt(minAirTemp) };
+  }
 
  let weatherCursor = await weather.find(query).limit(10).project({callLetters: 1, sections:1, "airTemperature.value":1});
-  return weatherCursor.toArray();
+ 
+ return weatherCursor.toArray();
 }
 
 // GET WEATHER BY CALL LETTERS ENPOINT
@@ -43,6 +51,15 @@ module.exports.getByCallLetters = async (callLetters) => {
     return { error: "Something went wrong. Please try again." }
   }
 }
+
+// https://www.mongodb.com/docs/manual/reference/method/cursor.toArray/
+// collection.find().toArray(function(err, documents) {
+//         assert.equal(1, documents.length);
+//         assert.deepEqual([1, 2, 3], documents[0].b);
+//       });
+// https://mongodb.github.io/node-mongodb-native/api-generated/cursor.html
+
+
 
 // POST WEATHER
 module.exports.create = async (newObj) => {
