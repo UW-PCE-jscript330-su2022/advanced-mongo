@@ -174,3 +174,4 @@ router.get("/genres/:genreName", async(req, res)=>{
   res.status(200).send(result);
 })
 //genre section end
+
