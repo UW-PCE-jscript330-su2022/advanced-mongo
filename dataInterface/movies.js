@@ -126,7 +126,6 @@ module.exports.createComment = async(movieId, newObj) =>{
 module.exports.updateById = async (movieId, newObj) => {
   const database = client.db(databaseName);
   const movies = database.collection(collName);
-
   // Product team says only these two fields can be updated.
   const updateRules = {
     $set: {"title" : newObj.title, "plot": newObj.plot}

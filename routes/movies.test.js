@@ -11,7 +11,7 @@ describe("/movies routes", () => {
 
   });
 
-  describe("GET /", () =>{
+  describe("GET /movies", () =>{
     it("should return an array on success", async () => {
       movieData.getAll.mockResolvedValue([{_id:"890", title:"One Day"}]);
 
@@ -31,7 +31,7 @@ describe("/movies routes", () => {
     });
   });
 
-  describe("GET /:id/comments", () =>{
+  describe("GET /movies/:id/comments", () =>{
     it("should return an array on success", async () => {
       movieData.getAllComments.mockResolvedValue([{_id:"123", text: "comment"}]);
 
@@ -51,7 +51,7 @@ describe("/movies routes", () => {
     });
   });
 
-  describe("GET /:id", () =>{
+  describe("GET /movies/:id", () =>{
     it("should return a single movie on success", async () => {
       movieData.getAll.mockResolvedValue([{_id:"890", title:"One Day"}]);
 
@@ -70,7 +70,7 @@ describe("/movies routes", () => {
     });
   });
 
-  describe("GET /:id/comments/:commentId", () =>{
+  describe("GET /movies/:id/comments/:commentId", () =>{
     it("should return a single comment on success", async () => {
       movieData.getComment.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
 
@@ -89,7 +89,7 @@ describe("/movies routes", () => {
     });
   });
 
-  describe("POST /", () =>{
+  describe("POST /movies", () =>{
     it("should return the new movie on success", async () => {
       movieData.getComment.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
 
@@ -118,7 +118,7 @@ describe("/movies routes", () => {
       // expect status code == 400
   });
 
-  describe("POST /:id/comments", () =>{
+  describe("POST /movies/:id/comments", () =>{
     it("should return the new comment on success", async () => {
       movieData.getComment.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
 
@@ -147,7 +147,7 @@ describe("/movies routes", () => {
       // expect status code == 400
   });
 
-  describe("PUT /:id", () =>{
+  describe("PUT /movies/:id", () =>{
     it("should return the updated movie on success", async () => {
       movieData.updateById.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
 
@@ -166,7 +166,7 @@ describe("/movies routes", () => {
     });
   });
 
-  describe("PUT /:id", () =>{
+  describe("PUT /movies/:id/comments/:commentId", () =>{
     it("should return the updated comment on success", async () => {
       movieData.updateCommentById.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
 
@@ -186,7 +186,7 @@ describe("/movies routes", () => {
   });
 
 
-  describe("DELETE /:id", () =>{
+  describe("DELETE /movies/:id", () =>{
     it("should return a message on success", async () => {
       movieData.deleteById.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
 
@@ -205,7 +205,7 @@ describe("/movies routes", () => {
     });
   });
 
-  describe("DELETE /:id", () =>{
+  describe("DELETE /movies/:id/comments/:commentId", () =>{
     it("should return a message on success", async () => {
       movieData.deleteCommentById.mockResolvedValue({_id:"890", title:"One Day", text: "comment"});
 
