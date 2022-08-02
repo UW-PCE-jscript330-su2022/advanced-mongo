@@ -21,20 +21,20 @@ module.exports.getAllByCallLetter = async (callLetter) => {
   return resultCursor.toArray();
 }
 
-module.exports.getByParameter = async (movieId) => {
+module.exports.getByParameter = async (queryObj) => {
   const database = client.db(databaseName);
   const movies = database.collection(collName);
-  const query = {_id: ObjectId(movieId)};
-  let movie = await movies.find(query).limit(10);
+  // const query = {  };
+  let movie = await movies.find(queryObj).limit(10);
 
   return movie;
 }
 
-module.exports.createWeatherDocument = async (title) => {
+module.exports.createWeatherDocument = async (itemsToInsert) => {
   const database = client.db(databaseName);
-  const movies = database.collection(collName);
-  const query = {title: title};
-  let movie = await movies.insertOne(query);
+  const weatherData = database.collection(collName);
+  const query = {...itemsToInsert};
+  let result = await weatherData.insertOne(query);
 
-  return movie;
+  return result;
 }
