@@ -21,25 +21,30 @@ router.get("/:callLetters", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   let result = await weatherData.createWeatherReport(req.body);
   if (result.error){
-    console.log(result);
     res.status(500).send(result);
   } else {
     res.status(200).send(result);
   }
 });
 
-// curl http://localhost:5000/weather?callLetters=VCSZ&minAirTemp=35
+// curl "http://localhost:5000/weather?callLetters=VCSZ&minAirTemp=-3.1&maxAirTemp=99&section=AG1"
 router.get("/", async (req, res, next) => {
   // Extract query parameters:
   const minAirTemp = req.query.minAirTemp;
   const maxAirTemp = req.query.maxAirTemp;
   const section = req.query.section;
   const callLetters = req.query.callLetters;
+  // Get weatherReports:
   let weatherReports = await weatherData.getWeatherReportsByQuery(minAirTemp, maxAirTemp, section, callLetters);
-  if (weatherReports){
-    res.status(200).send(weatherReports);
-  } else {
+  // Responses:
+  if (!weatherReports) {
     res.status(500).send({error: "Something went wrong. Please try again."})
+  } else {
+    if (weatherReports.errors) {
+      res.status(422).send(weatherReports);
+    } else {
+      res.status(200).send(weatherReports);
+    }
   }
 });
 
