@@ -49,6 +49,91 @@ describe("/weather routes", () => {
 
         });
     });
+
+    describe("GET / query parameters, minAirTemp", () =>{
+        it("should return a weather array on success", async () => {
+            weatherData.getAll.mockResolvedValue([{
+                _id:"573a1397f29313caabce8896",
+                airTemperature:{
+                    value: 7.5,
+                    quality: "1"
+                }}])
+            const res = await request(server).get("/weather?minAirTemp=5")
+            expect(res.statusCode).toEqual(200)
+            expect(Array.isArray(res.body)).toEqual(true)
+        });
+
+        it("should return a 404 if an error is found", async () => {
+            weatherData.getByIdOrCallLetter.mockResolvedValue(null)
+            const res = await request(server).get("/hello")
+            expect(res.statusCode).toEqual(404)
+
+        });
+    });
+
+    describe("GET / query parameters, section", () =>{
+        it("should return a weather array on success", async () => {
+            weatherData.getAll.mockResolvedValue([{
+                _id:"573a1397f29313caabce8896",
+                airTemperature:{
+                    value: 7.5,
+                    quality: "1"
+                }}])
+            const res = await request(server).get("/weather?section=AG1")
+            expect(res.statusCode).toEqual(200)
+            expect(Array.isArray(res.body)).toEqual(true)
+        });
+
+        it("should return a 404 if an error is found", async () => {
+            weatherData.getByIdOrCallLetter.mockResolvedValue(null)
+            const res = await request(server).get("/hello")
+            expect(res.statusCode).toEqual(404)
+
+        });
+    });
+
+    describe("GET / query parameters, Temperature Range", () =>{
+        it("should return a weather array on success", async () => {
+            weatherData.getAll.mockResolvedValue([{
+                _id:"573a1397f29313caabce8896",
+                airTemperature:{
+                    value: 7.5,
+                    quality: "1"
+                }}])
+            const res = await request(server).get("/weather?minAirTemp=5&maxAirTemp=90")
+            expect(res.statusCode).toEqual(200)
+            expect(Array.isArray(res.body)).toEqual(true)
+        });
+
+        it("should return a 404 if an error is found", async () => {
+            weatherData.getByIdOrCallLetter.mockResolvedValue(null)
+            const res = await request(server).get("/hello")
+            expect(res.statusCode).toEqual(404)
+
+        });
+    });
+
+    describe("GET / query parameters, callLetters and minAirTemp", () =>{
+        it("should return a weather array on success", async () => {
+            weatherData.getAll.mockResolvedValue([{
+                _id:"573a1397f29313caabce8896",
+                airTemperature:{
+                    value: 7.5,
+                    quality: "1"
+                }}])
+            const res = await request(server).get("/weather?callLetters=VC81&minAirTemp=35")
+            expect(res.statusCode).toEqual(200)
+            expect(Array.isArray(res.body)).toEqual(true)
+        });
+
+        it("should return a 404 if an error is found", async () => {
+            weatherData.getByIdOrCallLetter.mockResolvedValue(null)
+            const res = await request(server).get("/hello")
+            expect(res.statusCode).toEqual(404)
+
+        });
+    });
+
     //
     describe("POST /", () =>{
         it("should return a new weather object id on success", async () => {
