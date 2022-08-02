@@ -35,31 +35,47 @@ router.post("/", async (req, res, next) => {
 
  // curl "http://localhost:5000/weather?callLetters=TFBY&sections=AG1"
 router.get("/", async (req, res, next) => {
-    console.log(req.query);
-    let minAirTemp = req.query.minAirTemp;
-    let maxAirTemp = req.query.maxAirTemp;
+    let key = Object.keys(req.query);
+    let vals = Object.values(req.query)
+    console.log(key)
+    console.log(vals)
+
+    console.log(key.includes('minAirTemp') || key.includes('maxAirTemp') )
+
+    let airTemperature = req.query.airTemperature;
     let sections = req.query.sections;
     let callLetters = req.query.callLetters;
+    let minAirTemp = {};
+    let maxAirTemp = {};
 
-    // if undefined, write code to completely omit that key-val pair?
-  let minUndef = () =>{
-     if(minAirTemp === undefined){
-     return {$exists:true}
-    } else {
-      return minAirTemp 
+  let airTemperatureFunc = () => {
+
+    if (key.includes('minAirTemp')) {
+
+      let minAirTempNum = parseFloat(vals);
+
+      if (typeof minAirTempNum !== "number" ) {
+        return { error: 'this val must be a Number' }
+      }
+      else if (minAirTempNum !== {} || minAirTempNum !== undefined) {
+        return { $gte: minAirTempNum }
+        }
     }
+
+    if (key.includes('maxAirTemp')) {
+
+      let maxAirTempNum = parseFloat(vals);
+
+      if (typeof maxAirTempNum !== "number" ) {
+        return { error: 'this val must be a Number' }
+      }
+      else if (maxAirTempNum !== {} || maxAirTempNum !== undefined) {
+        return { $gte: maxAirTempNum }
+        }
+    }
+
   }
-
-  let maxUndef = () =>{
-    if (maxAirTemp === NaN){
-      return {error: 'this val must be a Number'}
-    }
-    else if(maxAirTemp === undefined){
-      return {$exists:true}
-   } else {
-     return {$gte: (parseFloat(minAirTemp)) }
-   }
- }
+  
 
 
  let secUndef = () =>{
@@ -80,7 +96,7 @@ let callLettersUndef = () =>{
 
     // let result = await weatherData.searchWeather({minAirTemp : minUndef(), maxAirTemp: maxUndef(), sections: secUndef(), callLetters: callLettersUndef()});
 
-    let result = await weatherData.searchWeather({sections: secUndef(), callLetters: callLettersUndef()});
+    let result = await weatherData.searchWeather({sections: secUndef(), callLetters: callLettersUndef(), "airTemperature.value": airTemperatureFunc() });
 
     console.log(result);
     if(result.error){
