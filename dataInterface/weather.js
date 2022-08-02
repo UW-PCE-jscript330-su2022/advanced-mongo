@@ -18,21 +18,15 @@ module.exports = {}
 module.exports.getAll = async (callLetters, sections, minAirTemp, maxAirTemp) => {
   const database = client.db(databaseName);
   const weather = database.collection(collName);
-  console.log(minAirTemp);
-  console.log(maxAirTemp); 
-  console.log(parseFloat(minAirTemp));
-  console.log(parseFloat(maxAirTemp));
-
 
   const query = {
     "callLetters": callLetters
-    , sections: { $in: [sections] }
-    , "airTemperature.value": { $gte: (parseFloat(minAirTemp)) }
-    , "airTemperature.value": { $lte: (parseFloat(maxAirTemp)) }
-    // , "airTemperature.value": { $gte: (minAirTemp) }
-    // , "airTemperature.value": { $lte: (maxAirTemp) }
+    , "sections": { $in: [sections] }
+    , "airTemperature.value": { $gte: (parseFloat(minAirTemp)),$lte: (parseFloat(maxAirTemp)) }
+
   };
-  let weatherCursor = await weather.find(query).limit(10).project({callLetters: 1, sections:1, "airTemperature.value":1});
+
+ let weatherCursor = await weather.find(query).limit(10).project({callLetters: 1, sections:1, "airTemperature.value":1});
   return weatherCursor.toArray();
 }
 
