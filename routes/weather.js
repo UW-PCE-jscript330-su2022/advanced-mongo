@@ -14,6 +14,8 @@ router.get('/', async (req, res) => {
   if (result === null) {
     resultStatus = 500;
   } else if (result.length === 0) {
+    resultStatus = 400;
+  } else if (result.error) {
     resultStatus = 422;
   } else {
     resultStatus = 200;

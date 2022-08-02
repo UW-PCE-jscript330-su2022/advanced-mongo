@@ -23,16 +23,25 @@ module.exports.getWeatherReports = async (
   let query = {};
   let projection = {};
 
+  minAirTemp = parseFloat(minAirTemp);
+  maxAirTemp = parseFloat(maxAirTemp);
+
+  if (minAirTemp > maxAirTemp) {
+    return {
+      error: `Minimum air temp cannot be greater than maximum air temp. Please try again.`,
+    };
+  }
+
   if (minAirTemp || maxAirTemp) {
     query['airTemperature.value'] = {};
     projection['airTemperature.value'] = 1;
   }
 
-  if (minAirTemp) {
+  if (!isNaN(minAirTemp)) {
     query['airTemperature.value']['$gte'] = parseFloat(minAirTemp);
   }
 
-  if (maxAirTemp) {
+  if (!isNaN(maxAirTemp)) {
     query['airTemperature.value']['$lte'] = parseFloat(maxAirTemp);
   }
 
