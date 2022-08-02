@@ -70,7 +70,7 @@ router.get("/", async (req, res, next) => {
         return { error: 'this val must be a Number' }
       }
       else if (maxAirTempNum !== {} || maxAirTempNum !== undefined) {
-        return { $gte: maxAirTempNum }
+        return { $lte: maxAirTempNum }
         }
     }
 
