@@ -24,11 +24,23 @@ module.exports.getAll = async () => {
 module.exports.getByQueryString = async (queryString) => {
     const database = client.db(databaseName);
     const weatherData = database.collection(collName);
-  console.log(queryString);
-    const query = {"callLetters": {$exists: 1, $eq: queryString.callLetters}, 
-        "airTemperature": {$exists: 1, $gt: queryString.minAirTemp, $lt: queryString.maxAirTemp}, 
-        "section": {$exists: 1, $in: [queryString.section]}};
-    console.log(query);
+    let query = {};
+    if (queryString.callLetters) {
+        query.callLetters = {$eq: queryString.callLetters};
+    }
+
+    if (query.minAirTemp && query.maxAirTemp) {
+        query.airTemperature.value ={$gt: parseInt(queryString.minAirTemp), $lt: parseInt(queryString.maxAirTemp)}
+    } else if (query.minAirTemp && !query.maxAirTemp) {
+        query.airTemperature.value = {$gt: parseInt(queryString.minAirTemp)};
+    } else if (!query.minAirTemp && query.maxAirTemp) {
+        query.airTemperature.value = {$lt: parseInt(queryString.maxAirTemp)};
+    }
+  
+    if (query.sections) {
+        query.sections = {$in: [queryString.section]};
+    }
+
     let wDataCursor = await weatherData.find(query).limit(10);
   
     return wDataCursor.toArray();
