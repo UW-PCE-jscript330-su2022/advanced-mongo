@@ -64,7 +64,6 @@ router.post("/", async (req, res) => {
     // If result is empty/null, something serious is wrong with the MongoDB connection.
     res.status(500).send({error: "Something went wrong. Please try again."});
   }
-
   // if(result.error){
   //   resultStatus = 404;
   // } else {

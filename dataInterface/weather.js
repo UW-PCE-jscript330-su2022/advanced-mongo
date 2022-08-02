@@ -26,7 +26,6 @@ module.exports.getByParameter = async (queryObj) => {
   const movies = database.collection(collName);
   // const query = {  };
   let movie = await movies.find(queryObj).limit(10);
-
   return movie;
 }
 
