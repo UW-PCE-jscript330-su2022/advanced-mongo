@@ -52,12 +52,11 @@ router.get("/", async (req, res) => {
     callLetters = req.query.callLetters;
     queryObj["callLetters"] = callLetters;
   }
-  const result = await weatherData.getByParameter(queryObj);
+  let result = await weatherData.getByParameter(queryObj);
   if(result){
     res.status(200).send(result);
   } else {
-    // If result is empty/null, something serious is wrong with the MongoDB connection.
-    res.status(404).send({error: "Something went wrong. Please try again."});
+    res.status(500).send({error: "Something went wrong. Please try again."});
   }
 });
 
@@ -66,11 +65,9 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   let resultStatus;
   let result = await weatherData.createWeatherDocument(req.body);
-
   if(result){
     res.status(200).send(result);
   } else {
-    // If result is empty/null, something serious is wrong with the MongoDB connection.
     res.status(500).send({error: "Something went wrong. Please try again."});
   }
   // if(result.error){

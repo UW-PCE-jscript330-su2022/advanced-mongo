@@ -22,7 +22,6 @@ module.exports.getAllByCallLetter = async (callLetter) => {
 }
 
 module.exports.getByParameter = async (queryObj) => {
-  console.log(queryObj);
   const database = client.db(databaseName);
   const weatherData = database.collection(collName);
   let result = await weatherData.find(queryObj).limit(10);
