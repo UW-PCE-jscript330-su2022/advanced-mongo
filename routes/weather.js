@@ -23,27 +23,41 @@ router.get("/:callLetter", async (req, res) => {
 // curl 'http://localhost:5000/weather?minAirTemp=0&sections=AG1&maxAirTemp=1&callLetter=UUQR'
 // '/' is all that's needed for path; '?' denotes query params, which are parsed by 'body-parser'. Multiple query params acceptable.
 router.get("/", async (req, res) => {
-  // Need validation for air temp being number (will come in as str, should be converted to num)
-  let queryObj;
+  let queryObj = {};
+  let minAirTemp;
+  let maxAirTemp;
+  let sections;
+  let callLetter;
   if (!req.query) {
     res.status(404).send({error: "No query parameters found."});
   }
-  if (req.query.minAirTemp) {
-    let minAirTempValue = parseFloat(req.query.minAirTemp);
+  if (req.query.minAirTemp && !req.query.maxAirTemp) {
+    // Need validation for air temp (will come in as str, should be converted to num)
+    minAirTemp = parseFloat(req.query.minAirTemp);
     // objName["keyName"] = valueName; <- creates key-value pair in objName
-    queryObj["airTemperature.value"] = {$gte: minAirTempValue};
-    console.log(queryObj);
+    queryObj["airTemperature.value"] = {$gte: minAirTemp};
   }
-  if (req.query.maxAirTemp) {
-    if (queryObj.airTemperature.value) {
-      let maxAirTempValue = parseFloat(req.query.maxAirTemp);
-      queryObj["airTemperature.value"] = {...queryObj, "airTemperature.value": $lte: maxAirTempValue};
-      console.log(queryObj);
-    }
+  if (req.query.maxAirTemp && !req.query.minAirTemp) {
+    maxAirTemp = parseFloat(req.query.maxAirTemp);
+    queryObj["airTemperature.value"] = {$lte: maxAirTemp};
   }
-  
+  if (req.query.maxAirTemp && req.query.minAirTemp) {
+    maxAirTemp = parseFloat(req.query.maxAirTemp);
+    minAirTemp = parseFloat(req.query.minAirTemp);
+    queryObj["airTemperature.value"] = { $lte: maxAirTemp, $gte: minAirTemp };
+  }
+  if (req.query.sections) {
+    sections = req.query.sections;
+    // objName["keyName"] = valueName; <- creates key-value pair in objName
+    queryObj["sections"] = { $in: [sections] };
+  }
+  if (req.query.callLetter) {
+    callLetter = req.query.callLetter;
+    // objName["keyName"] = valueName; <- creates key-value pair in objName
+    queryObj["callLetter"] = callLetter;
+  }
+  console.log(queryObj);
   const result = await weatherData.getByParameter(queryObj);
-
   if(result){
     res.status(200).send(result);
   } else {
