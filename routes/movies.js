@@ -10,6 +10,8 @@ router.get('/', async (req, res) => {
 
   if (result === null) {
     resultStatus = 500;
+  } else if (result.length === 0) {
+    resultStatus = 404;
   } else if (result.error) {
     resultStatus = 400;
   } else {

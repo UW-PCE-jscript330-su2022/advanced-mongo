@@ -14,31 +14,41 @@ const collectionData = database.collection(collection);
 
 module.exports = {};
 
-module.exports.getWeatherByQuery = async (
+module.exports.getWeatherReports = async (
   minAirTemp,
   maxAirTemp,
   section,
   callLetters
 ) => {
   let query = {};
+  let projection = {};
+
+  if (minAirTemp || maxAirTemp) {
+    query['airTemperature.value'] = {};
+    projection['airTemperature.value'] = 1;
+  }
 
   if (minAirTemp) {
-    query['airTemperature.value'] = { $gte: parseInt(minAirTemp) };
+    query['airTemperature.value']['$gte'] = parseFloat(minAirTemp);
   }
 
   if (maxAirTemp) {
-    query['airTemperature.value'] = { $lte: parseInt(maxAirTemp) };
+    query['airTemperature.value']['$lte'] = parseFloat(maxAirTemp);
   }
 
   if (section) {
     query.sections = section;
+    projection.sections = 1;
   }
 
   if (callLetters) {
     query.callLetters = callLetters;
+    projection.callLetters = 1;
   }
 
-  let cursor = await collectionData.find(query);
+  console.log('query = ', query);
+
+  let cursor = await collectionData.find(query).limit(10).project(projection);
 
   return cursor
     ? cursor.toArray()
@@ -52,6 +62,8 @@ module.exports.getWeatherByCallLetters = async (callLetters) => {
   const query = { callLetters: callLetters.toUpperCase() };
   let cursor = await collectionData.find(query).limit(10);
 
+  console.log('cursor = ', cursor);
+
   return cursor
     ? cursor.toArray()
     : {
@@ -63,7 +75,6 @@ module.exports.createWeatherReport = async (weatherReport) => {
   const result = await collectionData.insertOne(weatherReport);
 
   return result.acknowledged
-    ? 'Weather report successfully created'
-    : //? await module.exports.getMovieById(result.insertedId)
-      { error: 'Something went wrong. Please try again.' };
+    ? `Weather report ${result.insertedId} successfully created`
+    : { error: 'Something went wrong. Please try again.' };
 };

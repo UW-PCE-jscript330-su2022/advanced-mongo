@@ -22,6 +22,27 @@ describe('/movies routes', () => {
       expect(res.body.error).not.toBeDefined;
     });
 
+    it('should return an error and a 400 response if there is a problem retrieving movies after connection to server is made', async () => {
+      movieData.getAllMovies.mockResolvedValue({
+        error: `There was an error retrieving movie data. Please try again later.`,
+      });
+      const res = await request(server).get('/movies');
+
+      expect(res.status).toEqual(400);
+      expect(Array.isArray(res.body)).not.toEqual(true);
+      expect(res.body.error).toBeDefined;
+    });
+
+    it('should return an empty array and a 404 response if no movies are found', async () => {
+      movieData.getAllMovies.mockResolvedValue([]);
+      const res = await request(server).get('/movies');
+
+      expect(res.status).toEqual(404);
+      expect(Array.isArray(res.body)).toEqual(true);
+      expect(res.body[0]).not.toBeDefined;
+      expect(res.body.error).not.toBeDefined;
+    });
+
     it('should return a 500 response if server call returns null', async () => {
       movieData.getAllMovies.mockResolvedValue(null);
       const res = await request(server).get('/movies');
