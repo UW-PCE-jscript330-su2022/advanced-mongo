@@ -20,3 +20,16 @@ module.exports.getAll = async () => {
 
   return wDataCursor.toArray();
 }
+
+module.exports.getByQueryString = async (queryString) => {
+    const database = client.db(databaseName);
+    const weatherData = database.collection(collName);
+  console.log(queryString);
+    const query = {"callLetters": {$exists: 1, $eq: queryString.callLetters}, 
+        "airTemperature": {$exists: 1, $gt: queryString.minAirTemp, $lt: queryString.maxAirTemp}, 
+        "section": {$exists: 1, $in: [queryString.section]}};
+    console.log(query);
+    let wDataCursor = await weatherData.find(query).limit(10);
+  
+    return wDataCursor.toArray();
+  }
