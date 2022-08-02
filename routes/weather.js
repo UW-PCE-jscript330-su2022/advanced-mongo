@@ -34,13 +34,12 @@ router.post("/", async (req, res, next) => {
 
 
  // curl "http://localhost:5000/weather?callLetters=TFBY&sections=AG1"
+ //curl "http://localhost:5000/weather?minAirTemp=2&maxAirTemp=4"
 router.get("/", async (req, res, next) => {
     let key = Object.keys(req.query);
     let vals = Object.values(req.query)
     console.log(key)
     console.log(vals)
-
-    console.log(key.includes('minAirTemp') || key.includes('maxAirTemp') )
 
     let airTemperature = req.query.airTemperature;
     let sections = req.query.sections;
@@ -50,7 +49,32 @@ router.get("/", async (req, res, next) => {
 
   let airTemperatureFunc = () => {
 
-    if (key.includes('minAirTemp')) {
+    if (key.includes('minAirTemp') && key.includes('maxAirTemp')) {
+
+      let airTempLastKey = key.pop()
+      console.log(airTempLastKey)
+
+      if (airTempLastKey === 'maxAirTemp') {
+        let maxAirTempNum = parseFloat(vals[1]);
+        let minAirTempNum = parseFloat(vals);
+        if (typeof maxAirTempNum !== "number" && typeof minAirTempNum !== "number") {
+          return { error: 'this val must be a Number' }
+        }
+
+        return { $gte: minAirTempNum, $lte: maxAirTempNum }
+      } else if (airTempLastKey === 'minAirTemp') {
+        let maxAirTempNum = parseFloat(vals);
+        let minAirTempNum = parseFloat(vals[1]);
+
+        if (typeof maxAirTempNum !== "number" && typeof minAirTempNum !== "number") {
+          return { error: 'this val must be a Number' }
+        }
+
+        return { $gte: minAirTempNum, $lte: maxAirTempNum }
+      }
+    }
+
+    if (key.includes('minAirTemp') && !key.includes('maxAirTemp')) {
 
       let minAirTempNum = parseFloat(vals);
 
@@ -62,7 +86,7 @@ router.get("/", async (req, res, next) => {
         }
     }
 
-    if (key.includes('maxAirTemp')) {
+    if (key.includes('maxAirTemp')  && !key.includes('minAirTemp') ) {
 
       let maxAirTempNum = parseFloat(vals);
 
@@ -73,7 +97,6 @@ router.get("/", async (req, res, next) => {
         return { $lte: maxAirTempNum }
         }
     }
-
   }
   
 
@@ -98,7 +121,7 @@ let callLettersUndef = () =>{
 
     let result = await weatherData.searchWeather({sections: secUndef(), callLetters: callLettersUndef(), "airTemperature.value": airTemperatureFunc() });
 
-    console.log(result);
+    // console.log(result);
     if(result.error){
       resultStatus = 422;
     } else {

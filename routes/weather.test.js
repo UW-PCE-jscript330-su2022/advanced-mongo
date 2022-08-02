@@ -18,8 +18,7 @@ describe("/weather routes", () => {
       const res = await request(server).get("/weather/:userCallLetters");
 
       expect(res.statusCode).toEqual(200);
-    //   expect(Array.isArray(res.body)).toEqual(true);
-    //   expect(res.body.error).not.toBeDefined();
+      expect(res.body.error).not.toBeDefined();
     });
     it("should return an error message on error", async () => {
         weatherData.getByCallLetters.mockResolvedValue({error: "Mock error"});
@@ -53,6 +52,34 @@ describe("/weather routes", () => {
       const res = await request(server).post("/weather");
 
       expect(res.statusCode).toEqual(400);
+    });
+  });
+
+  describe("GET /:userParams", () =>{
+    it("should return an array on success via air temps", async () => {
+      weatherData.searchWeather.mockResolvedValue({minAirTemp: 1, maxAirTemp: 4});
+
+      const res = await request(server).get("/weather/");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
+    });
+
+    it("should return an array on success via air temps and sections", async () => {
+      weatherData.searchWeather.mockResolvedValue({sections: "ABC", minAirTemp: 1, maxAirTemp: 4});
+
+      const res = await request(server).get("/weather/");
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
+    });
+    it("should return a 422", async () => {
+        weatherData.searchWeather.mockResolvedValue({error: "Mock error"});
+
+      const res = await request(server).get("/weather/");
+
+      expect(res.statusCode).toEqual(422);
+      expect(res.body.error).toBeDefined();
     });
   });
 
