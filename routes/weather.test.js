@@ -14,12 +14,12 @@ describe("/weather routes", () => {
 
     describe("GET /:callLetters", () =>{
         it("should return an object on success", async () => {
-            weatherData.getByCallLetters.mockResolvedValue({_id:"890", title:"One Day"});
+            weatherData.getByCallLetters.mockResolvedValue({_id:"890", callLetters:"PLAT"});
 
             const res = await request(server).get("/weather/VC81");
 
             expect(res.statusCode).toEqual(200);
-            expect(Array.isArray(res.body)).toEqual(true);
+            expect(res.body != null && typeof res.body === 'object').toEqual(true);
             expect(res.body.error).not.toBeDefined();
         });
         it("should return an error message on error", async () => {
@@ -27,14 +27,14 @@ describe("/weather routes", () => {
 
             const res = await request(server).get("/weather/VC81");
 
-            expect(res.statusCode).toEqual(404);
+            expect(res.statusCode).toEqual(500);
             expect(res.body.error).toBeDefined();
         });
     });
 
     describe("GET /", () =>{
         it("should return an array on success", async () => {
-            weatherData.getByQuery.mockResolvedValue([{_id:"890", title:"One Day"}]);
+            weatherData.getByQuery.mockResolvedValue([{_id:"890", callLetters:"PLAT"}]);
 
             const res = await request(server).get("/weather?minAirTemp=50");
 

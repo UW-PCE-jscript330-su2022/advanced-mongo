@@ -21,7 +21,7 @@ router.get("/:callLetters", async (req, res, next) => {
 });
 
 router.get("/", async (req, res, next) => {
-    console.log()
+
     const result = await weatherData.getByQuery(req.query)
 
     if(result.error){
