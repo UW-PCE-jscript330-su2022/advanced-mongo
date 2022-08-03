@@ -30,4 +30,4 @@ describe("/weather routes", () => {
       expect(res.body.error).toBeDefined();
     });
   });
-}
+});
