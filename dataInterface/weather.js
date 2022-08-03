@@ -26,6 +26,7 @@ module.exports.getAll = async () => {
 }
 
 module.exports.getByQueryString = async (queryString) => {
+    console.log(queryString);
     const database = client.db(databaseName);
     const weatherData = database.collection(collName);
     let query = {};
