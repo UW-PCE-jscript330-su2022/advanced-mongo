@@ -15,6 +15,13 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+
+// curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments
+router.get("/:id/comments", async(req, res) => {
+  const result = await movieData.getAllComments(req.params.id)
+  res.status(200).send(result);
+})
+
 // This route handles either id or title as an identifier.
 // curl http://localhost:5000/movies/573a1390f29313caabcd4135
 // curl http://localhost:5000/movies/Jurassic%20Park
@@ -30,13 +37,6 @@ router.get("/:id", async (req, res, next) => {
   res.status(resultStatus).send(result);
 
 });
-
-// curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments
-router.get("/:id/comments", async(req, res) => {
-  const result = await movieData.getAllComments(req.params.id)
-  res.status(200).send(result);
-})
-
 // curl http://localhost:5000/movies/573a1390f29313caabcd446f/comments/5a9427648b0beebeb69579f5
 router.get("/:id/comments/:commentId", async(req, res) => {
   const result = await movieData.getComment(req.params.commentId)
