@@ -55,15 +55,8 @@ module.exports.getByQuery = async (queryParams) => {
         {
             return {error: 'maxAirTemp must be a number'};
         }
-        if (query)
-        {
-            query = {$and: [query,
-                    {"airTemperature.value": {$lt: Number(queryParams.maxAirTemp)}}]}
-        }
-        else
-        {
-            query = {...query, ...{"airTemperature.value": {$lt: Number(queryParams.maxAirTemp)}}};
-        }
+        query = {$and: [query,
+                {"airTemperature.value": {$lt: Number(queryParams.maxAirTemp)}}]}
         console.log(JSON.stringify(query));
     }
 
