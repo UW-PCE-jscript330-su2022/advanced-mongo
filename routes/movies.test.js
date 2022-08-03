@@ -209,3 +209,33 @@ describe("/Genre routes", () => {
   });
 });
 //genre test end here
+
+//weather test starts here
+//comment test start here
+//declare the jest will mock movieData. Must be before the require statement.
+jest.mock("../dataInterface/comments");
+const weatherData = require("../dataInterface/weather");
+
+describe("/weather routes", () => {
+  beforeEach(() => {
+    
+  });
+  describe("GET /", () =>{
+    it("should return an array on success for get all", async () => {
+      commentData.getAllComments.getAll);
+      const res = await request(server).get("/weather");
+      expect(res.statusCode).toEqual(200);
+      //check response body is an array
+      expect(res.body instanceof Array);
+      expect(Array.isArray(res.body));
+      expect(res.body.error).not.toBeDefined();
+    });
+    it("should return an error message on error", async () => {
+      commentData.getAllComments.mockResolvedValue({error: `No item found with the query string`});
+      const res = await request(server).get("/weather?section=tttt");
+      expect(res.statusCode).toEqual(422);
+      expect(res.body.error).toBeDefined();
+    });
+  });
+});
+//weather test ends here
