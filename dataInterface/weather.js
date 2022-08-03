@@ -73,7 +73,7 @@ module.exports.getByQuery = async (queryParams) => {
     }
     if (queryParams.section)
     {
-        query = {...query, ...{section: queryParams.section}};
+        query = {...query, ...{sections: queryParams.section}};
     }
     console.log(JSON.stringify(query));
 
