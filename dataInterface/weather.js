@@ -46,15 +46,27 @@ module.exports.getByQuery = async (queryParams) => {
             return {error: 'minAirTemp must be a number'};
         }
         query = {...query, ...{"airTemperature.value": {$gt: Number(queryParams.minAirTemp)  }}};
+        console.log(JSON.stringify(query));
     }
+
     if (queryParams.maxAirTemp)
     {
         if (isNaN(queryParams.maxAirTemp))
         {
-            return {error: 'minAirTemp must be a number'};
+            return {error: 'maxAirTemp must be a number'};
         }
-        query = {...query, ...{"airTemperature.value": {$lt: Number(queryParams.maxAirTemp)  }}};
+        if (query)
+        {
+            query = {$and: [query,
+                    {"airTemperature.value": {$lt: Number(queryParams.maxAirTemp)}}]}
+        }
+        else
+        {
+            query = {...query, ...{"airTemperature.value": {$lt: Number(queryParams.maxAirTemp)}}};
+        }
+        console.log(JSON.stringify(query));
     }
+
     if (queryParams.callLetters)
     {
         query = {...query, ...{callLetters: queryParams.callLetters}};
@@ -66,8 +78,9 @@ module.exports.getByQuery = async (queryParams) => {
     console.log(JSON.stringify(query));
 
     let weatherReports = await weatherdata.find(query).limit(10);
+    console.log(JSON.stringify(weatherReports));
 
-    return weatherReports;
+    return weatherReports.toArray();
 }
 
 module.exports.create = async (newObj) => {
