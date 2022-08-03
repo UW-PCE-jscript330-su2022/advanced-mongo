@@ -11,7 +11,7 @@ router.get("/:callLetters", async (req, res, next) => {
     const result = await weatherData.getByCallLetters(req.params.callLetters)
 
     if(result.error){
-        resultStatus = 500;
+        resultStatus = 422;
     } else {
         resultStatus = 200;
     }

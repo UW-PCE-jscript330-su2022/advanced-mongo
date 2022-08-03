@@ -27,7 +27,7 @@ describe("/weather routes", () => {
 
             const res = await request(server).get("/weather/VC81");
 
-            expect(res.statusCode).toEqual(500);
+            expect(res.statusCode).toEqual(422);
             expect(res.body.error).toBeDefined();
         });
     });
