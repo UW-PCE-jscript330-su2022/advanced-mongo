@@ -222,7 +222,7 @@ describe("/weather routes", () => {
   });
   describe("GET /", () =>{
     it("should return an array on success for get all", async () => {
-      commentData.getAllComments.getAll);
+      commentData.getAllComments.getAll();
       const res = await request(server).get("/weather");
       expect(res.statusCode).toEqual(200);
       //check response body is an array

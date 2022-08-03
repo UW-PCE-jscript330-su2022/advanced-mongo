@@ -94,10 +94,6 @@ module.exports.getByQueryString = async (queryString) => {
     const database = client.db(databaseName);
     const movies = database.collection(collName);
     
-    if(!newObj.airTemperature){
-      // Invalid movie object, shouldn't go in database.
-      return {error: "Movies must have a title."}
-    }
     const result = await movies.insertOne(newObj);
   
     if(result.acknowledged){

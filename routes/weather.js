@@ -32,7 +32,7 @@ router.get("/", async(req, res)=>{
     res.status(resultStatus).send(result);
   })
 
-// curl -X POST -H "Content-Type: application/json" -d '{"ts":"1984-03-05T15:00:00.000+00:00", "elevation":"9999", "airTemperature": {"value": "15.5", "quality": "1"}}' http://localhost:5001/weather
+// curl -X POST -H "Content-Type: application/json" -d "{\"callLetters\":\"TFRB\", \"elevation\":\"9999\"}" http://localhost:5001/weather
   router.post("/", async (req, res, next) => {
     let resultStatus;
     let result = await weatherData.create(req.body);
