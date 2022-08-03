@@ -24,9 +24,14 @@ router.get("/", async (req, res, next) => {
 
     const result = await weatherData.getByQuery(req.query)
 
-    if(result.error){
+    if(result.type && (result.type === "INVALID_QUERY_PARAMS" || result.type === "INVALID_QUERY_VALUE" || result.type === "NO_QUERY_PARAMS")){
+        resultStatus = 422;
+    } else if (result.type && result.type === "EXCEPTION")
+    {
         resultStatus = 500;
-    } else {
+    }
+    else
+    {
         resultStatus = 200;
     }
 

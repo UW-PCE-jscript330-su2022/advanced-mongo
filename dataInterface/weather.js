@@ -30,50 +30,54 @@ module.exports.getByQuery = async (queryParams) => {
     console.log(queryParams);
     const database = client.db(databaseName);
     const weatherdata = database.collection(collName);
-    if (!queryParams)
-    {
-        return {error: `Query parameters must be provided, at least one of minAirTemp, maxAirTemp, section or callLetters.`}
-    }
-    if (!queryParams.minAirTemp && !queryParams.maxAirTemp && !queryParams.section && !queryParams.callLetters)
-    {
-        return {error: `Invalid query parameters provided, at least one of minAirTemp, maxAirTemp, section or callLetters must be included.`}
-    }
-    let query = {}
-    if (queryParams.minAirTemp)
-    {
-        if (isNaN(queryParams.minAirTemp))
-        {
-            return {error: 'minAirTemp must be a number'};
+    try {
+        if (!queryParams) {
+            return {
+                error: `Query parameters must be provided, at least one of minAirTemp, maxAirTemp, section or callLetters.`,
+                type: 'NO_QUERY_PARAMS'
+            }
         }
-        query = {...query, ...{"airTemperature.value": {$gt: Number(queryParams.minAirTemp)  }}};
-        console.log(JSON.stringify(query));
-    }
-
-    if (queryParams.maxAirTemp)
-    {
-        if (isNaN(queryParams.maxAirTemp))
-        {
-            return {error: 'maxAirTemp must be a number'};
+        if (!queryParams.minAirTemp && !queryParams.maxAirTemp && !queryParams.section && !queryParams.callLetters) {
+            return {
+                error: `Invalid query parameters provided, at least one of minAirTemp, maxAirTemp, section or callLetters must be included.`,
+                type: 'INVALID_QUERY_PARAMS'
+            }
         }
-        query = {$and: [query,
-                {"airTemperature.value": {$lt: Number(queryParams.maxAirTemp)}}]}
+        let query = {}
+        if (queryParams.minAirTemp) {
+            if (isNaN(queryParams.minAirTemp)) {
+                return {error: 'minAirTemp must be a number', type: 'INVALID_QUERY_VALUE'};
+            }
+            query = {...query, ...{"airTemperature.value": {$gt: Number(queryParams.minAirTemp)}}};
+            console.log(JSON.stringify(query));
+        }
+
+        if (queryParams.maxAirTemp) {
+            if (isNaN(queryParams.maxAirTemp)) {
+                return {error: 'maxAirTemp must be a number', type: 'INVALID_QUERY_VALUE'};
+            }
+            query = {
+                $and: [query,
+                    {"airTemperature.value": {$lt: Number(queryParams.maxAirTemp)}}]
+            }
+            console.log(JSON.stringify(query));
+        }
+
+        if (queryParams.callLetters) {
+            query = {...query, ...{callLetters: queryParams.callLetters}};
+        }
+        if (queryParams.section) {
+            query = {...query, ...{sections: queryParams.section}};
+        }
         console.log(JSON.stringify(query));
-    }
 
-    if (queryParams.callLetters)
-    {
-        query = {...query, ...{callLetters: queryParams.callLetters}};
-    }
-    if (queryParams.section)
-    {
-        query = {...query, ...{sections: queryParams.section}};
-    }
-    console.log(JSON.stringify(query));
+        let weatherReports = await weatherdata.find(query).limit(10);
+        console.log(JSON.stringify(weatherReports));
 
-    let weatherReports = await weatherdata.find(query).limit(10);
-    console.log(JSON.stringify(weatherReports));
-
-    return weatherReports.toArray();
+        return weatherReports.toArray();
+    } catch (e) {
+        return {error: e, type: "EXCEPTION"};
+    }
 }
 
 module.exports.create = async (newObj) => {
