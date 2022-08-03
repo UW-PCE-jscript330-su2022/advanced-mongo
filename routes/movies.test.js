@@ -256,6 +256,23 @@ describe("/weather routes", () => {
       expect(res.statusCode).toEqual(422);
       expect(res.body instanceof Object);
     });
+    describe("GET /average", () =>{
+      // jest.setTimeout(600000);
+      it("should return an object on success for getAverage", async () => {
+        weatherData.getAverage.mockResolvedValue([{"_id":"1984-03-13T07:00:00.000Z","averageTemperature":5.1},{"_id":"1984-03-06T13:00:00.000Z","averageTemperature":5.1}]);
+        const res = await request(server).get("/weather/average");
+        expect(res.statusCode).toEqual(200);
+        //check response body is an array
+        expect(res.body instanceof Array);
+        expect(res.body.error).not.toBeDefined();
+      });
+      it("should return an error message on error", async () => {
+        weatherData.getAverage.mockResolvedValue({error: `Average can't calculated.`});
+        const res = await request(server).get("/weather/average");
+        expect(res.statusCode).toEqual(422);
+        expect(res.body.error).toBeDefined();
+      });
+    });
   });
 });
 //weather test ends here

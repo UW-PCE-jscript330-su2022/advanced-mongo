@@ -26,7 +26,9 @@ module.exports.getAll = async () => {
 }
 
 module.exports.getByQueryString = async (queryString) => {
-    console.log(queryString);
+    if (isNaN(query.minAirTemp) || isNaN(query.maxAirTemp))
+        return {error: "Query string minAirTemp or maxAirTemp or both must be a number"};
+        
     const database = client.db(databaseName);
     const weatherData = database.collection(collName);
     let query = {};
@@ -55,6 +57,7 @@ module.exports.getByQueryString = async (queryString) => {
       }
   }
 
+  //get average airTemperature for a group of data nodes between [5, 10]
   module.exports.getAverage = async () => {
     const database = client.db(databaseName);
     const weatherData = database.collection(collName);
@@ -87,7 +90,7 @@ module.exports.getByQueryString = async (queryString) => {
     if(wDataCursor){
       return wDataCursor.toArray();
     } else {
-      return {error: `No item was found.`}
+      return {error: `Average can't calculated.`}
     }
   }
 
