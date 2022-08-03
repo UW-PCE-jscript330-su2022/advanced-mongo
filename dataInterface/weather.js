@@ -52,15 +52,6 @@ module.exports.getByCallLetters = async (callLetters) => {
   }
 }
 
-// https://www.mongodb.com/docs/manual/reference/method/cursor.toArray/
-// collection.find().toArray(function(err, documents) {
-//         assert.equal(1, documents.length);
-//         assert.deepEqual([1, 2, 3], documents[0].b);
-//       });
-// https://mongodb.github.io/node-mongodb-native/api-generated/cursor.html
-
-
-
 // POST WEATHER
 module.exports.create = async (newObj) => {
   const database = client.db(databaseName);

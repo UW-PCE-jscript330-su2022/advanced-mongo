@@ -2,15 +2,13 @@ const { Router, response } = require("express");
 const router = Router();
 
 const bodyParser = require('body-parser');
-// const url = require('url');
-// const querystring = require('querystring');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 const weatherData = require('../dataInterface/weather');
 
-// GET WEATHER BY PARAMETER (minAirTemp, maxAirTemp, sections, callLetters)
+// GET WEATHER BY PARAMETER
 // curl -sS "http://localhost:5001/weather?callLetters=VCSZ&sections=AG1&minAirTemp=-30.1&maxAirTemp=10"
 
 router.get("/", async (req, res) => {
@@ -46,9 +44,7 @@ router.get("/callLetters/:callLetters", async (req, res) => {
 });
 
 // POST WEATHER
-// CREATE A NEW MOVIE
 // curl -sS -X POST -H "Content-Type: application/json" -d '{"elevation":"9999", "callLetters":"PLAT"}' http://localhost:5001/weather
-// new id created:62e18988b7cf924614483c36,  62e199807e735db7c97998ee
 router.post("/", async (req, res) => {
   let resultStatus;
   let result = await weatherData.create(req.body);
