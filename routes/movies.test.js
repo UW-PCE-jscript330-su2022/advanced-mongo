@@ -16,7 +16,6 @@ describe("/movies routes", () => {
       movieData.getAll.mockResolvedValue([{title: 'one'}])
       
       const res = await request(server).get("/movies");
-      
       expect(res.statusCode).toEqual(200);
       expect(Array.isArray(res.body)).toEqual(true)
       expect(res.body.error).not.toBeDefined()

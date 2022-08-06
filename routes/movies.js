@@ -39,7 +39,6 @@ router.get("/:id/comments", async(req, res) => {
   }else{
     realStatus = 200
   }
-  console.log('here', realStatus)
   res.status(realStatus).send(result);
 })
 

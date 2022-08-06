@@ -19,7 +19,11 @@
     "testEnvironment": "node"
   },
   "nodemonConfig": {
-    "ignore": ["**/*test.js", "README.md", "package.json"],
+    "ignore": [
+      "**/*test.js",
+      "README.md",
+      "package.json"
+    ],
     "delay": 2000
   },
   "dependencies": {
