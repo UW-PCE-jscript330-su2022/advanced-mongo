@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 // curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments
 router.get("/:id/comments", async(req, res) => {
   const result = await movieData.getAllComments(req.params.id)
-  if(result.error){
+  if(!result || result.error){
     resultStatus = 404;
   } else {
     resultStatus = 200;
@@ -34,7 +34,7 @@ router.get("/:id/comments", async(req, res) => {
 router.get("/:id", async (req, res, next) => {
   const result = await movieData.getByIdOrTitle(req.params.id)
 
-  if(result.error){
+  if(!result || result.error){
     resultStatus = 404;
   } else {
     resultStatus = 200;
@@ -47,7 +47,7 @@ router.get("/:id", async (req, res, next) => {
 router.get("/:id/comments/:commentId", async(req, res) => {
   const result = await movieData.getComment(req.params.commentId)
 
-  if(result.error){
+  if(!result || result.error){
     resultStatus = 400;
   } else {
     resultStatus = 200;
@@ -61,7 +61,7 @@ router.post("/", async (req, res, next) => {
   let resultStatus;
   let result = await movieData.create(req.body);
 
-  if(result.error){
+  if(!result || result.error){
     resultStatus = 400;
   } else {
     resultStatus = 200;
@@ -74,7 +74,7 @@ router.post("/", async (req, res, next) => {
 router.post("/:id/comments", async(req, res) => {
   const result = await movieData.createComment(req.params.id, req.body)
   
-  if(result.error){
+  if (!result || result.error){
     resultStatus = 400;
   } else {
     resultStatus = 200;
@@ -88,7 +88,7 @@ router.put("/:id", async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateById(req.params.id, req.body)
 
-  if(result.error){
+  if(!result || result.error){
     resultStatus = 400;
   } else {
     resultStatus = 200;
@@ -97,12 +97,12 @@ router.put("/:id", async (req, res, next) => {
   res.status(resultStatus).send(result);
 });
 
-// curl -X PUT -H "Content-Type: application/json" -d '{"plot":"Sharks..."}' http://localhost:5000/movies/573a13a3f29313caabd0e77b/000
+// curl -X PUT -H "Content-Type: application/json" -d '{"text":"Sharks..."}' http://localhost:5000/movies/573a13a3f29313caabd0e77b/comments/000
 router.put("/:movieId/comments/:commentId", async (req, res, next) => {
   let resultStatus;
-  const result = await movieData.updateById(req.params.commentId, req.body)
+  const result = await movieData.updateCommentById(req.params.commentId, req.body)
 
-  if(result.error){
+  if (!result || result.error){
     resultStatus = 400;
   } else {
     resultStatus = 200;
@@ -115,7 +115,7 @@ router.put("/:movieId/comments/:commentId", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   const result = await movieData.deleteById(req.params.id);
 
-  if(result.error){
+  if(!result || result.error){
     resultStatus = 400;
   } else {
     resultStatus = 200;
@@ -127,7 +127,7 @@ router.delete("/:id", async (req, res, next) => {
 // curl -X DELETE http://localhost:5000/movies/000/comments/000
 router.delete("/:movieId/comments/:commentId", async(req, res)=>{
   const result = await movieData.deleteCommentById(req.params.commentId)
-  if(result.error){
+  if(!result || result.error){
     resultStatus = 404;
   } else {
     resultStatus = 200;
