@@ -5,29 +5,29 @@ const server = require("../server");
 jest.mock("../dataInterface/weather");
 const movieData = require("../dataInterface/weather")
 
-describe("/weather routes", () => {
+// describe("/weather routes", () => {
 
-  beforeEach(() => {
+//   beforeEach(() => {
 
-  });
+//   });
 
-  describe("GET /", () =>{
-    it("should return an array on success", async () => {
-      movieData.getAllComments.mockResolvedValue([{_id:"123", text: "comment"}]);
+//   describe("GET /", () =>{
+//     it("should return an array on success", async () => {
+//       movieData.getAllComments.mockResolvedValue([{_id:"123", text: "comment"}]);
 
-      const res = await request(server).get("/movies");
+//       const res = await request(server).get("/movies");
 
-      expect(res.statusCode).toEqual(200);
-      expect(Array.isArray(res.body)).toEqual(true);
-      expect(res.body.error).not.toBeDefined();
-    });
-    it("should return an error message on error", async () => {
-      movieData.getAllComments.mockResolvedValue(null);
+//       expect(res.statusCode).toEqual(200);
+//       expect(Array.isArray(res.body)).toEqual(true);
+//       expect(res.body.error).not.toBeDefined();
+//     });
+//     it("should return an error message on error", async () => {
+//       movieData.getAllComments.mockResolvedValue(null);
 
-      const res = await request(server).get("/movies");
+//       const res = await request(server).get("/movies");
 
-      expect(res.statusCode).toEqual(500);
-      expect(res.body.error).toBeDefined();
-    });
-  });
-});
+//       expect(res.statusCode).toEqual(500);
+//       expect(res.body.error).toBeDefined();
+//     });
+//   });
+// });

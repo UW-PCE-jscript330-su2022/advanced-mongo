@@ -19,7 +19,13 @@ router.get("/", async (req, res, next) => {
 // curl http://localhost:5000/movies/573a1390f29313caabcd4323/comments
 router.get("/:id/comments", async(req, res) => {
   const result = await movieData.getAllComments(req.params.id)
-  res.status(200).send(result);
+  if(result.error){
+    resultStatus = 404;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
 })
 
 // This route handles either id or title as an identifier.
@@ -121,7 +127,13 @@ router.delete("/:id", async (req, res, next) => {
 // curl -X DELETE http://localhost:5000/movies/000/comments/000
 router.delete("/:movieId/comments/:commentId", async(req, res)=>{
   const result = await movieData.deleteCommentById(req.params.commentId)
-  res.status(200).send(result);
+  if(result.error){
+    resultStatus = 404;
+  } else {
+    resultStatus = 200;
+  }
+
+  res.status(resultStatus).send(result);
 })
 
 module.exports = router;
