@@ -31,25 +31,25 @@ describe("/movies routes", () => {
     });
   });
 
-  describe("GET /:id/comments", () =>{
-    it("should return an array on success", async () => {
-      movieData.getAllComments.mockResolvedValue([{_id:"123", text: "comment"}]);
+  // describe("GET /:id/comments", () =>{
+  //   it("should return an array on success", async () => {
+  //     movieData.getAllComments.mockResolvedValue([{_id:"123", text: "comment"}]);
 
-      const res = await request(server).get("/movies/:id/comments");
+  //     const res = await request(server).get("/movies/:id/comments");
 
-      expect(res.statusCode).toEqual(200);
-      expect(Array.isArray(res.body)).toEqual(true);
-      expect(res.body.error).not.toBeDefined();
-    });
-    it("should return an error message on error", async () => {
-      movieData.getAllComments.mockResolvedValue(null);
+  //     expect(res.statusCode).toEqual(200);
+  //     expect(Array.isArray(res.body)).toEqual(true);
+  //     expect(res.body.error).not.toBeDefined();
+  //   });
+  //   it("should return an error message on error", async () => {
+  //     movieData.getAllComments.mockResolvedValue(null);
 
-      const res = await request(server).get("/movies/:id/comments");
+  //     const res = await request(server).get("/movies/:id/comments");
 
-      expect(res.statusCode).toEqual(500);
-      expect(res.body.error).toBeDefined();
-    });
-  });
+  //     expect(res.statusCode).toEqual(500);
+  //     expect(res.body.error).toBeDefined();
+  //   });
+  // });
 
   // describe("GET /:id", () =>{
   //   it("should return a single movie on success", async () => {

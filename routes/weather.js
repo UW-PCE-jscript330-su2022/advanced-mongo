@@ -30,9 +30,9 @@ const weatherData = require('../dataInterface/weather');
 // Should return up to 10 weather report objects where the call letters were "VC81" and the air temperature was above 35 degrees. 
 
 router.get("/:callLetters", async (req, res, next) => {
-    const result = await weatherData.getByCallLetters( req.params.callLetters);
+    const result = await weatherData.getByCallLetters( req.params.callLetters );
 
-    if(result.error){
+    if(!result || result.error){
         resultStatus = 422;
     } else {
         resultStatus = 200;
@@ -44,7 +44,7 @@ router.get("/:callLetters", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
     const result = await weatherData.getByQuery( req.query.minAirTemp, req.query.maxAirTemp, req.query.sections, req.query.callLetters );
 
-    if(result.error){
+    if(!result || result.error){
         resultStatus = 422;
     } else {
         resultStatus = 200;
@@ -58,7 +58,7 @@ router.post("/", async (req, res, next) => {
     let resultStatus;
     let result = await weatherData.create(req.body);
   
-    if(result.error){
+    if(!result || result.error){
       resultStatus = 422;
     } else {
       resultStatus = 200;

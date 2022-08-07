@@ -18,8 +18,11 @@ module.exports.getByCallLetters = async ( callLetters ) => {
 
   const query = { callLetters: `${callLetters}` };
   let weatherCursor = await weather.find(query).limit(10).sort({runtime: -1});
-
-  return weatherCursor.toArray();
+  if(weatherCursor){
+    return weatherCursor.toArray();
+  } else {
+    return {error: `No item found with callLetters ${callLetters}.`}
+  }
 }
 
 module.exports.getByQuery =  ( minAirTemp,maxAirTemp,sections,callLetters ) => {
