@@ -3,7 +3,7 @@ const router = Router();
 
 const userData = require('../dataInterface/users');
 
-// curl -X POST -H "Content-Type: application/json" -d '{}' http://localhost:5000/users/login
+// curl -X POST -H "Content-Type: application/json" -d '{"email":"ca278@uw.edu","name":"cheri","password":"secrets!"}' http://localhost:5000/users/login
 router.post("/login", async (req, res, next) => {
   let resultStatus;
 
@@ -19,7 +19,7 @@ router.post("/login", async (req, res, next) => {
 
 });
 
-// curl -X POST -H "Content-Type: application/json" -d '{}' http://localhost:5000/users/register
+// curl -X POST -H "Content-Type: application/json" -d '{"email":"ca278@uw.edu","password":"secrets!"}' http://localhost:5000/users/register
 router.post("/register", async (req, res, next) => {
   let resultStatus;
 
