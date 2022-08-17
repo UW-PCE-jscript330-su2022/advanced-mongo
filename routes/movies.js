@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+const auth = require('../auth');
 
 const movieData = require('../dataInterface/movies');
 
@@ -37,8 +38,9 @@ router.get("/:id/comments", async(req, res) => {
   res.status(200).send(result);
 })
 
+// PROTECTED!!
 // curl -X POST -H "Content-Type: application/json" -d '{"title":"Llamas From Space", "plot":"Aliens..."}' http://localhost:5000/movies
-router.post("/", async (req, res, next) => {
+router.post("/", auth.verifyToken, async (req, res, next) => {
   let resultStatus;
   let result = await movieData.create(req.body);
 

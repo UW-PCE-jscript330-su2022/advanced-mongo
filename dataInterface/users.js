@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 const bcrypt = require('bcryptjs');
-
+const auth = require('../auth');
 const uri =
   "mongodb+srv://APIsuperuser:9RbwKvA8DpBkJgb9@cluster0.bwarser.mongodb.net/?retryWrites=true&w=majority";
 
@@ -27,7 +27,8 @@ module.exports.findByCredentials = async (userObj) => {
   if(!user.password){ return {error: "User doesn't have password??"} }
 
   if(await bcrypt.compare(userObj.password, user.password)){
-    return {email: user.email, name: user.name, id: user._id};
+    let token = auth.createToken(user.email)
+    return {message: "User logged in", token: token};
   } else {
     return {error: `No user found with email ${userObj.email}.`}
   }

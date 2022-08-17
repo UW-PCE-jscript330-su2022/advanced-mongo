@@ -10,11 +10,6 @@ server.use(express.json());
 
 function logging(req, res, next){
   console.log("Request received: ", req.url)
-
-  let testToken = auth.createToken("one@example.com")
-
-  auth.verifyToken(testToken)
-
   next()
 }
 
