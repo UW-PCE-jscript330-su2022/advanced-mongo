@@ -8,7 +8,6 @@ router.post("/login", async (req, res, next) => {
   let resultStatus;
 
   let result = await userData.findByCredentials(req.body)
-  console.log("RESULT: ", result)
 
   if(result.error){
     resultStatus = 404;
@@ -25,7 +24,6 @@ router.post("/register", async (req, res, next) => {
   let resultStatus;
 
   let result = await userData.create(req.body)
-  console.log("RESULT: ", result)
 
   if(result.error){
     resultStatus = 404;
