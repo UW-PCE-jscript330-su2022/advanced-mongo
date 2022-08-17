@@ -19,7 +19,8 @@ module.exports.getAll = async () => {
   const query = {};
   //let movieCursor = await movies.find(query).limit(10).project({title: 1, runtime: 1, directors: 1}).sort({runtime: -1});
   //let movieCursor = await movies.find(query).limit(10).sort({runtime: -1});
-  let movieCursor = await movies.find(query).limit(10).sort({"awards.wins": -1});
+  let movieCursor = await movies.find(query).limit(10).project({title: 1}).sort({runtime: -1});
+  //let movieCursor = await movies.find(query).limit(10).sort({"awards.wins": -1});
   return movieCursor.toArray();
 }
 
