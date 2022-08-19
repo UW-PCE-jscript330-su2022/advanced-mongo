@@ -19,7 +19,8 @@ router.get("/", async (req, res, next) => {
   });
   
 //GET USERS BY EMAIL CREDENTIAL
-// curl -X POST -H "Content-Type: application/json" -d '{}' http://localhost:5001/users/login
+// curl -X POST -H "Content-Type: application/json" -d '{"email":"ssmith29@email.com"}' http://localhost:5001/users/login
+
 router.post("/login", async (req, res, next) => {
   let resultStatus;
 
