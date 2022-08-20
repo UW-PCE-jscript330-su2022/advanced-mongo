@@ -25,7 +25,7 @@ router.post("/login", async (req, res, next) => {
   let resultStatus;
 
   let result = await userData.findByCredentials(req.body)
-  console.log("RESULT: ", result)
+  // console.log("RESULT: ", result)
 
   if(result.error){
     resultStatus = 404;
