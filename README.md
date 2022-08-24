@@ -13,6 +13,13 @@ To get started in development:
 
 This codebase includes Nodemon (https://nodemon.io/); the server will update to reflect code changes within 2 seconds, no need to manually restart it.
 
+This codebases uses .env files for holding secrets. Each environment (each dev's machine, for example) should have its own .env file. It looks like:
+```
+MONGO_USER=username
+MONGO_PW=supersecretpassword
+```
+The .gitignore file lists `.env` so they will not accidentally be committed to source control. To add a secret value in heroku, use the set config command, like: `heroku config:set MONGO_USER=username`
+
 ### Testing
 
 This codebase uses Jest (https://jestjs.io/) and Supertest (https://github.com/visionmedia/supertest). As you develop, ensure existing tests continue passing, and write new tests for each function added. Tests should cover positive and negative cases. All test files should have names that end in `.test.js` so Jest picks them up.
