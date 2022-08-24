@@ -117,7 +117,7 @@ router.put("/:id", async (req, res, next) => {
 
 // UPDATE A COMMENT TEXT
 // curl -sS http://localhost:5001/movies/573a1390f29313caabcd446f/comments
-// curl -sS -X PUT -H "Content-Type: application/json" -d '{"text":"Not favorite movie!"}' http://localhost:5001/movies/573a1391f29313caabcd9688/comments/5a9427648b0beebeb6957d04
+// curl -sS -X PUT -H "Content-Type: application/json" -d '{"text":"Not favorite movie!"}' http://localhost:5001/hikingtrails/573a1391f29313caabcd9688/comments/5a9427648b0beebeb6957d04
 router.put("/:movieId/comments/:commentId", async (req, res, next) => {
   let resultStatus;
   const result = await movieData.updateCommentById(req.params.commentId, req.body)

@@ -191,14 +191,11 @@ module.exports.updateCommentById = async (commentId, newObj) => {
   const result = await comments.updateOne(filter, updateRules);
 
   if (result.modifiedCount != 1) {
-    return { error: `Something went wrong. ${result.modifiedCount} comments were updated. Please try again.` }
+    return { error: `Something went wrong. Please try again.` }
   };
-
-
-  const updatedComment = module.exports.getOneComment(commentId);
-  console.log(updatedComment);
-  return updatedComment;
+  return {message: `${result.modifiedCount} comments has been updated`}
 }
+
 
 // DELETE A MOVIE BY ID
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
