@@ -2,7 +2,7 @@ const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
 const uri =
-  "mongodb+srv://APIsuperuser:9RbwKvA8DpBkJgb9@cluster0.bwarser.mongodb.net/?retryWrites=true&w=majority";
+  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PW}@cluster0.bwarser.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri);
 
