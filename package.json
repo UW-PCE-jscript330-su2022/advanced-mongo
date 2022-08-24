@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "startDev": "nodemon index.js",
     "start": "nodemon index.js"
   },
   "repository": {
@@ -18,11 +19,18 @@
     "testEnvironment": "node"
   },
   "nodemonConfig": {
-    "ignore": ["**/*test.js", "README.md", "package.json"],
+    "ignore": [
+      "**/*test.js",
+      "README.md",
+      "package.json"
+    ],
     "delay": 2000
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
     "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.8.0"
   },
   "devDependencies": {

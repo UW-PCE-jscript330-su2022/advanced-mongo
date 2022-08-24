@@ -2,12 +2,13 @@ const { MongoClient } = require("mongodb");
 const ObjectId = require('mongodb').ObjectId;
 
 const uri =
-  "YOUR CONNECTION STRING HERE";
+  "mongodb+srv://candy-dev:nIcjQAp7LPdpzDhm@cluster0.xaqhzyx.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri);
-
 const databaseName = 'sample_mflix';
 const collName = 'movies'
+const commCollName = 'comments'
+
 
 module.exports = {}
 
@@ -15,11 +16,43 @@ module.exports = {}
 module.exports.getAll = async () => {
   const database = client.db(databaseName);
   const movies = database.collection(collName);
-
   const query = {};
+  //let movieCursor = await movies.find(query).limit(10).project({title: 1, runtime: 1, directors: 1}).sort({runtime: -1});
+  //let movieCursor = await movies.find(query).limit(10).sort({runtime: -1});
   let movieCursor = await movies.find(query).limit(10).project({title: 1}).sort({runtime: -1});
-
+  //let movieCursor = await movies.find(query).limit(10).sort({"awards.wins": -1});
   return movieCursor.toArray();
+}
+
+module.exports.getAllComments = async (movieId)=>{
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const query = { movie_id: ObjectId(movieId)}
+  let commentCursor = await  comments.find(query)
+  return commentCursor.toArray()
+}
+
+module.exports.getCommentById = async (commentId) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const query = {_id: ObjectId(commentId)};
+  let comment = await comments.findOne(query);
+
+  return comment;
+}
+
+module.exports.getAComment = async (identifier) => {
+  let comment;
+
+  if(ObjectId.isValid(identifier)){
+    comment = module.exports.getCommentById(identifier);
+  }
+
+  if(comment){
+    return comment;
+  } else {
+    return {error: `No comment found with identifier ${identifier}.`}
+  }
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
@@ -57,6 +90,20 @@ module.exports.getByIdOrTitle = async (identifier) => {
   }
 }
 
+module.exports.createComment = async (movieId, newObj) =>{
+
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+  const goodObj = {...newObj, movie_id: ObjectId(movieId), date: new Date() }
+  const result = await comments.insertOne(goodObj)
+  if(result.acknowledged){
+    return { newObjectId: result.insertedId, message: `Comment created! ID: ${result.insertedId}` }
+  } else {
+    return {error: "Something went wrong. Please try again."}
+  }
+
+}
+
 // https://www.mongodb.com/docs/v4.4/tutorial/insert-documents/
 module.exports.create = async (newObj) => {
   const database = client.db(databaseName);
@@ -89,10 +136,42 @@ module.exports.updateById = async (movieId, newObj) => {
 
   if(result.modifiedCount != 1){
     return {error: `Something went wrong. ${result.modifiedCount} movies were updated. Please try again.`}
-  };
+  }
 
   const updatedMovie = module.exports.getById(movieId);
   return updatedMovie;
+}
+
+module.exports.updateCommentById = async (commentId, newObj) => {
+  const database = client.db(databaseName);
+  const comments = database.collection(commCollName);
+
+  // Product team says only these two fields can be updated.
+  const updateRules = {
+    //$set: {"post" : newObj.post, "date": new Date()}
+    $set: {"post" : newObj.post, "date": new Date()}
+  };
+  const filter = { _id: ObjectId(commentId) };
+  const result = await comments.updateOne(filter, updateRules);
+
+  if(result.modifiedCount !== 1){
+    return {error: `Something went wrong. ${result.modifiedCount} comments were updated. Please try again.`}
+  }
+
+  const updatedComment = module.exports.getCommentById(commentId);
+  return updatedComment;
+}
+
+module.exports.deleteCommentById = async (commentId)=>{
+  const database = client.db(databaseName)
+  const comments = database.collection(commCollName)
+  const deletionRules = {_id:ObjectId(commentId)}
+  const result = await comments.deleteOne(deletionRules)
+  if(result.deletedCount !==1){
+    return {error: `Something went wrong. ${result.deletedCount} comments were deleted. Please try again`}
+  }
+
+  return {message: `Deleted ${result.deletedCount} comment.`}
 }
 
 // https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/write-operations/delete/
