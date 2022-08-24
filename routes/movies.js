@@ -6,6 +6,7 @@ const movieData = require('../dataInterface/movies');
 
 // GET ALL MOVIES
 // curl -sS http://localhost:5001/movies
+// curl -sS https://advanced-mongo-jmc.herokuapp.com/movies
 router.get("/", async (req, res, next) => {
   let movieList = await movieData.getAll()
 
