@@ -29,6 +29,11 @@ module.exports.getByLetters = async (params)=>{
     let result = data.find(query).limit(10)
     return result.toArray()
   }else{
+    if(params.startsWith('callLetters=')){
+      let value = params.slice(12)
+      module.exports.getByLetters(value)
+    }
+    console.log('here')
     let query = {callLetters: params}
     let result = data.find(query).limit(10)
     return result.toArray()
