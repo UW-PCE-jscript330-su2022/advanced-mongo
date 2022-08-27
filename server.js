@@ -6,6 +6,7 @@ const server = express();
 server.use(express.json());
 
 // Enable CORS
+// From Ryan's contrib to freebikefinder, borrowed for my reference. 
 // server.use(function (req, res, next) {
 //   res.header('Access-Control-Allow-Origin', '*');
 //   res.header(
