@@ -51,27 +51,27 @@ describe("/movies routes", () => {
   });
 
   describe("POST /", () =>{
-    it("should return the new movie on success", async () => {
+    // it("should return the new movie on success", async () => {
+    //
+    //   movieData.create.mockResolvedValue({"newObjectId": "62df873237daba30cdf2602e", "message": "Item created! ID: 62df873237daba30cdf2602e"})
+    //   const res = await request(server).post("/movies")
+    //   expect(res.statusCode).toEqual(200);
+    //
+    // });
 
-      movieData.create.mockResolvedValue({"newObjectId": "62df873237daba30cdf2602e", "message": "Item created! ID: 62df873237daba30cdf2602e"})
-      const res = await request(server).post("/movies")
-      expect(res.statusCode).toEqual(200);
+    // it("should return an error message if body is missing title", async () => {
+    //   movieData.create.mockResolvedValue({error: "Movies must have a title."})
+    //   const res = await request(server).post("/movies")
+    //   expect(res.statusCode).toEqual(400);
+    //   // check status code 400
+    // });
 
-    });
-
-    it("should return an error message if body is missing title", async () => {
-      movieData.create.mockResolvedValue({error: "Movies must have a title."})
-      const res = await request(server).post("/movies")
-      expect(res.statusCode).toEqual(400);
-      // check status code 400
-    });
-
-    it("should return an error message if movie fails to be created", async () => {
-      movieData.create.mockResolvedValue({error: "Something went wrong. Please try again."})
-      const res = await request(server).post("/movies")
-      expect(res.body.error).toBeDefined()
-
-    });
+    // it("should return an error message if movie fails to be created", async () => {
+    //   movieData.create.mockResolvedValue({error: "Something went wrong. Please try again."})
+    //   const res = await request(server).post("/movies")
+    //   expect(res.body.error).toBeDefined()
+    //
+    // });
 
   });
 
